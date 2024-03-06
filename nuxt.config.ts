@@ -4,7 +4,9 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxtjs/color-mode',
+    'nuxt-icon',
   ],
+  // buildModules: ["nuxt-hero-icons"],
   colorMode: {
     dataValue: 'theme', // activate data-theme in <html> tag
     preference: 'system', // default value of $colorMode.preference
@@ -22,6 +24,17 @@ export default defineNuxtConfig({
   router: {
     base: '/3d-pathways-nuxt/'
  },
+//  deploy with nuxt build, You can statically generate Nuxt routes at build time using the prerender option
+ routeRules: {
+  // prerender index route by default
+  '/': { prerender: true },
+  // prerender this route and all child routes
+  '/prerender-multiple/**': { prerender: true },
+},
+// build your project with nuxt generate. You should set nitro.static to true to enable Vercel features
+ nitro: {
+  static: true,
+},
  runtimeConfig: {
   // Public keys that will be exposed to the client, prefix with 'public'
   publicAirtableApiKey: '', // Keep this empty if you don't need it on the client-side
