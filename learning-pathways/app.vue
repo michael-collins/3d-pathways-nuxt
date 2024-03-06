@@ -1,5 +1,12 @@
+<script setup lang="ts">
+
+// const nav = [
+//   { label: 'Home', to: '/' },
+//   { label: 'About', to: '/about' },
+// ]
+</script>
+
 <template>
-  <div>
-    <NuxtWelcome />
-  </div>
+    <NuxtLoadingIndicator />
+    <NuxtPage />
 </template>
