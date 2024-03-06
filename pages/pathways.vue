@@ -1,57 +1,46 @@
 <template>
     <div class="bg-base-200">
-      <div class=" p-3">
         <NavBar />  
        
   
   
-      </div>  
       <!-- <card-component card-component :records="records"></card-component> -->
       <LinkedCardComponent :records="records" destination="PathwayDetail" />
+      {{ records }}
     </div>
   </template>
   
-  <script>
-  // import CardComponent from '@/components/CardComponent.vue';
-  import LinkedCardComponent from '@/components/LinkedCardComponent.vue';
-  import AirtableService from '@/services/AirtableService';
-  import NavBar from '@/components/NavBar';
-  
-  export default {
-   
-    components: {
-      // 'card-component': CardComponent,
-      'LinkedCardComponent': LinkedCardComponent,
-      'NavBar': NavBar
-    },
-    data() {
-      return {
-        records: [],
-        activeId: null,
-      };
-    },
-    mounted() {
-      // Temporary test record
-      const testRecord = {
+  <script setup>
+import { ref, onMounted } from 'vue';
+import LinkedCardComponent from '@/components/LinkedCardComponent.vue';
+import NavBar from '@/components/NavBar';
+import { getAirtableRecords } from '@/services/AirtableService';
+
+const records = ref([]);
+
+onMounted(async () => {
+    // Fetching data from Airtable
+    const rawData = await getAirtableRecords('pathways');
+    
+    // Assuming the data is returned correctly, map through rawData to structure it as needed
+    records.value = rawData.map(record => ({
+        id: record.id,
+        name: record.fields['Name'], // Ensure these match the field names in your Airtable base
+        description: record.fields['Description']
+    }));
+    
+    // Temporary test record to append to fetched records
+    const testRecord = {
         id: 'testRecord',
-        fields: {
-          name: 'Test Record Name',
-          'learning objectives': 'Test learning objectives',
-          description: 'This is an example description!',
-          exercises: 'Test exercises',
-          roles: 'A roles, a second role',
-          examples: 'Test examples',
-          competencies: 'Test competencies',
-        },
-      };
-  
-      AirtableService.getPathwayRecords().then(data => {
-        this.records = data.records;
-      }).catch(error => console.error(error));
-      // Prepend the test record to the records array
-      this.records.push(testRecord);
-    },
-  };
-  </script>
+        name: 'Test Record Name',
+        description: 'This is an example description!',
+        // Add any additional fields you wish to mock
+    };
+
+    // Append the test record to the records array
+    records.value.push(testRecord);
+});
+</script>
+
     
   

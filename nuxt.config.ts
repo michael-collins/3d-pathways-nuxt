@@ -23,6 +23,9 @@ export default defineNuxtConfig({
     base: '/3d-pathways-nuxt/'
  },
  runtimeConfig: {
-  currencyKey: process.env.VUE_APP_AIRTABLE_API_KEY
-}
+  // Public keys that will be exposed to the client, prefix with 'public'
+  publicAirtableApiKey: '', // Keep this empty if you don't need it on the client-side
+  // Private keys, kept server-side
+  airtableApiKey: process.env.AIRTABLE_API_KEY,
+},
 })

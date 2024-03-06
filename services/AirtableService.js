@@ -1,56 +1,21 @@
-// services/AirtableService.js
-// import axios from 'axios';
+import { useRuntimeConfig } from '#imports';
 
-const baseURL = `https://api.airtable.com/v0/appErImxpeRDom8je`;
-const config = {
-  headers: {
-    Authorization: `Bearer ${process.env.VUE_APP_AIRTABLE_API_KEY}`
-  }
-};
+export const getAirtableRecords = async (tableName) => {
+    const config = useRuntimeConfig();
+    console.log("API Key:", config.airtableApiKey); // Debugging: Check if API key is fetched correctly
 
-export default {
-  async getPathwayRecords() {
-    try {
-      const response = await $fetch(`${baseURL}/pathways`, config);
-      return response.data;
-    } catch (error) {
-      console.error(error);
-    }
-  },
-  async getExerciseRecords() {
-    try {
-      const response = await $fetch(`${baseURL}/exercises`, config);
-      return response.data;
-    } catch (error) {
-      console.error(error);
-    }
-  },
-  async getExerciseById(exerciseId) {
-    console.log(`Fetching exercise with ID: ${exerciseId}`); // Log the ID being used
-    try {
-      const response = await $fetch(`${baseURL}/exercises/${exerciseId}`, config);
-      console.log(`Response for exercise ${exerciseId}:`, response.data); // Log the response
-      return response.data;
-    } catch (error) {
-      console.error(`Error fetching exercise ${exerciseId}:`, error);
-    }
-  },
+    const baseURL = `https://api.airtable.com/v0/appErImxpeRDom8je/${tableName}`;
+    const apiKey = config.airtableApiKey;
 
-  async getCompetencyById(competencyId) {
     try {
-      const response = await $fetch(`${baseURL}/competencies/${competencyId}`, config);
-      return response.data;
+        const response = await $fetch(baseURL, {
+            headers: {
+                Authorization: `Bearer ${apiKey}`,
+            },
+        });
+        return response;
     } catch (error) {
-      console.error('Error fetching competency:', error);
+        console.error(error);
+        throw error; // It's useful to re-throw the error for further handling upstream
     }
-  },
-
-  async getPathwayRecordById(recordId) {
-    try {
-      const response = await $fetch(`${baseURL}/pathways/${recordId}`, config);
-      return response.data;
-    } catch (error) {
-      console.error(error);
-    }
-  }
 };
