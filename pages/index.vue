@@ -14,11 +14,11 @@
   
 <script>
  
- import navBar from "@/components/navBar";
+ import NavBar from "@/components/NavBar";
  export default {
     name: "Home",
     components: {
-      'navBar': navBar,
+      'NavBar': NavBar,
     }
   };
 //   const colorMode = useColorMode();

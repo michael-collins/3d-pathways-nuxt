@@ -22,5 +22,7 @@ export default defineNuxtConfig({
   router: {
     base: '/3d-pathways-nuxt/'
  },
-  
+ runtimeConfig: {
+  currencyKey: process.env.VUE_APP_AIRTABLE_API_KEY
+}
 })

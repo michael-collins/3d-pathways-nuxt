@@ -5,11 +5,11 @@
     </div>
 </template>
 <script>
-import navBar from "@/components/navBar";
+ import NavBar from "@/components/NavBar";
 export default {
     name: "About",
     components: {
-        'navBar': navBar,
+        'NavBar': NavBar,
     }
 };
 </script>
