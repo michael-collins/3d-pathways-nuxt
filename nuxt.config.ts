@@ -18,5 +18,9 @@ export default defineNuxtConfig({
   },
   target: 'static', // default is 'server'
   ssr: true,
+  mode: 'static',
+  router: {
+    base: '/3d-pathways-nuxt/'
+ },
   
 })
