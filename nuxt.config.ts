@@ -39,8 +39,10 @@ export default defineNuxtConfig({
 // },
  runtimeConfig: {
   // Public keys that will be exposed to the client, prefix with 'public'
-  publicAirtableApiKey: '', // Keep this empty if you don't need it on the client-side
+  public: {
+    AirtableApiKey: process.env.AIRTABLE_API_KEY, // Keep this empty if you don't need it on the client-side
+  },
   // Private keys, kept server-side
-  airtableApiKey: process.env.AIRTABLE_API_KEY,
+  AirtableApiKey: process.env.AIRTABLE_API_KEY,
 },
 })
