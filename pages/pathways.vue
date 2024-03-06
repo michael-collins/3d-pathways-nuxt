@@ -1,46 +1,40 @@
 <template>
-    <div class="bg-base-200">
-        <NavBar />  
-       
-  
-  
-      <!-- <card-component card-component :records="records"></card-component> -->
-      <LinkedCardComponent :records="records" destination="PathwayDetail" />
-      {{ records }}
+    <NavBar />
+    <div class="hero bg-base-200 py-10">
+        <div class="hero-content text-left">
+            <div class="max-w-md">
+                <h1 class="text-5xl font-bold">Pathways</h1>
+                <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
+                    exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+            </div>
+        </div>
     </div>
-  </template>
-  
-  <script setup>
-import { ref, onMounted } from 'vue';
+
+    <LinkedCardComponent :records="records" destination="PathwayDetail" />
+    {{ records }}
+</template>
+
+<script setup>
+import { onMounted } from 'vue';
+import { useAirtableStore } from '@/stores/airtableStore';
+import { getAirtableRecords } from '@/services/airtableService'; // Ensure this import
 import LinkedCardComponent from '@/components/LinkedCardComponent.vue';
 import NavBar from '@/components/NavBar';
-import { getAirtableRecords } from '@/services/AirtableService';
 
-const records = ref([]);
+const airtableStore = useAirtableStore();
 
 onMounted(async () => {
-    // Fetching data from Airtable
-    const rawData = await getAirtableRecords('pathways');
-    
-    // Assuming the data is returned correctly, map through rawData to structure it as needed
-    records.value = rawData.map(record => ({
-        id: record.id,
-        name: record.fields['Name'], // Ensure these match the field names in your Airtable base
-        description: record.fields['Description']
-    }));
-    
-    // Temporary test record to append to fetched records
-    const testRecord = {
-        id: 'testRecord',
-        name: 'Test Record Name',
-        description: 'This is an example description!',
-        // Add any additional fields you wish to mock
-    };
-
-    // Append the test record to the records array
-    records.value.push(testRecord);
+    if (!airtableStore.records.length) {
+        const rawData = await getAirtableRecords('pathways');
+        console.log("Raw Data:", rawData); // Debugging
+        airtableStore.setRecords(rawData.map(record => ({
+            id: record.id,
+            name: record.fields.name,
+            description: record.fields.description
+        })));
+    }
 });
+
+const records = airtableStore.records;
 </script>
 
-    
-  

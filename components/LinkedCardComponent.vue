@@ -9,10 +9,10 @@
             <div class="flex justify-between items-center">
               <div>
                 <h3 class="group-hover:text-primary font-semibold">
-                  {{ record.fields && record.fields.name ? record.fields.name : 'Name not available' }}
+                    {{ record.name ? record.name : 'Name not available' }}
                 </h3>
                 <p class="group-hover:text-primary text-sm">
-                  {{ record.fields && record.fields.description ? record.fields.description : 'Description not available' }}
+                    {{ record.description ? record.description : 'Description not available' }}
                 </p>
               </div>
             </div>
