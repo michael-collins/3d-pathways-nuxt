@@ -9,10 +9,10 @@
             <div class="flex justify-between items-center">
               <div>
                 <h3 class="group-hover:text-primary font-semibold">
-                    {{ record.name ? record.name : 'Name not available' }}
+                    {{ record.fields.name ? record.fields.name : 'Name not available' }}
                 </h3>
                 <p class="group-hover:text-primary text-sm">
-                    {{ record.description ? record.description : 'Description not available' }}
+                    {{ record.fields.description ? record.fields.description : 'Description not available' }}
                 </p>
               </div>
             </div>
@@ -33,7 +33,7 @@
       navigateToDestination(id) {
         this.$router.push({ name: this.destination, params: { id } });
       },
-    },
+    },  
   };
   </script>
   
