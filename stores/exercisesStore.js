@@ -5,6 +5,13 @@ export const useExercisesStore = defineStore('exercises', {
     state: () => ({
         records: [],
     }),
+    // Getters allow you to define computed properties based on the state
+  getters: {
+    // Define a getter to find an exercise by its ID
+    getExerciseById: (state) => (id) => {
+        return state.records.find(record => record.id === id);
+      }
+  },
     actions: {
         async fetchRecords() {
             if (this.records.length) return; // Avoid refetching if already populated

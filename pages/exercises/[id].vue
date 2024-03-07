@@ -1,13 +1,118 @@
 <template>
   <div>
-    <div class="container mx-auto px-4 py-6"> {{ exerciseId }}
+    <NavBar />
+    
+    <div v-if="record" class="container max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
+      <!-- Displaying the Name and Image -->
+      <img v-if="record.fields.image" :src="record.fields.image[0].url" class="w-full h-auto" />
+      <h1 v-if="record.fields.name" class="text-5xl font-bold mt-8 mb-4">{{ record.fields.name }}</h1>
+    
+    <div v-if="record && record.fields" :key="record.id" class="space-y-10 divide-y-4 divide-neutral">
 
+    <!-- Displaying the Difficulty -->
+    --\> Display difficulty
+    <div v-if="record.fields.difficulty" class="pb-8">
+    <!-- Displaying the difficulty levels -->
+    <ul class="space-x-2">
+      <li v-for="level in record.fields.difficulty" :key="level" class="badge badge-outline text-xs uppercase">
+  {{ level }}
+</li>
+
+    </ul>
     </div>
+
+<!-- Displaying the Description -->
+<div v-if="record.fields.description">
+<h2   class="text-2xl font-semibold mb-2 text-left uppercase ">Description:</h2>
+<!-- <p v-if="record.fields.description" class="text-md p-3">{{ record.fields.description }}</p> -->
+<!-- <MarkdownRenderer :source="record.fields.description" /> -->
+{{ record.fields.description }}
+</div>
+
+<!-- Displaying the Learning Objectives -->
+<div v-if="record.fields.learningObjectives">
+<h2   class="text-2xl font-semibold text-left uppercase mb-4">Learning Objectives:</h2>
+<!-- <MarkdownRenderer :source="record.fields.learningObjectives" /> -->
+{{ record.fields.learningObjectives }}
+
+</div>
+
+<!-- Displaying the Instructions -->
+<div v-if="record.fields.instructions">
+<h2   class="text-2xl font-semibold text-left uppercase mb-4">Instructions:</h2>
+<!-- <MarkdownRenderer :source="record.fields.instructions" /> -->
+{{ record.fields.instructions }}
+</div>
+
+<!-- Displaying the YouTube Playlist -->
+<div v-if="record.fields.youtubePlaylist">
+<h2   class="text-2xl font-semibold mb-2 text-left uppercase ">Tutorials:</h2>
+<p v-if="record.fields.youtubePlaylist" class="text-md p-3">
+<a :href="record.fields.youtubePlaylist" target="_blank">{{ record.fields.youtubePlaylist }}</a>
+</p>
+</div>
+<!-- Displaying the associatedMaterial -->
+<div v-if="record.fields.associatedMaterial">
+<h2   class="text-2xl font-semibold text-left uppercase mb-4">Associated Material:</h2>
+<!-- <MarkdownRenderer :source="record.fields.associatedMaterial" /> -->
+{{ record.fields.associatedMaterial }}
+
+</div>
+<!-- Displaying the Downloads -->
+<div v-if="record.fields.downloads">
+<p  class="text-md p-3">
+<ul>
+  <li v-for="download in record.fields.downloads" :key="download.id">
+    <a :href="download.url">{{ download.name }}</a>
+  </li>
+</ul>
+</p>
+</div>
+<!-- iframe -->
+<div class="mockup-code">
+<pre class="language-html"><code>&lt;iframe src="{{ currentUrl }}" style="border:none;" title="{{ record.fields && record.fields.name ? record.fields.name : 'Exercise' }}"&gt;&lt;/iframe&gt;</code></pre>
+</div>
+
+
+</div>
   </div>
+</div>
 </template>
 
 <script setup>
+ import NavBar from "@/components/NavBar";
+
+// import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+// import MarkdownRenderer from 'MarkdownRenderer';
+import { ref } from 'vue';
+import { useExercisesStore } from '@/stores/exercisesStore'; // Ensure this import is correct
 
 const route = useRoute();
-const exerciseId = route.params.id;
+const exercisesStore = useExercisesStore();
+const exerciseId = ref(route.params.id);
+const record = ref(null);
+
+// const record = computed(() => {
+//   const rawRecord = exercisesStore.getExerciseById(exerciseId.value);
+//   // Normalize `difficulty` to always be an array
+//   if (rawRecord && !Array.isArray(rawRecord.fields.difficulty)) {
+//     rawRecord.fields.difficulty = [rawRecord.fields.difficulty];
+//   }
+//   return rawRecord;
+// });
+// This computed property will reactively update if the route changes.
+const currentUrl = computed(() => {
+  // Construct the full URL using the route object
+  // If you're running Nuxt in SSR mode, ensure window is defined before accessing it.
+  if (typeof window !== 'undefined') {
+    return window.location.origin + route.fullPath;
+  }
+  return '';
+});
+onMounted(async () => {
+  await exercisesStore.fetchRecords();
+  record.value = exercisesStore.getExerciseById(exerciseId.value);
+});
+// console.log('url: ',currentUrl.value);
 </script>

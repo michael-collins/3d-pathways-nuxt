@@ -5,6 +5,13 @@ export const usePathwaysStore = defineStore('pathways', {
     state: () => ({
         records: [],
     }),
+    // Getters allow you to define computed properties based on the state
+  getters: {
+    // Define a getter to find an exercise by its ID
+    getPathwayById: (state) => (id) => {
+      return state.pathways.find(pathway => pathway.id === id);
+    }
+  },
     actions: {
         async fetchRecords() {
             if (this.records.length) return; // Avoid refetching if already populated
