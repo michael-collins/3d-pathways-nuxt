@@ -8,7 +8,8 @@
         <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
             <li><nuxt-link to="/">Home</nuxt-link></li>
         <li><nuxt-link to="/about">About</nuxt-link></li>
-        <li><nuxt-link to="/pathways">Pathways</nuxt-link></li>
+        <li><nuxt-link to="/pathways/">Pathways</nuxt-link></li>
+        <li><nuxt-link to="/exercises/">Exercises</nuxt-link></li>
 
         </ul>
       </div>
@@ -16,7 +17,8 @@
       <ul class="menu menu-horizontal px-1">
         <li class="text-primary"><nuxt-link to="/">Home</nuxt-link></li>
         <li class="text-secondary"><nuxt-link to="/About">About</nuxt-link></li>
-        <li><nuxt-link to="/pathways">Pathways</nuxt-link></li>
+        <li><nuxt-link to="/pathways/">Pathways</nuxt-link></li>
+        <li><nuxt-link to="/exercises/">Exercises</nuxt-link></li>
       </ul>
     </div>
     </div>

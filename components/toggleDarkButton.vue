@@ -1,6 +1,6 @@
 <template>
     
-    <button aria-label="Color Mode" class="btn"
+    <button aria-label="Color Mode" class="btn btn-ghost"
             @click="changeColor">
         <ColorScheme placeholder="...">
             <Icon v-if="colorMode.value === darkTheme" name="heroicons-outline:moon" class="text-xl" />

@@ -20,8 +20,8 @@ export default defineNuxtConfig({
     classSuffix: '-mode',
     storageKey: 'nuxt-color-mode'
   },
-  target: 'static', // default is 'server'
-  ssr: true,
+  // target: 'static', // default is 'server'
+  ssr: false,
   mode: 'static',
 //   router: {
 //     base: '/3d-pathways-nuxt/'
