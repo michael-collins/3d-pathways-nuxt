@@ -1,24 +1,18 @@
 <template>
-  <navBar/>
-   
+  <navBar />
+
   <div class="hero bg-base-200 py-10">
     <div class="hero-content text-left">
       <div class="max-w-md">
         <h1 class="text-5xl font-bold">Home</h1>
-        <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+        <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
+          quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
       </div>
     </div>
   </div>
-  
-  </template>
-  
+
+</template>
+
 <script>
- 
- import NavBar from "@/components/NavBar";
- export default {
-    name: "Home",
-    components: {
-      'NavBar': NavBar,
-    }
-  };
+
 </script>

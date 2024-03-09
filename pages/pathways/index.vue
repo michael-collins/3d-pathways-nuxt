@@ -13,12 +13,6 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
-//   import { useRuntimeConfig } from '#app';
-import { usePathwaysStore } from '@/stores/pathwaysStore'; // Import the dedicated store for pathways
-import LinkedCardComponent from '@/components/LinkedCardComponent.vue';
-import NavBar from '@/components/NavBar';
-
 const pathwaysStore = usePathwaysStore(); // Use the dedicated pathways store
 
 onMounted(() => {

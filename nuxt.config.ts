@@ -22,6 +22,12 @@ export default defineNuxtConfig({
     classSuffix: '-mode',
     storageKey: 'nuxt-color-mode'
   },
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
   // target: 'static', // default is 'server'
   // ssr: false,
   // mode: 'static',
