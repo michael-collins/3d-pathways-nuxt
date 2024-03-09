@@ -7,6 +7,8 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     'nuxt-icon',
     '@pinia/nuxt',
+    '@nuxt/content',
+    '@nuxtjs/mdc',
   ],
   // buildModules: ["nuxt-hero-icons"],
   colorMode: {
@@ -21,8 +23,8 @@ export default defineNuxtConfig({
     storageKey: 'nuxt-color-mode'
   },
   // target: 'static', // default is 'server'
-  ssr: false,
-  mode: 'static',
+  // ssr: false,
+  // mode: 'static',
 //   router: {
 //     base: '/3d-pathways-nuxt/'
 //  },

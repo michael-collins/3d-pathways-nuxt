@@ -24,24 +24,63 @@
 <!-- Displaying the Description -->
 <div v-if="record.fields.description">
 <h2   class="text-2xl font-semibold mb-2 text-left uppercase ">Description:</h2>
-<!-- <p v-if="record.fields.description" class="text-md p-3">{{ record.fields.description }}</p> -->
-<!-- <MarkdownRenderer :source="record.fields.description" /> -->
-{{ record.fields.description }}
+<MDC :value="record.fields.description" class="markdown mx-2 
+    child-list-ol:mx-6 
+    child-list-ol:list-decimal 
+    child-list-ul:mx-6 
+    child-list-ul:list-disc 
+    child-list-ol-li:pt-1 
+    child-list-ul-li:pt-1 
+    child-list-ol-li-ul:list-[circle] 
+    child-list-ol-li-ul:px-4 
+    child-list-ol-li-ul:py-1 
+    child-list-ul-li-ul:list-[circle] 
+    child-list-ul-li-ul:px-4 
+    child-list-ul-li-ul:py-1 
+    child-list-ol-li-ul-li:pt-1 
+    child-list-ul-li-ul-li:pt-1"/>
 </div>
 
 <!-- Displaying the Learning Objectives -->
 <div v-if="record.fields.learningObjectives">
-<h2   class="text-2xl font-semibold text-left uppercase mb-4">Learning Objectives:</h2>
-<!-- <MarkdownRenderer :source="record.fields.learningObjectives" /> -->
-{{ record.fields.learningObjectives }}
+  <h2   class="text-2xl font-semibold text-left uppercase mb-4">Learning Objectives:</h2>
+  <MDC :value="record.fields.learningObjectives" class="markdown mx-2 
+    child-list-ol:mx-6 
+    child-list-ol:list-decimal 
+    child-list-ul:mx-6 
+    child-list-ul:list-disc 
+    child-list-ol-li:pt-1 
+    child-list-ul-li:pt-1 
+    child-list-ol-li-ul:list-[circle] 
+    child-list-ol-li-ul:px-4 
+    child-list-ol-li-ul:py-1 
+    child-list-ul-li-ul:list-[circle] 
+    child-list-ul-li-ul:px-4 
+    child-list-ul-li-ul:py-1 
+    child-list-ol-li-ul-li:pt-1 
+    child-list-ul-li-ul-li:pt-1"/>
+
 
 </div>
 
 <!-- Displaying the Instructions -->
 <div v-if="record.fields.instructions">
 <h2   class="text-2xl font-semibold text-left uppercase mb-4">Instructions:</h2>
-<!-- <MarkdownRenderer :source="record.fields.instructions" /> -->
-{{ record.fields.instructions }}
+<MDC :value="record.fields.instructions" class="markdown mx-2 
+    child-list-ol:mx-6 
+    child-list-ol:list-decimal 
+    child-list-ul:mx-6 
+    child-list-ul:list-disc 
+    child-list-ol-li:pt-1 
+    child-list-ul-li:pt-1 
+    child-list-ol-li-ul:list-[circle] 
+    child-list-ol-li-ul:px-4 
+    child-list-ol-li-ul:py-1 
+    child-list-ul-li-ul:list-[circle] 
+    child-list-ul-li-ul:px-4 
+    child-list-ul-li-ul:py-1 
+    child-list-ol-li-ul-li:pt-1 
+    child-list-ul-li-ul-li:pt-1"/>
 </div>
 
 <!-- Displaying the YouTube Playlist -->
@@ -80,27 +119,18 @@
 </template>
 
 <script setup>
- import NavBar from "@/components/NavBar";
+//  import NavBar from "@/components/NavBar";
 
 // import { computed } from 'vue';
-import { useRoute } from 'vue-router';
-// import MarkdownRenderer from 'MarkdownRenderer';
-import { ref } from 'vue';
-import { useExercisesStore } from '@/stores/exercisesStore'; // Ensure this import is correct
+// import { useRoute } from 'vue-router';
+// import { ref } from 'vue';
+// import { useExercisesStore } from '@/stores/exercisesStore'; // Ensure this import is correct
 
 const route = useRoute();
 const exercisesStore = useExercisesStore();
 const exerciseId = ref(route.params.id);
 const record = ref(null);
 
-// const record = computed(() => {
-//   const rawRecord = exercisesStore.getExerciseById(exerciseId.value);
-//   // Normalize `difficulty` to always be an array
-//   if (rawRecord && !Array.isArray(rawRecord.fields.difficulty)) {
-//     rawRecord.fields.difficulty = [rawRecord.fields.difficulty];
-//   }
-//   return rawRecord;
-// });
 // This computed property will reactively update if the route changes.
 const currentUrl = computed(() => {
   // Construct the full URL using the route object
