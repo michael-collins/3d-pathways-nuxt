@@ -39,8 +39,14 @@
       <!-- Displaying the Description -->
       <p v-if="record.fields.description" class="text-md p-3">
         <MDC :value="record.fields.description" class="markdown mx-2 
-    child-list-ol:mx-6 
+    child-a:font-medium 
+    child-a:link 
+    child-a:text-secondary 
+    hover:child-a:text-base-content 
     child-list-ol:list-decimal 
+    child-list-ol-li-marker:font-medium 
+    child-list-ol-li-marker:text-info 
+    child-list-ol:mx-6 
     child-list-ul:mx-6 
     child-list-ul:list-disc 
     child-list-ol-li:pt-1 
@@ -100,8 +106,14 @@
             <h3 class="text-lg font-medium normal-case">Name: {{ competency }}</h3>
             <h4>Description:</h4>
             <MDC :value="competency" class="p-3 markdown mx-2 
-    child-list-ol:mx-6 
+    child-a:font-medium 
+    child-a:link 
+    child-a:text-secondary 
+    hover:child-a:text-base-content 
     child-list-ol:list-decimal 
+    child-list-ol-li-marker:font-medium 
+    child-list-ol-li-marker:text-info 
+    child-list-ol:mx-6 
     child-list-ul:mx-6 
     child-list-ul:list-disc 
     child-list-ol-li:pt-1 
@@ -122,8 +134,14 @@
       <div v-if="record.fields.examples" class="">
         <h2 class="text-2xl font-semibold uppercase text-center">Examples:</h2>
         <MDC :value="record.fields.examples" class="p-3 markdown mx-2 
-    child-list-ol:mx-6 
+    child-a:font-medium 
+    child-a:link 
+    child-a:text-secondary 
+    hover:child-a:text-base-content 
     child-list-ol:list-decimal 
+    child-list-ol-li-marker:font-medium 
+    child-list-ol-li-marker:text-info 
+    child-list-ol:mx-6 
     child-list-ul:mx-6 
     child-list-ul:list-disc 
     child-list-ol-li:pt-1 

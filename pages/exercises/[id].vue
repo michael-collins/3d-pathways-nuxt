@@ -19,14 +19,20 @@
 
           </ul>
         </div>
-        <div v-else class="pb-8"></div>
+        <div v-else class="pb-8"><!-- I'm here to handle the divide style utility--></div>
 
         <!-- Displaying the Description -->
         <div v-if="record.fields.description">
           <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Description:</h2>
           <MDC :value="record.fields.description" class="markdown mx-2 
-    child-list-ol:mx-6 
+    child-a:font-medium 
+    child-a:link 
+    child-a:text-secondary 
+    hover:child-a:text-base-content 
     child-list-ol:list-decimal 
+    child-list-ol-li-marker:font-medium 
+    child-list-ol-li-marker:text-info 
+    child-list-ol:mx-6 
     child-list-ul:mx-6 
     child-list-ul:list-disc 
     child-list-ol-li:pt-1 
@@ -45,8 +51,14 @@
         <div v-if="record.fields.learningObjectives">
           <h2 class="text-2xl font-semibold text-left uppercase mb-4">Learning Objectives:</h2>
           <MDC :value="record.fields.learningObjectives" class="markdown mx-2 
-    child-list-ol:mx-6 
+          child-a:font-medium 
+    child-a:link 
+    child-a:text-secondary 
+    hover:child-a:text-base-content 
     child-list-ol:list-decimal 
+    child-list-ol-li-marker:font-medium 
+    child-list-ol-li-marker:text-info 
+    child-list-ol:mx-6 
     child-list-ul:mx-6 
     child-list-ul:list-disc 
     child-list-ol-li:pt-1 
@@ -67,8 +79,14 @@
         <div v-if="record.fields.instructions">
           <h2 class="text-2xl font-semibold text-left uppercase mb-4">Instructions:</h2>
           <MDC :value="record.fields.instructions" class="markdown mx-2 
-    child-list-ol:mx-6 
+    child-a:font-medium 
+    child-a:link 
+    child-a:text-secondary 
+    hover:child-a:text-base-content 
     child-list-ol:list-decimal 
+    child-list-ol-li-marker:font-medium 
+    child-list-ol-li-marker:text-info 
+    child-list-ol:mx-6 
     child-list-ul:mx-6 
     child-list-ul:list-disc 
     child-list-ol-li:pt-1 
@@ -93,8 +111,27 @@
         <!-- Displaying the associatedMaterial -->
         <div v-if="record.fields.associatedMaterial">
           <h2 class="text-2xl font-semibold text-left uppercase mb-4">Associated Material:</h2>
-          <!-- <MarkdownRenderer :source="record.fields.associatedMaterial" /> -->
-          {{ record.fields.associatedMaterial }}
+          <MDC :value="record.fields.associatedMaterial" class="p-3 markdown mx-2 
+    child-a:font-medium 
+    child-a:link 
+    child-a:text-secondary 
+    hover:child-a:text-base-content 
+    child-list-ol:list-decimal 
+    child-list-ol-li-marker:font-medium 
+    child-list-ol-li-marker:text-info 
+    child-list-ol:mx-6 
+    child-list-ul:mx-6 
+    child-list-ul:list-disc 
+    child-list-ol-li:pt-1 
+    child-list-ul-li:pt-1 
+    child-list-ol-li-ul:list-[circle] 
+    child-list-ol-li-ul:px-4 
+    child-list-ol-li-ul:py-1 
+    child-list-ul-li-ul:list-[circle] 
+    child-list-ul-li-ul:px-4 
+    child-list-ul-li-ul:py-1 
+    child-list-ol-li-ul-li:pt-1 
+    child-list-ul-li-ul-li:pt-1" />
 
         </div>
         <!-- Displaying the Downloads -->
