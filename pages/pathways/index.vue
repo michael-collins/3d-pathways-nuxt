@@ -1,4 +1,5 @@
 <template>
+  <div>
   <NavBar />
   <div class="hero bg-base-200 py-10">
     <div class="hero-content text-left">
@@ -8,8 +9,11 @@
       </div>
     </div>
   </div>
+<gridContainer>
   <LinkedCardComponent :records="pathwaysStore.records" destination="pathways" />
+</gridContainer>  
   <pre class="mockup-code m-8">{{ pathwaysStore.records }}</pre>
+</div>
 </template>
 
 <script setup>

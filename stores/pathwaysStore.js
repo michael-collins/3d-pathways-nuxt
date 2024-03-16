@@ -19,9 +19,6 @@ export const usePathwaysStore = defineStore('pathways', {
           const data = await getAirtableRecords('pathways', config.public.AirtableApiKey);
           this.records = data;
       },
-      // updateRecords(){
-      //   this.records.push()
-
-      // }
+      
   },
 });

@@ -79,56 +79,69 @@
 
       
       <!-- Displaying Exercises -->
-      <div v-if="record.fields.exercises && record.fields.exercises.length" class="py-8">
-          <h2 class="text-2xl font-semibold mb-2 text-center uppercase">Exercises:</h2>
-          
-          <div class="space-y-3">
-            <div v-for="exercise in record.fields.exercises" :key="'exercise'" class="p-4 bg-base-200 rounded-box">
-              <h3 class="text-lg font-semibold normal-case">Exercise name ID: {{ exercise }}</h3>
-              <p class="text-sm p-3">Description placeholder</p>
-              <!-- <a class="btn" @click="navigateToExerciseDetail(exerciseDetail.id)">View</a> -->
-              <!-- <div v-if="exerciseDetail.difficulty && exerciseDetail.difficulty.length" class="pt-8">
-                <ul class="">
-                  <li v-for="(difficulty, index) in exerciseDetail.difficulty" :key="index" class="badge badge-outline text-xs m-1 uppercase">
-                    {{ difficulty }}
-                  </li>
-                </ul>
-              </div> -->
-            </div>
-          </div>
-        </div>
+<div v-if="exerciseDetails && exerciseDetails.length" class="py-8">
+  <LinkedCardComponent :records="exerciseDetails" destination="exercises" />
+  <!-- <h2 class="text-2xl font-semibold mb-2 text-center uppercase">Exercises:</h2>
+  <div class="space-y-4">
+    <div v-for="exercise in exerciseDetails.filter(e => e)" :key="exercise.name" class="bg-base-200 p-4 rounded-lg">
+      <h3 class="text-lg font-medium normal-case">Name: {{ exercise.name }}</h3>
+      <h4>Description:</h4>
+      <MDC :value="exercise.description" class="p-3 markdown mx-2 
+  child-a:font-medium 
+  child-a:link 
+  child-a:text-secondary 
+  hover:child-a:text-base-content 
+  child-list-ol:list-decimal 
+  child-list-ol-li-marker:font-medium 
+  child-list-ol-li-marker:text-info 
+  child-list-ol:mx-6 
+  child-list-ul:mx-6 
+  child-list-ul:list-disc 
+  child-list-ol-li:pt-1 
+  child-list-ul-li:pt-1 
+  child-list-ol-li-ul:list-[circle] 
+  child-list-ol-li-ul:px-4 
+  child-list-ol-li-ul:py-1 
+  child-list-ul-li-ul:list-[circle] 
+  child-list-ul-li-ul:px-4 
+  child-list-ul-li-ul:py-1 
+  child-list-ol-li-ul-li:pt-1 
+  child-list-ul-li-ul-li:pt-1" />
+    </div>
+  </div> -->
+</div>
 
       <!-- Displaying Competencies -->
-      <div v-if="record.fields.competencies && record.fields.competencies.length" class="py-8">
-        <h2 class="text-2xl font-semibold mb-2 text-center uppercase">Competencies:</h2>
-        <div class="space-y-4">
-          <div v-for="competency in record.fields.competencies" :key="'competency'" class="bg-base-200 p-4 rounded-lg">
-            <h3 class="text-lg font-medium normal-case">Name: {{ competency }}</h3>
-            <h4>Description:</h4>
-            <MDC :value="competency" class="p-3 markdown mx-2 
-    child-a:font-medium 
-    child-a:link 
-    child-a:text-secondary 
-    hover:child-a:text-base-content 
-    child-list-ol:list-decimal 
-    child-list-ol-li-marker:font-medium 
-    child-list-ol-li-marker:text-info 
-    child-list-ol:mx-6 
-    child-list-ul:mx-6 
-    child-list-ul:list-disc 
-    child-list-ol-li:pt-1 
-    child-list-ul-li:pt-1 
-    child-list-ol-li-ul:list-[circle] 
-    child-list-ol-li-ul:px-4 
-    child-list-ol-li-ul:py-1 
-    child-list-ul-li-ul:list-[circle] 
-    child-list-ul-li-ul:px-4 
-    child-list-ul-li-ul:py-1 
-    child-list-ol-li-ul-li:pt-1 
-    child-list-ul-li-ul-li:pt-1" />
-          </div>
-        </div>
-      </div>
+<div v-if="competencyDetails && competencyDetails.length" class="py-8">
+  <h2 class="text-2xl font-semibold mb-2 text-center uppercase">Competencies:</h2>
+  <div class="space-y-4">
+    <div v-for="competency in competencyDetails" :key="competency.name" class="bg-base-200 p-4 rounded-lg">
+      <h3 class="text-lg font-medium normal-case">{{ competency.name }}</h3>
+      
+      <MDC :value="competency.description" class="p-3 markdown mx-2 
+  child-a:font-medium 
+  child-a:link 
+  child-a:text-secondary 
+  hover:child-a:text-base-content 
+  child-list-ol:list-decimal 
+  child-list-ol-li-marker:font-medium 
+  child-list-ol-li-marker:text-info 
+  child-list-ol:mx-6 
+  child-list-ul:mx-6 
+  child-list-ul:list-disc 
+  child-list-ol-li:pt-1 
+  child-list-ul-li:pt-1 
+  child-list-ol-li-ul:list-[circle] 
+  child-list-ol-li-ul:px-4 
+  child-list-ol-li-ul:py-1 
+  child-list-ul-li-ul:list-[circle] 
+  child-list-ul-li-ul:px-4 
+  child-list-ul-li-ul:py-1 
+  child-list-ol-li-ul-li:pt-1 
+  child-list-ul-li-ul-li:pt-1" />
+    </div>
+  </div>
+</div>
 
       <!-- Displaying Examples -->
       <div v-if="record.fields.examples" class="">
@@ -165,22 +178,57 @@
 </template>
 
 <script setup lang="ts">
+
 const route = useRoute();
 const pathwaysStore = usePathwaysStore();
 const pathwayId = ref(route.params.id);
-let record = ref(null); // Initialize as a let to allow reassignment
+let record = ref(null);
+const competencyDetails = ref([]);
+const exerciseDetails = ref([]);
 
-// const {pathway} = pathwaysStore.getPathwayById(route.params.id);
 onMounted(async () => {
   await pathwaysStore.fetchRecords();
   const { records } = pathwaysStore;
 
-  // Ensure records is an array before using find()
   if (Array.isArray(records)) {
     record.value = records.find(record => record.id === pathwayId.value);
   } else {
     console.error("Records is not an array:", records);
   }
+
+  // Importing the competenciesStore and ref from Vue
+  const competenciesStore = useCompetenciesStore();
+  const competencies = ref([]);
+
+  // Fetching the competency records from the store
+  await competenciesStore.fetchRecords();
+  competencies.value = competenciesStore.competencies;
+
+  // Checking if the record and competencies are available
+  if (record.value && record.value.fields.competencies && competencies.value) {
+    // Mapping the competency IDs to their names and descriptions
+    competencyDetails.value = record.value.fields.competencies.map(competencyId => {
+      const matchedCompetency = competencies.value.find(competency => competency.id === competencyId);
+      return matchedCompetency ? { name: matchedCompetency.fields.name, description: matchedCompetency.fields.description } : null;
+    });
+  }
+
+  /// Importing the exerciseStore and ref from Vue
+const exercisesStore = useExercisesStore();
+const exercises = ref([]);
+
+// Fetching the exercise records from the store
+await exercisesStore.fetchRecords();
+exercises.value = exercisesStore.records; // Use records instead of exercises
+
+// Checking if the record and exercises are available
+if (record.value && record.value.fields.exercises && exercises.value) {
+  // Mapping the exercise IDs to their names and descriptions
+exerciseDetails.value = record.value.fields.exercises.map(exerciseId => {
+  const matchedExercise = exercises.value.find(exercise => exercise.id === exerciseId);
+  return matchedExercise ? { id: matchedExercise.id, fields: { name: matchedExercise.fields.name, description: matchedExercise.fields.description } } : null;
+});
+}
 });
 </script>
 
