@@ -79,9 +79,11 @@
       
       <!-- Displaying Exercises -->
 <div v-if="exerciseDetails && exerciseDetails.length" class="py-8">
-  <LinkedCardComponent :records="exerciseDetails" destination="exercises" />
-  <!-- <h2 class="text-2xl font-semibold mb-2 text-center uppercase">Exercises:</h2>
+  <h2 class="text-2xl font-semibold mb-2 text-center uppercase">Exercises:</h2>
   <div class="space-y-4">
+  <LinkedCardComponent :records="exerciseDetails" destination="exercises" />
+</div>
+  <!--<div class="space-y-4">
     <div v-for="exercise in exerciseDetails.filter(e => e)" :key="exercise.name" class="bg-base-200 p-4 rounded-lg">
       <h3 class="text-lg font-medium normal-case">Name: {{ exercise.name }}</h3>
       <h4>Description:</h4>

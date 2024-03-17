@@ -1,12 +1,19 @@
 <template>
-    <div>
-      <NavBar />
-
+    <div class="flex flex-col h-screen">
+      <header>
+        <NavBar />
         <BreadcrumbsComponent  :breadcrumbs="breadcrumbs" />
+      </header>
+      <main class="flex-grow">
         <div>
         <slot />
+        
       </div>
-    </div>
+    </main>
+    <footer>
+      <FooterComponent />
+    </footer>  
+  </div>
   </template>
   <script setup>
 
