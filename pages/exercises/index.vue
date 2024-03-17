@@ -12,7 +12,7 @@
       </div>
     </div>
   </div>
-  <GridContainer>
+  <GridContainer :isLoading="isLoading">
   <LinkedCardComponent :records="exercisesStore.records" :isLoading="isLoading" destination="exercises" />
 </GridContainer>
   <!-- <pre class="mockup-code m-8">{{ exercisesStore.records }}</pre> -->
