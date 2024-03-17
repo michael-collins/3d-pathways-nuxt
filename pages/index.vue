@@ -1,6 +1,4 @@
 <template>
-  <navBar />
-
   <div class="hero bg-base-200 py-10">
     <div class="hero-content text-left">
       <div class="max-w-md">
@@ -10,9 +8,18 @@
       </div>
     </div>
   </div>
-
 </template>
 
-<script>
+<script setup lang="ts">
 
+const breadcrumbs = ref({
+  show: false, // Set this to false to hide the BreadcrumbsComponent on this page
+  showBackButton: false, // Set this to false to hide the back button on this page
+  // Add more properties as needed
+});
+provide('breadcrumbs', breadcrumbs);
+
+// definePageMeta({
+//   layout: 'breadcrumbs'
+// })
 </script>

@@ -1,12 +1,10 @@
-<script setup lang="ts">
+<script setup>
 
-// const nav = [
-//   { label: 'Home', to: '/' },
-//   { label: 'About', to: '/about' },
-// ]
 </script>
 
 <template>
     <NuxtLoadingIndicator />
+    <NuxtLayout>
     <NuxtPage />
+  </NuxtLayout>
 </template>

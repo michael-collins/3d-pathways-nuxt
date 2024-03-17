@@ -1,6 +1,5 @@
 <template>
   <div>
-  <NavBar />
   <div class="hero bg-base-200 py-10">
     <div class="hero-content text-left">
       <div class="max-w-md">
@@ -16,11 +15,14 @@
   <GridContainer>
   <LinkedCardComponent :records="exercisesStore.records" :isLoading="isLoading" destination="exercises" />
 </GridContainer>
-  <pre class="mockup-code m-8">{{ exercisesStore.records }}</pre>
+  <!-- <pre class="mockup-code m-8">{{ exercisesStore.records }}</pre> -->
 </div>
 </template>
 
 <script setup>
+definePageMeta({
+  layout: 'breadcrumbs'
+})
 const exercisesStore = useExercisesStore(); // Use the dedicated exercises store
 const isLoading = ref(true); // Initialize isLoading as true
 

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <NavBar />
 
     <div v-if="record" class="container max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
       <!-- Displaying the Name and Image -->
@@ -174,11 +173,13 @@
   </div>
   </div>
   </div>
-  <pre class="mockup-code m-8">{{ record }}</pre>
+  <!-- <pre class="mockup-code m-8">{{ record }}</pre> -->
 </template>
 
 <script setup lang="ts">
-
+definePageMeta({
+  layout: 'breadcrumbs'
+})
 const route = useRoute();
 const pathwaysStore = usePathwaysStore();
 const pathwayId = ref(route.params.id);

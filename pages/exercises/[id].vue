@@ -1,7 +1,5 @@
 <template>
   <div>
-    <NavBar />
-
     <div v-if="record" class="container max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
       <!-- Displaying the Name and Image -->
       <img v-if="record.fields.image" :src="record.fields.image[0].url" class="w-full h-auto" />
@@ -157,6 +155,9 @@
 </template>
 
 <script setup>
+definePageMeta({
+  layout: 'breadcrumbs'
+})
 const route = useRoute();
 const exercisesStore = useExercisesStore();
 const exerciseId = ref(route.params.id);

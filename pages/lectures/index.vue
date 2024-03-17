@@ -1,6 +1,5 @@
 <template>
     <div>
-      <NavBar />
       <div class="hero bg-base-200 py-10">
         <div class="hero-content text-left">
           <div class="max-w-md">

@@ -1,8 +1,7 @@
 <template>
-  <div>
-    <NavBar />
+  <div class="">
     <div class="hero bg-base-200 py-10">
-      <div class="hero-content text-left">
+      <div class="hero-content text-left ">
         <div class="max-w-md">
           <h1 class="text-5xl font-bold">Pathways</h1>
           <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
@@ -13,11 +12,14 @@
     <GridContainer :isLoading="isLoading">
       <LinkedCardComponent :records="pathwaysStore.records" :isLoading="isLoading" destination="pathways" />
     </GridContainer>
-    <pre class="mockup-code m-8">{{ pathwaysStore.records }}</pre>
+    <!-- <pre class="mockup-code m-8">{{ pathwaysStore.records }}</pre> -->
   </div>
 </template>
 
 <script setup>
+definePageMeta({
+  layout: 'breadcrumbs'
+})
 const pathwaysStore = usePathwaysStore(); // Use the dedicated pathways store
 const isLoading = ref(true); // Initialize isLoading as true
 
