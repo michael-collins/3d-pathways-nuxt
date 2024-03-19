@@ -1,13 +1,13 @@
 <script setup>
 useHead( {
   titleTemplate: ( titleChunk ) => {
-    return titleChunk ? `${ titleChunk } - Pathways` : 'Pathways'
+    return titleChunk ? `${ titleChunk }` : 'Learning Pathways'
   }
 } )
 </script>
 
 <template>
-    <NuxtLoadingIndicator />
+    <NuxtLoadingIndicator aria-label="Loading..." />
     <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>

@@ -26,9 +26,8 @@
       </div>
     </div>
   </template>
-  <script setup>
-
-  // definePageMeta({
-  //   layout: 'breadcrumbs'
-  // })
+  <script setup lang="ts">
+useHead({
+  title: 'Lessons'
+})
   </script>

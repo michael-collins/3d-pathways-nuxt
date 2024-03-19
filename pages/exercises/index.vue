@@ -22,9 +22,10 @@
 <script setup>
 definePageMeta({
   layout: 'breadcrumbs',
-  
 })
-
+useHead({
+  title: 'Exercises'
+})
 const exercisesStore = useExercisesStore(); // Use the dedicated exercises store
 const isLoading = ref(true); // Initialize isLoading as true
 

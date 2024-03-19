@@ -19,7 +19,8 @@ const breadcrumbs = ref({
 });
 provide('breadcrumbs', breadcrumbs);
 
-// definePageMeta({
-//   layout: 'breadcrumbs'
-// })
+useHead({
+  title: 'About',
+  // layout: 'breadcrumbs', 
+})
 </script>

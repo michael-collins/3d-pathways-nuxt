@@ -180,8 +180,9 @@
 
 <script setup lang="ts">
 definePageMeta({
-  layout: 'breadcrumbs'
+  layout: 'breadcrumbs',
 })
+
 const route = useRoute();
 const pathwaysStore = usePathwaysStore();
 const pathwayId = ref(route.params.id);
@@ -233,5 +234,10 @@ exerciseDetails.value = record.value.fields.exercises.map(exerciseId => {
 });
 }
 });
+
+const title = ref({ id: pathwayId })
+useHead({
+  title: 'Pathway: ' + title.value.id,
+})
 </script>
 

@@ -18,7 +18,10 @@
 
 <script setup>
 definePageMeta({
-  layout: 'breadcrumbs'
+  layout: 'breadcrumbs',
+})
+useHead({
+  title: 'Pathways'
 })
 const pathwaysStore = usePathwaysStore(); // Use the dedicated pathways store
 const isLoading = ref(true); // Initialize isLoading as true

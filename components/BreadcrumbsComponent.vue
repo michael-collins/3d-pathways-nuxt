@@ -8,12 +8,11 @@
                     </button>
                 </li>   -->
           <ul class="p-2 bg-base-100 rounded-t-none text-md">
-                
-                  <li><nuxt-link to="/"><Icon name="heroicons:home" class="text-primary" /></nuxt-link></li>
+                  <li><NuxtLink class="btn btn-sm btn-link" aria-label="home" to="/"><Icon name="heroicons:home-20-solid" class="text-neutral" /></NuxtLink></li>
                 <li v-for="(breadcrumb, index) in breadcrumbList" :key="index">
-                    <router-link :to="breadcrumb.path" class="hover:underline">
-                        {{ breadcrumb.label }}
-                    </router-link>
+                  <NuxtLink class="btn btn-sm btn-link no-underline focus:underline hover:underline text-neutral" :to="breadcrumb.path" :aria-label="breadcrumb.label">
+                      {{ breadcrumb.label }}
+                  </NuxtLink>
                 </li>
             </ul>
         </div>

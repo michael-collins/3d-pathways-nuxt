@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <article>
     <div v-if="record" class="container max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
       <!-- Displaying the Name and Image -->
       <img v-if="record.fields.image" :src="record.fields.image[0].url" class="w-full h-auto" />
@@ -151,16 +151,19 @@
 
       </div>
     </div>
-  </div>
+  </article>
 </template>
 
 <script setup>
 definePageMeta({
-  layout: 'breadcrumbs'
+  layout: 'breadcrumbs',
 })
+
+
 const route = useRoute();
 const exercisesStore = useExercisesStore();
 const exerciseId = ref(route.params.id);
+
 const record = ref(null);
 
 // This computed property will reactively update if the route changes.
@@ -177,4 +180,21 @@ onMounted(async () => {
   record.value = exercisesStore.getExerciseById(exerciseId.value);
 });
 // console.log('url: ',currentUrl.value);
+
+// Get the exercise record's name from record.fields.name and put into a const called exerciseName
+// const exerciseName = ref({ id: record.value.fields.name })
+
+const title = computed(() => {
+  // Check if record.value and record.value.fields are defined before accessing record.value.fields.name
+  if (record.value && record.value.fields) {
+    return 'Exercise: ' + record.value.fields.name
+  }
+  // Return a default title if record.value or record.value.fields is not defined
+  return 'Exercise'
+})
+
+useHead({
+  title: title.value,
+})
 </script>
+
