@@ -8,9 +8,9 @@
                     </button>
                 </li>   -->
           <ul class="p-2 bg-base-100 rounded-t-none text-md">
-                  <li><NuxtLink class="btn btn-sm btn-link" aria-label="home" to="/"><Icon name="heroicons:home-20-solid" class="text-neutral" /></NuxtLink></li>
+                  <li><NuxtLink class="" aria-label="home" to="/"><Icon name="heroicons:home-20-solid" class="text-base-content" /></NuxtLink></li>
                 <li v-for="(breadcrumb, index) in breadcrumbList" :key="index">
-                  <NuxtLink class="btn btn-sm btn-link no-underline focus:underline hover:underline text-neutral" :to="breadcrumb.path" :aria-label="breadcrumb.label">
+                  <NuxtLink class=" focus:underline text-base-content" :to="breadcrumb.path" :aria-label="breadcrumb.label">
                       {{ breadcrumb.label }}
                   </NuxtLink>
                 </li>

@@ -16,10 +16,11 @@
   </template>
   
   <script setup>
-    const darkTheme = 'dim'
+    const darkTheme = 'customdark'
     const changeColor = () => (colorMode.preference = (colorMode.value === 'light' ? darkTheme : 'light'))
     const colorMode = useColorMode();
     const themes = [
+    'customdark',
     'system',
     "light",
     "dark",
