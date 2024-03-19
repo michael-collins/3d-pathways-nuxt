@@ -40,6 +40,13 @@
       child-list-ol-li-ul-li:pt-1 
       child-list-ul-li-ul-li:pt-1" />
           </div>
+          <!-- Displaying the Description -->
+          <div class="mb-10" v-if="record.fields.googleSlidesID">
+            <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Slides:</h2>
+            <!-- <MDC :value="record.fields.description" class="markdown mx-2" /> -->
+            <iframe :src="`https://docs.google.com/presentation/d/e/${record.fields.googleSlidesID}/embed?start=false&loop=false&delayms=3000`" frameborder="0" width="100%" class="aspect-video" height="" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+          </div>
+
           <!-- Displaying the Topics -->
           <div class="mb-10" v-if="record.fields.topics">
             <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Topics:</h2>
