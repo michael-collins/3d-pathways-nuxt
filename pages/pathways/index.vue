@@ -1,6 +1,6 @@
 <template>
-  <div class="">
-    <div class="hero bg-base-200 py-10">
+  <div class="w-full p-10">
+    <div class="hero bg-base-200 py-10 rounded-lg ">
       <div class="hero-content text-left ">
         <div class="max-w-md">
           <h1 class="text-5xl font-bold">Pathways</h1>

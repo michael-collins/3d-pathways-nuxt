@@ -2,7 +2,7 @@
   <article>
     <div v-if="record" class="container max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
       <!-- Displaying the Name and Image -->
-      <img v-if="record.fields.image" :src="record.fields.image[0].url" class="w-full h-auto" />
+      <img v-if="record.fields.image" :src="record.fields.image[0].url" class="w-full h-auto rounded-lg" />
       <h1 v-if="record.fields.name" class="text-5xl font-bold mt-8 mb-4">{{ record.fields.name }}</h1>
 
       <div v-if="record && record.fields" :key="record.id" class="space-y-10 divide-y-4 divide-neutral">
@@ -100,10 +100,37 @@
         </div>
 
         <!-- Displaying the YouTube Playlist -->
-        <div v-if="record.fields.youtubePlaylist">
+        <div v-if="record.fields.youtubePlaylistID">
           <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Tutorials:</h2>
-          <p v-if="record.fields.youtubePlaylist" class="text-md p-3">
-            <a :href="record.fields.youtubePlaylist" target="_blank">{{ record.fields.youtubePlaylist }}</a>
+          <p v-if="record.fields.youtubePlaylistID" class="text-md p-3">
+            <iframe 
+            width="100%" 
+            height="" 
+            class="aspect-video" 
+            :src="'https://www.youtube.com/embed/videoseries?si=qS1_gP2XR65V9BbI&amp;list=' + record.fields.youtubePlaylistID" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerpolicy="strict-origin-when-cross-origin" 
+            allowfullscreen>
+          </iframe>          </p>
+          <a class="mx-auto btn btn-ghost text-secondary hover:text-secondary:":href="'https://youtube.com/playlist?list=' + record.fields.youtubePlaylistID" target="_blank">Youtube.com playlist <Icon name="octicon:link-external-16" class=" text-sm" /></a>
+        </div>
+        <!-- Displaying the Vimeo Playlist -->
+        <div v-if="record.fields.vimeoPlaylistID">
+          <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Tutorials:</h2>
+          <p v-if="record.fields.vimeoPlaylistID" class="text-md p-3">
+           
+          <div style='padding:56.25% 0 0 0;position:relative;'>
+            <iframe 
+            :src="'https://vimeo.com/showcase/' + record.fields.vimeoPlaylistID + '/embed'" 
+            class="aspect-video" 
+            allowfullscreen frameborder='0' 
+            style='position:absolute;top:0;
+            left:0;width:100%;
+            height:100%;'>
+            </iframe></div>
+          <a class="mx-auto  btn btn-ghost text-secondary hover:text-secondary:":href="'https://vimeo.com/showcase/' + record.fields.vimeoPlaylistID" target="_blank">Vimeo.com playlist <Icon name="octicon:link-external-16" class=" text-sm" /></a>
           </p>
         </div>
         <!-- Displaying the associatedMaterial -->
