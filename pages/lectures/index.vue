@@ -10,11 +10,24 @@
           </div>
         </div>
       </div>
-      <GridContainer :isLoading="isLoading">
-        <LinkedCardComponent :records="lecturesStore.records" :isLoading="isLoading" destination="lectures" />
-      </GridContainer>
-      <!-- <pre class="mockup-code m-8">{{ pathwaysStore.records }}</pre> -->
+      <GridListToggle :viewMode="viewMode" @viewModeChanged="updateViewMode" />
+
+    <!-- Grid View -->
+    <GridContainer v-if="viewMode === 'grid'">
+      <LinkedCardComponent :records="lecturesStore.records" :isLoading="isLoading" destination="lectures" />
+    </GridContainer>
+    
+    <!-- List View -->
+    <div v-else>
+      <div >
+        <ListContainer>
+          <ListItem :records="lecturesStore.records" :isLoading="isLoading" destination="lectures" />
+        </ListContainer>
+      </div>
     </div>
+  </div>
+      <!-- <pre class="mockup-code m-8">{{ pathwaysStore.records }}</pre> -->
+  
   </template>
   
   <script setup>
@@ -33,5 +46,11 @@
     isLoading.value = false; // Set isLoading to false when the records have been fetched
   
   });
+  // Toggle view mode
+const viewMode = ref('grid') // Initialize viewMode as 'grid'
+const updateViewMode = (newViewMode) => {
+  viewMode.value = newViewMode
+  console.log('View mode changed:', viewMode.value) // Log the new view mode
+}
   </script>
   

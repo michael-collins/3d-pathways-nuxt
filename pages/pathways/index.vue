@@ -12,10 +12,7 @@
     <!-- <pre class="mockup-code m-8">{{ pathwaysStore.records }}</pre> -->
   </div>
   <div>
-    <!-- Add a button to toggle the view mode -->
-    <!-- <button @click="toggleViewMode">{{ viewMode === 'grid' ? 'Switch to List View' : 'Switch to Grid View' }}</button> -->
-    <!-- <GridListToggle :mode="viewMode"/> -->
-    <GridListToggle @viewModeChanged="updateViewMode" />
+    <GridListToggle :viewMode="viewMode" @viewModeChanged="updateViewMode" />
 
     <!-- Grid View -->
     <GridContainer v-if="viewMode === 'grid'">
@@ -24,7 +21,7 @@
     
     <!-- List View -->
     <div v-else>
-      <div v-for="record in pathwaysStore.records" :key="record.id">
+      <div >
         <ListContainer>
       <ListItem :records="pathwaysStore.records" :isLoading="isLoading" destination="pathways" />
     </ListContainer>
@@ -48,7 +45,8 @@ onMounted(() => {
   isLoading.value = false; // Set isLoading to false when the records have been fetched
 
 });
-// Toogle view mode
+
+// Toggle view mode
 const viewMode = ref('grid') // Initialize viewMode as 'grid'
 const updateViewMode = (newViewMode) => {
   viewMode.value = newViewMode

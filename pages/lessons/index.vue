@@ -1,8 +1,5 @@
 <template>
   <div>
-    <!-- Add a button to toggle the view mode -->
-    <!-- <button @click="toggleViewMode">{{ viewMode === 'grid' ? 'Switch to List View' : 'Switch to Grid View' }}</button> -->
-    <!-- <GridListToggle :mode="viewMode"/> -->
     <GridListToggle :viewMode="viewMode" @viewModeChanged="updateViewMode" />
 
     <!-- Grid View -->
@@ -37,7 +34,7 @@ onMounted(() => {
   lessonsStore.fetchRecords()
   isLoading.value = false
 })
-// Toogle view mode
+// Toggle view mode
 const viewMode = ref('grid') // Initialize viewMode as 'grid'
 const updateViewMode = (newViewMode) => {
   viewMode.value = newViewMode
