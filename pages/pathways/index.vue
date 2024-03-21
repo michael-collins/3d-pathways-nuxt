@@ -9,10 +9,27 @@
         </div>
       </div>
     </div>
-    <GridContainer :isLoading="isLoading">
+    <!-- <pre class="mockup-code m-8">{{ pathwaysStore.records }}</pre> -->
+  </div>
+  <div>
+    <!-- Add a button to toggle the view mode -->
+    <!-- <button @click="toggleViewMode">{{ viewMode === 'grid' ? 'Switch to List View' : 'Switch to Grid View' }}</button> -->
+    <!-- <GridListToggle :mode="viewMode"/> -->
+    <GridListToggle @viewModeChanged="updateViewMode" />
+
+    <!-- Grid View -->
+    <GridContainer v-if="viewMode === 'grid'">
       <LinkedCardComponent :records="pathwaysStore.records" :isLoading="isLoading" destination="pathways" />
     </GridContainer>
-    <!-- <pre class="mockup-code m-8">{{ pathwaysStore.records }}</pre> -->
+    
+    <!-- List View -->
+    <div v-else>
+      <div v-for="record in pathwaysStore.records" :key="record.id">
+        <ListContainer>
+      <ListItem :records="pathwaysStore.records" :isLoading="isLoading" destination="pathways" />
+    </ListContainer>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -26,10 +43,15 @@ useHead({
 const pathwaysStore = usePathwaysStore(); // Use the dedicated pathways store
 const isLoading = ref(true); // Initialize isLoading as true
 
-
 onMounted(() => {
   pathwaysStore.fetchRecords(); // Call the fetchRecords action specific to pathways
   isLoading.value = false; // Set isLoading to false when the records have been fetched
 
 });
+// Toogle view mode
+const viewMode = ref('grid') // Initialize viewMode as 'grid'
+const updateViewMode = (newViewMode) => {
+  viewMode.value = newViewMode
+  console.log('View mode changed:', viewMode.value) // Log the new view mode
+}
 </script>

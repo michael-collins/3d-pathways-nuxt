@@ -1,33 +1,47 @@
 <template>
-    <div>
-      <div class="hero bg-base-200 py-10">
-        <div class="hero-content text-left">
-          <div class="max-w-md">
-            <h1 class="text-5xl font-bold">Lessons</h1>
-            <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-              quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-          </div>
-        </div>
-      </div>
-      <div class="max-w-md mx-auto my-10 py-10">
-        <ul class="steps steps-vertical">
-        <li class="step step-primary">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-              quasi. In deleniti eaque aut repudiandae et a id nisi.Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-              quasi. In deleniti eaque aut repudiandae et a id nisi.Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-              quasi. In deleniti eaque aut repudiandae et a id nisi.</li>
-        <li class="step step-primary">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-              quasi. In deleniti eaque aut repudiandae et a id nisi.</li>
-        <li class="step">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-              quasi. In deleniti eaque aut repudiandae et a id nisi.</li>
-        <li class="step">
-          
-        </li>
-      </ul>
+  <div>
+    <!-- Add a button to toggle the view mode -->
+    <!-- <button @click="toggleViewMode">{{ viewMode === 'grid' ? 'Switch to List View' : 'Switch to Grid View' }}</button> -->
+    <!-- <GridListToggle :mode="viewMode"/> -->
+    <GridListToggle :viewMode="viewMode" @viewModeChanged="updateViewMode" />
+
+    <!-- Grid View -->
+    <GridContainer v-if="viewMode === 'grid'">
+      <LinkedCardComponent :records="lessonsStore.records" :isLoading="isLoading" destination="lessons" />
+    </GridContainer>
+    
+    <!-- List View -->
+    <div v-else>
+      <div >
+        <ListContainer>
+          <ListItem :records="lessonsStore.records" :isLoading="isLoading" destination="lessons" />
+        </ListContainer>
       </div>
     </div>
-  </template>
-  <script setup lang="ts">
-useHead({
-  title: 'Lessons'
+  </div>
+</template>
+
+<script setup>
+
+definePageMeta({
+  layout: 'breadcrumbs', // Set the layout of the page
 })
-  </script>
+useHead({
+  title: 'Lessons' // Set the title of the page
+})
+// Loader
+const isLoading = ref(true)
+// Fetch records from the lessons store
+const lessonsStore = useLessonsStore()
+onMounted(() => {
+  lessonsStore.fetchRecords()
+  isLoading.value = false
+})
+// Toogle view mode
+const viewMode = ref('grid') // Initialize viewMode as 'grid'
+const updateViewMode = (newViewMode) => {
+  viewMode.value = newViewMode
+  console.log('View mode changed:', viewMode.value) // Log the new view mode
+}
+
+</script>
