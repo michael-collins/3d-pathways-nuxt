@@ -9,11 +9,16 @@
                 </li>   -->
           <ul class="p-2 bg-base-100 rounded-t-none text-md">
                   <li><NuxtLink class="" aria-label="home" to="/"><Icon name="heroicons:home-20-solid" class="text-base-content" /></NuxtLink></li>
-                <li v-for="(breadcrumb, index) in breadcrumbList" :key="index">
+                <!-- <li v-for="(breadcrumb, index) in breadcrumbList" :key="index">
                   <NuxtLink class=" focus:underline text-base-content" :to="breadcrumb.path" :aria-label="breadcrumb.label">
                       {{ breadcrumb.label }}
                   </NuxtLink>
-                </li>
+                </li> -->
+                <li v-for="(breadcrumb, index) in breadcrumbList" :key="index">
+                <NuxtLink class=" focus:underline text-base-content" :to="breadcrumb.path" :aria-label="breadcrumb.label">
+                  {{ breadcrumb.label }}
+                </NuxtLink>
+              </li>
             </ul>
         </div>
     </div>
@@ -31,9 +36,27 @@ onMounted(() => {
 const props = defineProps({
   breadcrumbs: {
     type: Object,
-    default: () => ({ show: false, showBackButton: false })
-  }
+    default: () => ({ show: false, showBackButton: false }),
+  },
+  pathwayName: {
+    type: String,
+    required: true
+  },
+  exerciseName: {
+    type: String,
+    required: true
+  },
+  lectureName: {
+    type: String,
+    required: true
+  },
+  lessonName: {
+    type: String,
+    required: true
+  },
 });
+// let recordName = inject('recordName');
+// console.log('breadcrumbscomponent recordName:', recordName?.value);
 
 const route = useRoute();
 const router = useRouter();
@@ -45,17 +68,31 @@ const goBack = () => { // Go back to the previous page.
 const breadcrumbList = computed(() => {
   if (props.breadcrumbs.show) {
     const pathParts = route.path.split('/').filter(part => part);
-    return pathParts.map((part, index) => {
+    const breadcrumbs = pathParts.map((part, index) => {
       return {
         label: part,
         path: '/' + pathParts.slice(0, index + 1).join('/'),
       };
     });
+
+    // If name prop is provided, replace the last breadcrumb's label with it
+    if (props.pathwayName) {
+      breadcrumbs[breadcrumbs.length - 1].label = props.pathwayName;
+    } else if (props.exerciseName) {
+      breadcrumbs[breadcrumbs.length - 1].label = props.exerciseName;
+    } else if (props.lectureName) {
+      breadcrumbs[breadcrumbs.length - 1].label = props.lectureName;
+    } else if (props.lessonName) {
+      breadcrumbs[breadcrumbs.length - 1].label = props.lessonName;
+    }
+
+
+    return breadcrumbs;
   } else {
     return [];
   }
 });
-
-console.log('breadcrumbs:', props.breadcrumbs);
-console.log('breadcrumbList:', breadcrumbList.value);
+// console.log('name:', props.name);
+console.log('breadcrumbs:', props.exerciseName);
+// console.log('breadcrumbList:', breadcrumbList.value);
 </script>

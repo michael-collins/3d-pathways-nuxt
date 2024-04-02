@@ -1,8 +1,8 @@
 <template>
-  <div>
-  <div class="hero bg-base-200 py-10">
-    <div class="hero-content text-left">
-      <div class="max-w-md">
+<div class="w-full p-10">
+    <div class="hero bg-base-200 py-10 rounded-lg ">
+      <div class="hero-content text-left ">
+        <div class="max-w-md">
         <h1 class="text-5xl font-bold">Exercises</h1>
         <p class="py-6">
           Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
@@ -47,7 +47,7 @@ onMounted(() => {
 
 });
 // Toggle view mode
-const viewMode = ref('grid') // Initialize viewMode as 'grid'
+const viewMode = ref('list') // Initialize viewMode as 'grid'
 const updateViewMode = (newViewMode) => {
   viewMode.value = newViewMode
   console.log('View mode changed:', viewMode.value) // Log the new view mode

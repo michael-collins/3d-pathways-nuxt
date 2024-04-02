@@ -190,12 +190,9 @@ definePageMeta({
 const route = useRoute();
 const exercisesStore = useExercisesStore();
 const exerciseId = ref(route.params.id);
-
 const record = ref(null);
 
-// This computed property will reactively update if the route changes.
 const currentUrl = computed(() => {
-  // Construct the full URL using the route object
   // If you're running Nuxt in SSR mode, ensure window is defined before accessing it.
   if (typeof window !== 'undefined') {
     return window.location.origin + route.fullPath;
@@ -206,13 +203,7 @@ onMounted(async () => {
   await exercisesStore.fetchRecords();
   record.value = exercisesStore.getExerciseById(exerciseId.value);
 });
-// console.log('url: ',currentUrl.value);
-
-// Get the exercise record's name from record.fields.name and put into a const called exerciseName
-// const exerciseName = ref({ id: record.value.fields.name })
-
 const title = computed(() => {
-  // Check if record.value and record.value.fields are defined before accessing record.value.fields.name
   if (record.value && record.value.fields) {
     return 'Exercise: ' + record.value.fields.name
   }

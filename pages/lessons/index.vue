@@ -35,7 +35,7 @@ onMounted(() => {
   isLoading.value = false
 })
 // Toggle view mode
-const viewMode = ref('grid') // Initialize viewMode as 'grid'
+const viewMode = ref('list') // Initialize viewMode as 'grid'
 const updateViewMode = (newViewMode) => {
   viewMode.value = newViewMode
   console.log('View mode changed:', viewMode.value) // Log the new view mode
