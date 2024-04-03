@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-full p-10">
     <GridListToggle :viewMode="viewMode" @viewModeChanged="updateViewMode" />
 
     <!-- Grid View -->
