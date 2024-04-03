@@ -1,17 +1,13 @@
 <template>
   <div class="w-full p-10">
-    <div class="hero bg-base-200 py-10 rounded-lg ">
-      <div class="hero-content text-left ">
-        <div class="max-w-md">
-          <h1 class="text-5xl font-bold">Pathways</h1>
-          <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-            quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-        </div>
-      </div>
-    </div>
+    <HeroComponent title="Pathways">
+      <template #description>
+        <p>This is the description for the pathways page.</p>
+      </template>
+    </HeroComponent>
     <!-- <pre class="mockup-code m-8">{{ pathwaysStore.records }}</pre> -->
-  </div>
-  <div>
+
+  
     <GridListToggle :viewMode="viewMode" @viewModeChanged="updateViewMode" />
 
     <!-- Grid View -->
@@ -23,10 +19,11 @@
     <div v-else>
       <div >
         <ListContainer>
-      <ListItem :records="pathwaysStore.records" :isLoading="isLoading" destination="pathways" />
-    </ListContainer>
+         <ListItem :records="pathwaysStore.records" :isLoading="isLoading" destination="pathways" />
+        </ListContainer>
       </div>
     </div>
+
   </div>
 </template>
 

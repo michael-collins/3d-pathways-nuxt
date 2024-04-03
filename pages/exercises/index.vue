@@ -1,32 +1,26 @@
 <template>
 <div class="w-full p-10">
-    <div class="hero bg-base-200 py-10 rounded-lg ">
-      <div class="hero-content text-left ">
-        <div class="max-w-md">
-        <h1 class="text-5xl font-bold">Exercises</h1>
-        <p class="py-6">
-          Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-          excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a
-          id nisi.
-        </p>
-      </div>
-    </div>
-  </div>
+  
+  <HeroComponent title="Exercises">
+      <template #description>
+        <p>This is the description for the exercises page.</p>
+      </template>
+    </HeroComponent>
   <GridListToggle :viewMode="viewMode" @viewModeChanged="updateViewMode" />
 
-<!-- Grid View -->
-<GridContainer v-if="viewMode === 'grid'">
-  <LinkedCardComponent :records="exercisesStore.records" :isLoading="isLoading" destination="exercises" />
-</GridContainer>
+  <!-- Grid View -->
+  <GridContainer v-if="viewMode === 'grid'">
+    <LinkedCardComponent :records="exercisesStore.records" :isLoading="isLoading" destination="exercises" />
+  </GridContainer>
 
-<!-- List View -->
-<div v-else>
-  <div >
-    <ListContainer>
-      <ListItem :records="exercisesStore.records" :isLoading="isLoading" destination="exercises" />
-    </ListContainer>
+  <!-- List View -->
+  <div v-else>
+    <div >
+      <ListContainer>
+        <ListItem :records="exercisesStore.records" :isLoading="isLoading" destination="exercises" />
+      </ListContainer>
+    </div>
   </div>
-</div>
   <!-- <pre class="mockup-code m-8">{{ exercisesStore.records }}</pre> -->
 </div>
 </template>

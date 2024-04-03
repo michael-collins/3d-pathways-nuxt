@@ -4,8 +4,8 @@
   <div class="flex justify-end w-full">
     <button aria-label="Color Mode" class="btn btn-ghost"
     @click="toggleViewMode">
-        <Icon v-if="props.viewMode === 'grid'" name="material-symbols:grid-view-rounded" class=" text-xl " />
-        <Icon v-else name="material-symbols:view-list-rounded" class=" text-xl" />
+        <Icon v-if="props.viewMode === 'grid'" name="material-symbols:view-list-rounded" class=" text-xl " />
+        <Icon v-else name="material-symbols:grid-view-rounded" class=" text-xl" />
       </button>
     
   </div>

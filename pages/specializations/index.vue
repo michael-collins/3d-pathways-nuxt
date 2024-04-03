@@ -1,17 +1,12 @@
 <template>
   <div class="w-full p-10">
-    <div class="hero bg-base-200 py-10 rounded-lg ">
-      <div class="hero-content text-left ">
-        <div class="max-w-md">
-          <h1 class="text-5xl font-bold">Specializations</h1>
-          <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-            quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-        </div>
-      </div>
-    </div>
+    <HeroComponent title="Specializations">
+      <template #description>
+        <p>This is the description for the specializations page.</p>
+      </template>
+    </HeroComponent>
     <!-- <pre class="mockup-code m-8">{{ specializationsStore.records }}</pre> -->
-  </div>
-  <div>
+
     <GridListToggle :viewMode="viewMode" @viewModeChanged="updateViewMode" />
 
     <!-- Grid View -->
