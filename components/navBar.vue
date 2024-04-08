@@ -12,6 +12,7 @@
           <li><NuxtLink class="nav-link" role="button" aria-label="Pathways page" to="/pathways/">Pathways</NuxtLink></li>
           <li><NuxtLink class="nav-link" role="button" aria-label="Specializations page" to="/specializations/">Specializations</NuxtLink></li>
           <li><NuxtLink class="nav-link" role="button" aria-label="Exercises page" to="/exercises/">Exercises</NuxtLink></li>
+          <li><NuxtLink class="nav-link" role="button" aria-label="Projects page" to="/projects/">Projects</NuxtLink></li>
         </ul>
       </nav>
       <nav class="flex-1 hidden md:flex">
@@ -22,6 +23,7 @@
         <li><NuxtLink class="nav-link" role="button" aria-label="Pathways page" to="/pathways/">Pathways</NuxtLink></li>
         <li><NuxtLink class="nav-link" role="button" aria-label="Specializations page" to="/specializations/">Specializations</NuxtLink></li>
         <li><NuxtLink class="nav-link" role="button" aria-label="Exercises page" to="/exercises/">Exercises</NuxtLink></li>
+        <li><NuxtLink class="nav-link" role="button" aria-label="Projects page" to="/projects/">Projects</NuxtLink></li>
       </ul>
     </nav>
     </div>

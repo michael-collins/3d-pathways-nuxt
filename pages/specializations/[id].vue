@@ -1,6 +1,5 @@
 <template>
-  <div>
-
+<article ref="articleElement">
     <div v-if="record" class="container max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
       <!-- Displaying the Name and Image -->
       <!-- <img v-if="record.fields.image" :src="record.fields.image[0].url" class="w-full h-auto" /> -->
@@ -170,11 +169,17 @@
     child-list-ul-li-ul-li:pt-1" />
       </div>
 
-    
+      <div class="mockup-code">
+          <pre class="language-html">
+            <code>
+              &lt;iframe width="100%" height="{{articleHeight}}" src="{{currentUrl}}?iframe=true" style="border:none;" title="{{ record.fields && record.fields.name ? record.fields.name : 'Exercise' }}" &gt;&lt;/iframe&gt;
+            </code>
+          </pre>
+        </div>
    
   </div>
   </div>
-  </div>
+</article>
   <!-- <pre class="mockup-code m-8">{{ record }}</pre> -->
 </template>
 
@@ -189,6 +194,23 @@ const specializationId = ref(route.params.id);
 let record = ref(null);
 const competencyDetails = ref([]);
 const exerciseDetails = ref([]);
+const articleHeight = ref(0);
+const articleElement = ref(null);
+
+const updateHeight = () => {
+  if (articleElement.value) {
+    const rect = articleElement.value.getBoundingClientRect();
+    articleHeight.value = Math.ceil(rect.height);
+  }
+};
+
+const currentUrl = computed(() => {
+  // If you're running Nuxt in SSR mode, ensure window is defined before accessing it.
+  if (typeof window !== 'undefined') {
+    return window.location.origin + route.fullPath;
+  }
+  return '';
+});
 
 onMounted(async () => {
   await specializationsStore.fetchRecords();
@@ -233,7 +255,13 @@ exerciseDetails.value = record.value.fields.exercises.map(exerciseId => {
   return matchedExercise ? { id: matchedExercise.id, fields: { name: matchedExercise.fields.name, description: matchedExercise.fields.description } } : null;
 });
 }
+  // Update the iframe height when the page is rendered
+  await nextTick();
+  updateHeight();
 });
+
+// Update the iframe height when the record changes
+watch(record, updateHeight, { immediate: true });
 
 const title = ref({ id: specializationId })
 useHead({

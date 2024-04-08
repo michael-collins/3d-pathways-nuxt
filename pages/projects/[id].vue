@@ -173,7 +173,7 @@
         <div class="mockup-code">
           <pre class="language-html">
             <code>
-              &lt;iframe width="100%" height="{{articleHeight}}px" src="{{currentUrl}}?iframe=true" style="border:none;" title="{{ record.fields && record.fields.name ? record.fields.name : 'Exercise' }}" &gt;&lt;/iframe&gt;
+              &lt;iframe width="100%" height="{{articleHeight}}" src="{{currentUrl}}?iframe=true" style="border:none;" title="{{ record.fields && record.fields.name ? record.fields.name : 'Exercise' }}" &gt;&lt;/iframe&gt;
             </code>
           </pre>
         </div>
@@ -191,8 +191,8 @@ definePageMeta({
 
 
 const route = useRoute();
-const exercisesStore = useExercisesStore();
-const exerciseId = ref(route.params.id);
+const projectsStore = useProjectsStore();
+const projectId = ref(route.params.id);
 const record = ref(null);
 const articleHeight = ref(0);
 const articleElement = ref(null);
@@ -202,8 +202,7 @@ const updateHeight = () => {
     const rect = articleElement.value.getBoundingClientRect();
     articleHeight.value = Math.ceil(rect.height) + 1000;
   }
-};
-
+  };
 
 const currentUrl = computed(() => {
   // If you're running Nuxt in SSR mode, ensure window is defined before accessing it.
@@ -212,33 +211,28 @@ const currentUrl = computed(() => {
   }
   return '';
 });
-
-
-
-
 onMounted(async () => {
-  await exercisesStore.fetchRecords();
-  record.value = exercisesStore.getExerciseById(exerciseId.value);
-  
-    // Update the iframe height when the page is rendered
-    await nextTick();
-      updateHeight();
+  await projectsStore.fetchRecords();
+  record.value = projectsStore.getProjectById(projectId.value);
 
-  
-   });
+  // Update the iframe height when the page is rendered
+  await nextTick();
+  updateHeight();
+});
 
-   // Update the iframe height when the record changes
-   watch(record, updateHeight, { immediate: true });
+// Update the iframe height when the record changes
+watch(record, updateHeight, { immediate: true });
 
 const title = computed(() => {
   if (record.value && record.value.fields) {
-    return 'Exercise: ' + record.value.fields.name
+    return 'Project: ' + record.value.fields.name
   }
   // Return a default title if record.value or record.value.fields is not defined
-  return 'Exercise'
+  return 'Project'
 })
 
 useHead({
   title: title.value,
 })
 </script>
+

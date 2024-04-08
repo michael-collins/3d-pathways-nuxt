@@ -1,5 +1,5 @@
 <template>
-    <article>
+    <article ref="articleElement">
       <div v-if="record" class="container max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
         <!-- Displaying the Name and Image -->
         <!-- <img v-if="record.fields.image" :src="record.fields.image[0].url" class="w-full h-auto" /> -->
@@ -75,9 +75,12 @@
 
           <!-- iframe -->
           <div class="mockup-code">
-            <pre
-              class="language-html"><code>&lt;iframe src="{{ currentUrl }}" style="border:none;" title="{{ record.fields && record.fields.name ? record.fields.name : 'Lecture' }}"&gt;&lt;/iframe&gt;</code></pre>
-          </div>
+          <pre class="language-html">
+            <code>
+              &lt;iframe width="100%" height="{{articleHeight}}px" src="{{currentUrl}}?iframe=true" style="border:none;" title="{{ record.fields && record.fields.name ? record.fields.name : 'Exercise' }}" &gt;&lt;/iframe&gt;
+            </code>
+          </pre>
+        </div>
         </div>
       </div>
     </article>
@@ -92,9 +95,17 @@
   const route = useRoute();
   const lecturesStore = useLecturesStore();
   const lectureId = ref(route.params.id);
-  
   const record = ref(null);
+  const articleHeight = ref(0);
+  const articleElement = ref(null);
   
+  const updateHeight = () => {
+  if (articleElement.value) {
+    const rect = articleElement.value.getBoundingClientRect();
+    articleHeight.value = Math.ceil(rect.height) + 1000;
+  }
+  };
+
   // This computed property will reactively update if the route changes.
   const currentUrl = computed(() => {
     // Construct the full URL using the route object
@@ -113,7 +124,13 @@
   } else {
     console.error("Records is not an array:", records);
   }
+    // Update the iframe height when the page is rendered
+  await nextTick();
+      updateHeight();
   });
+     // Update the iframe height when the record changes
+     watch(record, updateHeight, { immediate: true });
+
   const title = computed(() => {
     // Check if record.value and record.value.fields are defined before accessing record.value.fields.name
     if (record.value && record.value.fields) {

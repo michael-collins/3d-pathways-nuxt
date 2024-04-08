@@ -1,17 +1,16 @@
 <template>
     <div class="flex flex-col h-screen">
-      <header>
-        <NavBar />
+      <header v-if="!iframe">
+        <NavBar  />
         <BreadcrumbsComponent 
-    :pathwayName="pathwayName" 
-    :exerciseName="exerciseName" 
-    :lectureName="lectureName" 
-    :lessonName="lessonName" 
-    :breadcrumbs="breadcrumbs" 
-    :defaultBreadcrumbs="{ show: true, showBackButton: true }" 
-  />
-  
-  <!-- other layout content -->      </header>
+          :pathwayName="pathwayName" 
+          :exerciseName="exerciseName" 
+          :lectureName="lectureName" 
+          :lessonName="lessonName" 
+          :breadcrumbs="breadcrumbs" 
+          :defaultBreadcrumbs="{ show: true, showBackButton: true }" 
+        />
+      </header>
       <main class="flex-grow">
         <div>
         <slot />
@@ -19,7 +18,7 @@
       </div>
     </main>
     <footer>
-      <FooterComponent />
+      <FooterComponent v-if="!iframe" />
     </footer>  
   </div>
   </template>
@@ -66,6 +65,9 @@ const exerciseName = ref('');
 const lectureName = ref('');
 const lessonName = ref('');
 
+const iframe = computed(() => route.query.iframe === 'true');
+// v-if="!iframe"
+// ?iframe=true
 
 const updateNames = async () => {
   const newId = route.params.id;
