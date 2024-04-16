@@ -1,6 +1,6 @@
 <template>
     <div class="navbar bg-base-100">
-        <div class="text-md breadcrumbs flex-1 mx-8 border-t-2 border-base-300" v-if="breadcrumbs.show">
+        <div class="text-md breadcrumbs flex-1 mx-8 border-b-2 border-base-300" v-if="breadcrumbs.show">
           <!-- <li v-if="breadcrumbs.showBackButton">
                     <button @click="goBack" class="btn btn-ghost">
                         <Icon name="heroicons:arrow-left-16-solid" class="text-primary" />
@@ -57,6 +57,7 @@ const props = defineProps({
 });
 // let recordName = inject('recordName');
 // console.log('breadcrumbscomponent recordName:', recordName?.value);
+
 
 const route = useRoute();
 const router = useRouter();
