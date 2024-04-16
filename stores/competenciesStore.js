@@ -15,14 +15,14 @@ export const useCompetenciesStore = defineStore('competencies', {
   },
   actions: {
     async fetchRecords() {
-    console.log('fetchRecords called');
-    if (this.competencies.length) return;
-    console.log('fetching records');
-    const config = useRuntimeConfig();
-    console.log('config:', config);
-    const data = await getAirtableRecords('competencies', config.public.AirtableApiKey);
-    console.log('fetched data:', data);
-    this.competencies = data;
-  },
+      if (this.competencies.length) return;
+      const config = useRuntimeConfig();
+      let data = await getAirtableRecords('competencies', config.public.AirtableApiKey);
+      
+      // Filter out records where the published field is not true
+      data = data.filter(record => record.fields.published === true);
+      
+      this.competencies = data;
+    },
   },
 });

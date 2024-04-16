@@ -17,7 +17,11 @@ export const useProjectsStore = defineStore('projects', {
             if (this.records.length) return; // Avoid refetching if already populated
             const config = useRuntimeConfig();
             const data = await getAirtableRecords('projects', config.public.AirtableApiKey);
-            this.records = data;
+            
+            // Filter out records where the published field is not true
+        const filteredData = data.filter(record => record.fields.published === true);
+        
+        this.records = filteredData;
         }
     },
 });

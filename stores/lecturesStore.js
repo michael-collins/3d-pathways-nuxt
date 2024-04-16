@@ -17,7 +17,10 @@ export const useLecturesStore = defineStore('lectures', {
           if (this.records.length) return; // Avoid refetching if already populated
           const config = useRuntimeConfig();
           const data = await getAirtableRecords('lectures', config.public.AirtableApiKey);
-          this.records = data;
+          // Filter out records where the published field is not true
+        const filteredData = data.filter(record => record.fields.published === true);
+        
+        this.records = filteredData;
       },
       
   },

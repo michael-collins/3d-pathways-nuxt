@@ -232,12 +232,20 @@ onMounted(async () => {
 
   // Checking if the record and competencies are available
   if (record.value && record.value.fields.competencies && competencies.value) {
-    // Mapping the competency IDs to their names and descriptions
-    competencyDetails.value = record.value.fields.competencies.map(competencyId => {
+  // Mapping the competency IDs to their names and descriptions
+  competencyDetails.value = record.value.fields.competencies
+    .map(competencyId => {
       const matchedCompetency = competencies.value.find(competency => competency.id === competencyId);
-      return matchedCompetency ? { name: matchedCompetency.fields.name, description: matchedCompetency.fields.description } : null;
-    });
-  }
+      
+      if (matchedCompetency) {
+        return { name: matchedCompetency.fields.name, description: matchedCompetency.fields.description };
+      } else {
+        // Return null if the competency is not found
+        return null;
+      }
+    })
+    .filter(item => item !== null); // Filter out null values
+}
 
   /// Importing the exerciseStore and ref from Vue
 const exercisesStore = useExercisesStore();
@@ -250,10 +258,18 @@ exercises.value = exercisesStore.records; // Use records instead of exercises
 // Checking if the record and exercises are available
 if (record.value && record.value.fields.exercises && exercises.value) {
   // Mapping the exercise IDs to their names and descriptions
-exerciseDetails.value = record.value.fields.exercises.map(exerciseId => {
-  const matchedExercise = exercises.value.find(exercise => exercise.id === exerciseId);
-  return matchedExercise ? { id: matchedExercise.id, fields: { name: matchedExercise.fields.name, description: matchedExercise.fields.description } } : null;
-});
+  exerciseDetails.value = record.value.fields.exercises
+    .map(exerciseId => {
+      const matchedExercise = exercises.value.find(exercise => exercise.id === exerciseId);
+      
+      if (matchedExercise) {
+        return { id: matchedExercise.id, fields: { name: matchedExercise.fields.name, description: matchedExercise.fields.description } };
+      } else {
+        // Return null if the exercise is not found
+        return null;
+      }
+    })
+    .filter(item => item !== null); // Filter out null values
 }
   // Update the iframe height when the page is rendered
   await nextTick();
