@@ -3,12 +3,14 @@ useHead( {
   titleTemplate: ( titleChunk ) => {
     return titleChunk ? `${ titleChunk }` : 'Learning Pathways'
   }
-} )
+} );
 </script>
 
 <template>
-    <NuxtLoadingIndicator aria-label="Loading..." />
-    <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
+  <div>
+    <NuxtLoadingIndicator v-if="isLoading" aria-label="Loading..." />
+    <NuxtLayout v-else>
+      <NuxtPage />
+    </NuxtLayout>
+  </div>
 </template>
