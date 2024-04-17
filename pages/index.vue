@@ -1,8 +1,8 @@
 <template>
 <div class="w-full p-10">
-  <HeroComponent title="Welcome">
+  <HeroComponent title="Learning Materials for 3D Studio Production">
       <template #description>
-        <p>Getting started.</p>
+        <p>Open Educational Resources for students and teachers.</p>
       </template>
     </HeroComponent>
   </div>
