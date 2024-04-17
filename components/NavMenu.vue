@@ -1,6 +1,6 @@
 <template>
 
-      <nav class="flex-1 ">
+      <nav class="flex-1" role="navigation" aria-label="Main Navigation">
       <ul class="menu menu-vertical px-1">
         
         <li><NuxtLink class="nav-link" role="button" aria-label="Getting started page" to="/">Home</NuxtLink></li>

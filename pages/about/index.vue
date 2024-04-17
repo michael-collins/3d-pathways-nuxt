@@ -19,6 +19,6 @@
     
     useHead({
       title: 'About',
-      // layout: 'breadcrumbs', 
+      layout: 'breadcrumbs', 
     })
 </script>

@@ -2,10 +2,12 @@
   
     <div class="flex flex-col h-screen">
       
-      <div class="drawer lg:drawer-open">
-  <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+      <div class="drawer lg:drawer-open" role="navigation" :aria-expanded="drawerOpen">
+  <input id="nav-drawer-2" type="checkbox" class="drawer-toggle" v-model="drawerOpen" />
   <div class="drawer-content">
-    <label for="my-drawer-2" class="btn btn-ghost drawer-button lg:hidden left m-1">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <label for="nav-drawer-2" class="btn btn-ghost drawer-button lg:hidden left m-1">
       <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg> -->
       <Icon name="charm:menu-hamburger" class="text-xl" />
     </label>
@@ -20,7 +22,7 @@
           :defaultBreadcrumbs="{ show: true, showBackButton: true }" 
         />
       </header>
-    <main class="flex-grow">
+    <main id="main-content" class="flex-grow">
         <div>
         <slot />
         
@@ -33,13 +35,13 @@
   
   </div> 
   <div class="drawer-side" v-if="!iframe">
-    <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label> 
-    <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+    <label for="nav-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label> 
+    <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content " @focusin="toggleDrawer">
       <!-- Sidebar content here -->
-      <label for="my-drawer-2" class="btn btn-ghost lg:hidden">Close <Icon name="material-symbols:close-small" class="text-xl" />
+      <label for="nav-drawer-2" class="btn btn-ghost lg:hidden">Close <Icon name="material-symbols:close-small" class="text-xl" />
         <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg> -->
       </label>
-      <NavMenu />
+      <NavMenu  />
     </ul>
   
   </div>
@@ -90,6 +92,28 @@ const exerciseName = ref('');
 const lectureName = ref('');
 const lessonName = ref('');
 
+const drawerOpen = ref(false);
+
+const toggleDrawer = () => {
+    const checkbox = document.getElementById('nav-drawer-2');
+    if (checkbox) {
+      checkbox.checked = true;
+    }
+  };
+const closeDrawer = () => {
+  const checkbox = document.getElementById('nav-drawer-2');
+  if (checkbox) {
+    checkbox.checked = false;
+  }
+};
+
+const handleKeydown = (event) => {
+    if (event.key === 'Escape') {
+      closeDrawer();
+      document.activeElement.blur();
+    }
+  };
+
 const iframe = computed(() => route.query.iframe === 'true');
 // v-if="!iframe"
 // ?iframe=true
@@ -128,7 +152,31 @@ const updateNames = async () => {
     lessonName.value = '';
   }
 };
+onMounted(() => {
+    window.addEventListener('keydown', handleKeydown);
+  });
 
+  onUnmounted(() => {
+    window.removeEventListener('keydown', handleKeydown);
+  });
     onMounted(updateNames);
+    
     watch(() => route.params.id, updateNames, { immediate: true });
   </script>
+
+  <style scoped>
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #000;
+    color: #fff;
+    padding: 8px;
+    z-index: 100;
+    transition: top 0.3s;
+  }
+  
+  .skip-link:focus {
+    top: 0;
+  }
+  </style>

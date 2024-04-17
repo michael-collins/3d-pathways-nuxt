@@ -21,4 +21,7 @@ useHead({
   title: 'Welcome',
   // layout: 'breadcrumbs', 
 })
+definePageMeta({
+  layout: 'breadcrumbs',
+})
 </script>
