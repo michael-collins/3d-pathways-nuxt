@@ -72,16 +72,10 @@
       child-list-ol-li-ul-li:pt-1 
       child-list-ul-li-ul-li:pt-1" />
           </div>
-
+        </div>
           <!-- iframe -->
-          <div class="mockup-code">
-          <pre class="language-html">
-            <code>
-              &lt;iframe width="100%" height="{{articleHeight}}px" src="{{currentUrl}}?iframe=true" style="border:none;" title="{{ record.fields && record.fields.name ? record.fields.name : 'Exercise' }}" &gt;&lt;/iframe&gt;
-            </code>
-          </pre>
-        </div>
-        </div>
+          <IframeComponent :articleHeight="articleHeight" :currentUrl="currentUrl" :record="record" />
+
       </div>
     </article>
   </template>

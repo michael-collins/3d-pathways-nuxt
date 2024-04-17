@@ -169,17 +169,9 @@
           </ul>
           </p>
         </div>
-        <!-- iframe -->
-        <div class="mockup-code">
-          <pre class="language-html">
-            <code>
-              &lt;iframe width="100%" height="{{articleHeight}}" src="{{currentUrl}}?iframe=true" style="border:none;" title="{{ record.fields && record.fields.name ? record.fields.name : 'Exercise' }}" &gt;&lt;/iframe&gt;
-            </code>
-          </pre>
-        </div>
-
-
       </div>
+       <!-- iframe -->
+       <IframeComponent :articleHeight="articleHeight" :currentUrl="currentUrl" :record="record" />
     </div>
   </article>
 </template>
