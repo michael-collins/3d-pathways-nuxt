@@ -103,34 +103,35 @@
         <div v-if="record.fields.youtubePlaylistID">
           <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Tutorials:</h2>
           <p v-if="record.fields.youtubePlaylistID" class="text-md p-3">
-            <iframe 
-            width="100%" 
-            height="" 
-            class="aspect-video" 
-            :src="'https://www.youtube.com/embed/videoseries?si=qS1_gP2XR65V9BbI&amp;list=' + record.fields.youtubePlaylistID" 
-            title="YouTube video player" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            referrerpolicy="strict-origin-when-cross-origin" 
-            allowfullscreen>
-          </iframe>          </p>
-          <a class="mx-auto btn btn-ghost text-secondary hover:text-secondary:":href="'https://youtube.com/playlist?list=' + record.fields.youtubePlaylistID" target="_blank">Youtube.com playlist <Icon name="octicon:link-external-16" class=" text-sm" /></a>
+            <iframe width="100%" height="" class="aspect-video"
+              :src="'https://www.youtube.com/embed/videoseries?si=qS1_gP2XR65V9BbI&amp;list=' + record.fields.youtubePlaylistID"
+              title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            </iframe>
+          </p>
+          <a class="mx-auto btn btn-ghost text-secondary hover:text-secondary:"
+            :href="'https://youtube.com/playlist?list=' + record.fields.youtubePlaylistID" target="_blank">Youtube.com
+            playlist
+            <Icon name="octicon:link-external-16" class=" text-sm" />
+          </a>
         </div>
         <!-- Displaying the Vimeo Playlist -->
         <div v-if="record.fields.vimeoPlaylistID">
           <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Tutorials:</h2>
           <p v-if="record.fields.vimeoPlaylistID" class="text-md p-3">
-           
+
           <div style='padding:56.25% 0 0 0;position:relative;'>
-            <iframe 
-            :src="'https://vimeo.com/showcase/' + record.fields.vimeoPlaylistID + '/embed'" 
-            class="aspect-video" 
-            allowfullscreen frameborder='0' 
-            style='position:absolute;top:0;
+            <iframe :src="'https://vimeo.com/showcase/' + record.fields.vimeoPlaylistID + '/embed'" class="aspect-video"
+              allowfullscreen frameborder='0' style='position:absolute;top:0;
             left:0;width:100%;
             height:100%;'>
-            </iframe></div>
-          <a class="mx-auto  btn btn-ghost text-secondary hover:text-secondary:":href="'https://vimeo.com/showcase/' + record.fields.vimeoPlaylistID" target="_blank">Vimeo.com playlist <Icon name="octicon:link-external-16" class=" text-sm" /></a>
+            </iframe>
+          </div>
+          <a class="mx-auto  btn btn-ghost text-secondary hover:text-secondary:"
+            :href="'https://vimeo.com/showcase/' + record.fields.vimeoPlaylistID" target="_blank">Vimeo.com playlist
+            <Icon name="octicon:link-external-16" class=" text-sm" />
+          </a>
           </p>
         </div>
         <!-- Displaying the associatedMaterial -->
@@ -168,12 +169,16 @@
             </li>
           </ul>
           </p>
-        </div>        
+        </div>
+        <TableComponent :rubricData="rubric" :criteriaData="criteria" title="Rubric" />
       </div>
-       <!-- iframe -->
-       <IframeComponent :articleHeight="articleHeight" :currentUrl="currentUrl" :record="record" />
+      <!-- iframe -->
+      <IframeComponent :articleHeight="articleHeight" :currentUrl="currentUrl" :record="record" />
 
     </div>
+
+
+
   </article>
 </template>
 
@@ -187,8 +192,16 @@ const route = useRoute();
 const exercisesStore = useExercisesStore();
 const exerciseId = ref(route.params.id);
 const record = ref(null);
+
+const criteriaStore = useCriteriaStore();
+const rubricsStore = useRubricsStore();
+const rubric = ref(null);
+const criteria = ref(null);
+
 const articleHeight = ref(0);
 const articleElement = ref(null);
+// const criteriaRecord = ref(null);
+
 
 const updateHeight = () => {
   if (articleElement.value) {
@@ -196,7 +209,6 @@ const updateHeight = () => {
     articleHeight.value = Math.ceil(rect.height) + 1000;
   }
 };
-
 
 const currentUrl = computed(() => {
   // If you're running Nuxt in SSR mode, ensure window is defined before accessing it.
@@ -206,22 +218,37 @@ const currentUrl = computed(() => {
   return '';
 });
 
-
-
-
 onMounted(async () => {
   await exercisesStore.fetchRecords();
   record.value = exercisesStore.getExerciseById(exerciseId.value);
-  
-    // Update the iframe height when the page is rendered
-    await nextTick();
-      updateHeight();
 
-  
-   });
+  const exerciseRecord = exercisesStore.getExerciseById(exerciseId.value);
+  if (exerciseRecord && exerciseRecord.fields.rubrics) {
+    await rubricsStore.fetchRecords();
+    rubric.value = exerciseRecord.fields.rubrics.map(rubricId => rubricsStore.getRubricById(rubricId));
+    console.log('Fetched rubrics:', rubric.value);
 
-   // Update the iframe height when the record changes
-   watch(record, updateHeight, { immediate: true });
+  }
+  const rubricId = exerciseRecord.fields.rubrics;
+  console.log('Rubric ID:', rubricId);
+
+  if (rubric.value && rubric.value.length > 0) {
+    await criteriaStore.fetchRecords();
+    criteria.value = rubric.value[0].fields.criteria.map(criteriaId => criteriaStore.getCriteriaById(criteriaId));
+    console.log('Fetched criteria:', criteria.value);
+  }
+  // Update the iframe height when the page is rendered
+  await nextTick();
+  updateHeight();
+
+
+});
+// const filteredCriteria = computed(() => {
+//   return criteriaStore.records.filter(criterion => criterion.fields.rubric.value === 'exercise');
+// });
+
+// Update the iframe height when the record changes
+watch(record, updateHeight, { immediate: true });
 
 const title = computed(() => {
   if (record.value && record.value.fields) {
@@ -234,4 +261,5 @@ const title = computed(() => {
 useHead({
   title: title.value,
 })
+
 </script>

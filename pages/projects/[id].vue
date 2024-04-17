@@ -169,6 +169,8 @@
           </ul>
           </p>
         </div>
+        <TableComponent :rubricData="rubric" :criteriaData="criteria" title="Rubric" />
+
       </div>
        <!-- iframe -->
        <IframeComponent :articleHeight="articleHeight" :currentUrl="currentUrl" :record="record" />
@@ -186,6 +188,12 @@ const route = useRoute();
 const projectsStore = useProjectsStore();
 const projectId = ref(route.params.id);
 const record = ref(null);
+
+const criteriaStore = useCriteriaStore();
+const rubricsStore = useRubricsStore();
+const rubric = ref(null);
+const criteria = ref(null);
+
 const articleHeight = ref(0);
 const articleElement = ref(null);
 
@@ -206,6 +214,23 @@ const currentUrl = computed(() => {
 onMounted(async () => {
   await projectsStore.fetchRecords();
   record.value = projectsStore.getProjectById(projectId.value);
+
+
+  const projectRecord = projectsStore.getProjectById(projectId.value);
+  if (projectRecord && projectRecord.fields.rubrics) {
+    await rubricsStore.fetchRecords();
+    rubric.value = projectRecord.fields.rubrics.map(rubricId => rubricsStore.getRubricById(rubricId));
+    console.log('Fetched rubrics:', rubric.value);
+
+  }
+  const rubricId = projectRecord.fields.rubrics;
+  console.log('Rubric ID:', rubricId);
+
+  if (rubric.value && rubric.value.length > 0) {
+    await criteriaStore.fetchRecords();
+    criteria.value = rubric.value[0].fields.criteria.map(criteriaId => criteriaStore.getCriteriaById(criteriaId));
+    console.log('Fetched criteria:', criteria.value);
+  }
 
   // Update the iframe height when the page is rendered
   await nextTick();
