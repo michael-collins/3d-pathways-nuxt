@@ -161,7 +161,7 @@
 
         </div>
         <!-- Displaying the Downloads -->
-        <div v-if="record.fields.downloads">
+        <div v-if="record.fields.downloads && record.fields.downloads.length ">
           <p class="text-md p-3">
           <ul>
             <li v-for="download in record.fields.downloads" :key="download.id">
@@ -174,6 +174,7 @@
       </div>
       <!-- iframe -->
       <IframeComponent :articleHeight="articleHeight" :currentUrl="currentUrl" :record="record" />
+      <LicenseComponent :work="record.fields.name" :currentUrl="currentUrl" :license="license" :author="record.fields.author" :authorURL="record.fields.authorURL" title="License" />
 
     </div>
 
@@ -189,14 +190,20 @@ definePageMeta({
 
 
 const route = useRoute();
-const exercisesStore = useExercisesStore();
 const exerciseId = ref(route.params.id);
-const record = ref(null);
 
+const exercisesStore = useExercisesStore();
 const criteriaStore = useCriteriaStore();
 const rubricsStore = useRubricsStore();
+const licensesStore = useLicensesStore();
+
+
+const record = ref(null);
 const rubric = ref(null);
 const criteria = ref(null);
+const license = ref(null);
+const projectAuthor = ref(null);
+const projectAuthorURL = ref(null);
 
 const articleHeight = ref(0);
 const articleElement = ref(null);
@@ -229,6 +236,23 @@ onMounted(async () => {
     console.log('Fetched rubrics:', rubric.value);
 
   }
+
+if (exerciseRecord && exerciseRecord.fields.licenses) {
+  await licensesStore.fetchRecords();
+  license.value = exerciseRecord.fields.licenses.map(licenseId => licensesStore.getLicenseById(licenseId));
+  console.log('Fetched licenses:', license.value);
+
+  if (exerciseRecord.fields.author) {
+    projectAuthor.value = exerciseRecord.fields.author;
+    console.log('Project Author:', projectAuthor.value);
+  }
+
+  if (exerciseRecord.fields.authorURL) {
+    projectAuthorURL.value = exerciseRecord.fields.authorURL;
+    console.log('Project Author URL:', projectAuthorURL.value);
+  }
+}
+
   const rubricId = exerciseRecord.fields.rubrics;
   console.log('Rubric ID:', rubricId);
 

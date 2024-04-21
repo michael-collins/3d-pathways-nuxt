@@ -170,10 +170,10 @@
           </p>
         </div>
         <TableComponent :rubricData="rubric" :criteriaData="criteria" title="Rubric" />
-
       </div>
-       <!-- iframe -->
-       <IframeComponent :articleHeight="articleHeight" :currentUrl="currentUrl" :record="record" />
+      <!-- iframe -->
+      <IframeComponent :articleHeight="articleHeight" :currentUrl="currentUrl" :record="record" />
+      <LicenseComponent :work="record.fields.name" :currentUrl="currentUrl" :license="license" :author="record.fields.author" :authorURL="record.fields.authorURL" title="License" />
     </div>
   </article>
 </template>
@@ -185,14 +185,23 @@ definePageMeta({
 
 
 const route = useRoute();
-const projectsStore = useProjectsStore();
 const projectId = ref(route.params.id);
-const record = ref(null);
 
+const projectsStore = useProjectsStore();
 const criteriaStore = useCriteriaStore();
 const rubricsStore = useRubricsStore();
-const rubric = ref(null);
+const licensesStore = useLicensesStore();
+
+const record = ref(null);
 const criteria = ref(null);
+const rubric = ref(null);
+const license = ref(null);
+const projectAuthor = ref(null);
+const projectAuthorURL = ref(null);
+
+// console.log('License:', license.value);
+// console.log('Project Author:', projectAuthor.value);
+// console.log('Project Author URL:', projectAuthorURL.value);
 
 const articleHeight = ref(0);
 const articleElement = ref(null);
@@ -218,11 +227,27 @@ onMounted(async () => {
 
   const projectRecord = projectsStore.getProjectById(projectId.value);
   if (projectRecord && projectRecord.fields.rubrics) {
-    await rubricsStore.fetchRecords();
-    rubric.value = projectRecord.fields.rubrics.map(rubricId => rubricsStore.getRubricById(rubricId));
-    console.log('Fetched rubrics:', rubric.value);
+  await rubricsStore.fetchRecords();
+  rubric.value = projectRecord.fields.rubrics.map(rubricId => rubricsStore.getRubricById(rubricId));
+  console.log('Fetched rubrics:', rubric.value);
+}
 
+if (projectRecord && projectRecord.fields.licenses) {
+  await licensesStore.fetchRecords();
+  license.value = projectRecord.fields.licenses.map(licenseId => licensesStore.getLicenseById(licenseId));
+  console.log('Fetched licenses:', license.value);
+
+  if (projectRecord.fields.author) {
+    projectAuthor.value = projectRecord.fields.author;
+    console.log('Project Author:', projectAuthor.value);
   }
+
+  if (projectRecord.fields.authorURL) {
+    projectAuthorURL.value = projectRecord.fields.authorURL;
+    console.log('Project Author URL:', projectAuthorURL.value);
+  }
+}
+
   const rubricId = projectRecord.fields.rubrics;
   console.log('Rubric ID:', rubricId);
 
@@ -231,7 +256,6 @@ onMounted(async () => {
     criteria.value = rubric.value[0].fields.criteria.map(criteriaId => criteriaStore.getCriteriaById(criteriaId));
     console.log('Fetched criteria:', criteria.value);
   }
-
   // Update the iframe height when the page is rendered
   await nextTick();
   updateHeight();
