@@ -160,14 +160,10 @@
 
         </div>
         <!-- Displaying the Downloads -->
-        <div v-if="record.fields.downloads">
-          <p class="text-md p-3">
-          <ul>
-            <li v-for="download in record.fields.downloads" :key="download.id">
-              <a :href="download.url">{{ download.name }}</a>
-            </li>
-          </ul>
-          </p>
+       <!-- Displaying the Files -->
+       <div  v-if="record.fields.files && record.fields.files.length">
+          <h2 class="text-2xl font-semibold text-left uppercase mb-4">Downloads:</h2>
+          <FileComponent :fileData="files" />
         </div>
         <TableComponent :rubricData="rubric" :criteriaData="criteria" title="Rubric" />
       </div>
@@ -191,11 +187,14 @@ const projectsStore = useProjectsStore();
 const criteriaStore = useCriteriaStore();
 const rubricsStore = useRubricsStore();
 const licensesStore = useLicensesStore();
+const filesStore = useFilesStore();
+
 
 const record = ref(null);
 const criteria = ref(null);
 const rubric = ref(null);
 const license = ref(null);
+const files = ref(null);
 const projectAuthor = ref(null);
 const projectAuthorURL = ref(null);
 
@@ -247,6 +246,17 @@ if (projectRecord && projectRecord.fields.licenses) {
     console.log('Project Author URL:', projectAuthorURL.value);
   }
 }
+
+// get the files
+if (projectRecord && projectRecord.fields.files) {
+    await filesStore.fetchRecords();
+    // Map the file IDs to the corresponding file records
+    files.value = projectRecord.fields.files.map(fileId => {
+      return filesStore.getFileById(fileId);
+    }).filter(file => file !== null && file !== undefined);
+    console.log('Fetched files:', files.value);
+
+  }
 
   const rubricId = projectRecord.fields.rubrics;
   console.log('Rubric ID:', rubricId);

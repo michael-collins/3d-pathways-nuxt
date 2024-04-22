@@ -160,17 +160,12 @@
     child-list-ul-li-ul-li:pt-1" />
 
         </div>
-        <!-- Displaying the Downloads -->
-        <div v-if="record.fields.downloads && record.fields.downloads.length ">
-          <p class="text-md p-3">
-          <ul>
-            <li v-for="download in record.fields.downloads" :key="download.id">
-              <a :href="download.url">{{ download.name }}</a>
-            </li>
-          </ul>
-          </p>
+        <!-- Displaying the Files -->
+        <div  v-if="record.fields.files && record.fields.files.length">
+          <h2 class="text-2xl font-semibold text-left uppercase mb-4">Downloads:</h2>
+          <FileComponent :fileData="files" />
         </div>
-        <TableComponent :rubricData="rubric" :criteriaData="criteria" title="Rubric" />
+        <TableComponent :rubricData="rubric" :criteriaData="criteria" title="Rubric:" />
       </div>
       <!-- iframe -->
       <IframeComponent :articleHeight="articleHeight" :currentUrl="currentUrl" :record="record" />
@@ -196,12 +191,14 @@ const exercisesStore = useExercisesStore();
 const criteriaStore = useCriteriaStore();
 const rubricsStore = useRubricsStore();
 const licensesStore = useLicensesStore();
+const filesStore = useFilesStore();
 
 
 const record = ref(null);
 const rubric = ref(null);
 const criteria = ref(null);
 const license = ref(null);
+const files = ref(null);
 const projectAuthor = ref(null);
 const projectAuthorURL = ref(null);
 
@@ -228,8 +225,9 @@ const currentUrl = computed(() => {
 onMounted(async () => {
   await exercisesStore.fetchRecords();
   record.value = exercisesStore.getExerciseById(exerciseId.value);
-
   const exerciseRecord = exercisesStore.getExerciseById(exerciseId.value);
+
+  // get the rubric
   if (exerciseRecord && exerciseRecord.fields.rubrics) {
     await rubricsStore.fetchRecords();
     rubric.value = exerciseRecord.fields.rubrics.map(rubricId => rubricsStore.getRubricById(rubricId));
@@ -237,30 +235,43 @@ onMounted(async () => {
 
   }
 
-if (exerciseRecord && exerciseRecord.fields.licenses) {
-  await licensesStore.fetchRecords();
-  license.value = exerciseRecord.fields.licenses.map(licenseId => licensesStore.getLicenseById(licenseId));
-  console.log('Fetched licenses:', license.value);
-
-  if (exerciseRecord.fields.author) {
-    projectAuthor.value = exerciseRecord.fields.author;
-    console.log('Project Author:', projectAuthor.value);
-  }
-
-  if (exerciseRecord.fields.authorURL) {
-    projectAuthorURL.value = exerciseRecord.fields.authorURL;
-    console.log('Project Author URL:', projectAuthorURL.value);
-  }
-}
-
-  const rubricId = exerciseRecord.fields.rubrics;
-  console.log('Rubric ID:', rubricId);
-
+  // Get rubric criteria
   if (rubric.value && rubric.value.length > 0) {
     await criteriaStore.fetchRecords();
     criteria.value = rubric.value[0].fields.criteria.map(criteriaId => criteriaStore.getCriteriaById(criteriaId));
     console.log('Fetched criteria:', criteria.value);
   }
+
+  // get the files
+  if (exerciseRecord && exerciseRecord.fields.files) {
+    await filesStore.fetchRecords();
+    // Map the file IDs to the corresponding file records
+    files.value = exerciseRecord.fields.files.map(fileId => {
+      return filesStore.getFileById(fileId);
+    }).filter(file => file !== null && file !== undefined);
+    console.log('Fetched files:', files.value);
+
+  }
+  // get the license and author
+  if (exerciseRecord && exerciseRecord.fields.licenses) {
+    await licensesStore.fetchRecords();
+    license.value = exerciseRecord.fields.licenses.map(licenseId => licensesStore.getLicenseById(licenseId));
+    console.log('Fetched licenses:', license.value);
+  
+  if (exerciseRecord.fields.author) {
+    projectAuthor.value = exerciseRecord.fields.author;
+    console.log('Project Author:', projectAuthor.value);
+    }
+
+  if (exerciseRecord.fields.authorURL) {
+    projectAuthorURL.value = exerciseRecord.fields.authorURL;
+    console.log('Project Author URL:', projectAuthorURL.value);
+    }
+  }
+
+  // const rubricId = exerciseRecord.fields.rubrics;
+  // console.log('Rubric ID:', rubricId);
+
   // Update the iframe height when the page is rendered
   await nextTick();
   updateHeight();
