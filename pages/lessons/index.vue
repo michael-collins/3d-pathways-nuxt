@@ -16,6 +16,7 @@
       </div>
     </div>
   </div>
+  <pre>{{ JSON.stringify(lessonsStore.records, null, 2) }}</pre>
 </template>
 
 <script setup>

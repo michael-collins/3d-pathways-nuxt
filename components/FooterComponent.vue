@@ -13,6 +13,7 @@
       </aside> 
       <nav class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
         <ul class="menu-horizontal space-x-2">
+          <NuxtLink class="link hover:text-secondary" role="button" aria-label="License page" to="/dev" >Dev</NuxtLink>
           <a class="link text-neutral-content hover:text-secondary" href="https://github.com/michael-collins/3d-pathways-nuxt/issues/new?assignees=&labels=&projects=&template=report-a-problem.md&title=">Report a problem</a>
           <a class="link text-neutral-content hover:text-secondary" href="https://github.com/michael-collins/3d-pathways-nuxt"><Icon name="entypo-social:github" class="w-6 h-6" /></a>
         </ul>
