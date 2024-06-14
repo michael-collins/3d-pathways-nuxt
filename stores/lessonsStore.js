@@ -10,6 +10,9 @@ export const useLessonsStore = defineStore('lessons', {
     // Define a getter to find an lesson by its ID
     getLessonById: (state) => (id)=> {
       return (id) => state.records.find((record) => record.id === id);
+    },
+    getLessonBySlug: (state) => (slug) => {
+        return state.records.find(record => record.fields.slug === slug);
     }
   },
   actions: {

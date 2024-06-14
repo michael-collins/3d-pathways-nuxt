@@ -104,7 +104,8 @@ definePageMeta({
 
 const route = useRoute();
 const lessonsStore = useLessonsStore();
-const lessonId = ref(route.params.id);
+// const lessonId = ref(route.params.id);
+const lessonSlug = ref(route.params.id);
 const record = ref(null);
 const articleHeight = ref(0);
 const articleElement = ref(null);
@@ -130,13 +131,19 @@ const currentUrl = computed(() => {
 
 onMounted(async () => {
   await lessonsStore.fetchRecords();
-  const { records } = lessonsStore;
+  lessonSlug.value = route.params.id;
+  console.log('lessonSlug.value:', lessonSlug.value); // Debugging line
+  record.value = lessonsStore.getLessonBySlug(lessonSlug.value);
+  console.log('record.value:', record.value); // Debugging line
 
-  if (Array.isArray(records)) {
-    record.value = records.find(record => record.id === lessonId.value);
-  } else {
-    console.error("Records is not an array:", records);
-  }
+  // const lessonRecord =  record.value;
+  // const { records } = lessonsStore;
+
+  // if (Array.isArray(records)) {
+  //   record.value = records.find(record => record.id === lessonId.value);
+  // } else {
+  //   console.error("Records is not an array:", records);
+  // }
 
   // Importing the exerciseStore and ref from Vue
   const exercisesStore = useExercisesStore();
@@ -151,7 +158,7 @@ onMounted(async () => {
     // Mapping the exercise IDs to their names and descriptions
     exerciseDetails.value = record.value.fields.exercises.map(exerciseId => {
       const matchedExercise = exercises.value.find(exercise => exercise.id === exerciseId);
-      return matchedExercise ? { id: matchedExercise.id, fields: { name: matchedExercise.fields.name, description: matchedExercise.fields.description } } : null;
+      return matchedExercise ? { id: matchedExercise.id, fields: { name: matchedExercise.fields.name, description: matchedExercise.fields.description, slug: matchedExercise.fields.slug } } : null;
     });
   }
   // Importing the exerciseStore and ref from Vue
@@ -167,7 +174,7 @@ onMounted(async () => {
     // Mapping the lecture IDs to their names and descriptions
     lectureDetails.value = record.value.fields.lectures.map(lectureId => {
       const matchedLecture = lectures.value.find(lecture => lecture.id === lectureId);
-      return matchedLecture ? { id: matchedLecture.id, fields: { name: matchedLecture.fields.name, description: matchedLecture.fields.description } } : null;
+      return matchedLecture ? { id: matchedLecture.id, fields: { name: matchedLecture.fields.name, description: matchedLecture.fields.description, slug: matchedLecture.fields.slug } } : null;
     });
   }
   // Update the iframe height when the page is rendered
