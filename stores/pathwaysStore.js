@@ -10,6 +10,9 @@ export const usePathwaysStore = defineStore('pathways', {
     // Define a getter to find an pathway by its ID
     getPathwayById: (state) => (id)=> {
       return (id) => state.records.find((record) => record.id === id);
+    },
+    getPathwayBySlug: (state) => (slug) => {
+        return state.records.find(record => record.fields.slug === slug);
     }
   },
   actions: {

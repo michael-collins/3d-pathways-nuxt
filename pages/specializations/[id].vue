@@ -185,6 +185,7 @@ definePageMeta({
 const route = useRoute();
 const specializationsStore = useSpecializationsStore();
 const specializationId = ref(route.params.id);
+const specializationSlug = ref(route.params.id);
 let record = ref(null);
 const competencyDetails = ref([]);
 const exerciseDetails = ref([]);
@@ -208,13 +209,20 @@ const currentUrl = computed(() => {
 
 onMounted(async () => {
   await specializationsStore.fetchRecords();
-  const { records } = specializationsStore;
+  specializationSlug.value = route.params.id;
+  console.log('specializationSlug.value:', specializationSlug.value); // Debugging line
+  record.value = specializationsStore.getSpecializationBySlug(specializationSlug.value);
+  console.log('record.value:', record.value); // Debugging line
 
-  if (Array.isArray(records)) {
-    record.value = records.find(record => record.id === specializationId.value);
-  } else {
-    console.error("Records is not an array:", records);
-  }
+  // const specializationRecord =  record.value;
+  
+  // const { records } = specializationsStore;
+
+  // if (Array.isArray(records)) {
+  //   record.value = records.find(record => record.id === specializationId.value);
+  // } else {
+  //   console.error("Records is not an array:", records);
+  // }
 
   // Importing the competenciesStore and ref from Vue
   const competenciesStore = useCompetenciesStore();
@@ -257,7 +265,7 @@ if (record.value && record.value.fields.exercises && exercises.value) {
       const matchedExercise = exercises.value.find(exercise => exercise.id === exerciseId);
       
       if (matchedExercise) {
-        return { id: matchedExercise.id, fields: { name: matchedExercise.fields.name, description: matchedExercise.fields.description } };
+        return { id: matchedExercise.id, fields: { name: matchedExercise.fields.name, description: matchedExercise.fields.description, slug: matchedExercise.fields.slug } };
       } else {
         // Return null if the exercise is not found
         return null;

@@ -10,6 +10,9 @@ export const useSpecializationsStore = defineStore('specializations', {
     // Define a getter to find an specialization by its ID
     getSpecializationById: (state) => (id)=> {
       return (id) => state.records.find((record) => record.id === id);
+    },
+    getSpecializationBySlug: (state) => (slug) => {
+        return state.records.find(record => record.fields.slug === slug);
     }
   },
   actions: {

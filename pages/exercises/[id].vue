@@ -185,7 +185,8 @@ definePageMeta({
 
 
 const route = useRoute();
-const exerciseId = ref(route.params.id);
+// const exerciseId = ref(route.params.id);
+const exerciseSlug = ref(route.params.id);
 
 const exercisesStore = useExercisesStore();
 const criteriaStore = useCriteriaStore();
@@ -224,8 +225,12 @@ const currentUrl = computed(() => {
 
 onMounted(async () => {
   await exercisesStore.fetchRecords();
-  record.value = exercisesStore.getExerciseById(exerciseId.value);
-  const exerciseRecord = exercisesStore.getExerciseById(exerciseId.value);
+  exerciseSlug.value = route.params.id;
+  console.log('exerciseSlug.value:', exerciseSlug.value); // Debugging line
+  record.value = exercisesStore.getExerciseBySlug(exerciseSlug.value);
+  console.log('record.value:', record.value); // Debugging line
+
+  const exerciseRecord =  record.value;
 
   // get the rubric
   if (exerciseRecord && exerciseRecord.fields.rubrics) {
@@ -276,7 +281,7 @@ onMounted(async () => {
   await nextTick();
   updateHeight();
 
-
+  console.log(record.value)
 });
 // const filteredCriteria = computed(() => {
 //   return criteriaStore.records.filter(criterion => criterion.fields.rubric.value === 'exercise');

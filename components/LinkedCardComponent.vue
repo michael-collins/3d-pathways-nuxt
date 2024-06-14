@@ -6,7 +6,7 @@
     <!-- <section v-else v-for="record in records" :key="record.id"
     class="group flex flex-col bg-base-100 border shadow-sm rounded-xl hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500 transition min-h-32 cursor-pointer sm:m-1"
    > -->
-    <NuxtLink  v-else v-for="record in records" :key="record.id" :to="`/${destination}/${record.id}`" :aria-label="`Link to ${record.fields.name}`" :aria-live="'polite'" class="group flex flex-col bg-base-100 border-2 border-base-300 hover:border-primary shadow-sm rounded-xl hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500 transition min-h-32 cursor-pointer sm:m-1 p-4 md:p-5">
+    <NuxtLink  v-else v-for="record in records" :key="record.id" :to="`/${destination}/${record.fields.slug}`" :aria-label="`Link to ${record.fields.name}`" :aria-live="'polite'" class="group flex flex-col bg-base-100 border-2 border-base-300 hover:border-primary shadow-sm rounded-xl hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500 transition min-h-32 cursor-pointer sm:m-1 p-4 md:p-5">
       <div class="flex items-center min-h-28">
         <div class="self-center">
           <h3 class="group-hover:text-primary font-semibold self-center">

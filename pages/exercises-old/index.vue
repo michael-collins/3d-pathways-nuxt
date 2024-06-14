@@ -47,4 +47,3 @@ const updateViewMode = (newViewMode) => {
   console.log('View mode changed:', viewMode.value) // Log the new view mode
 }
 </script>
-
