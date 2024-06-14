@@ -88,7 +88,8 @@
   
   const route = useRoute();
   const lecturesStore = useLecturesStore();
-  const lectureId = ref(route.params.id);
+  // const lectureId = ref(route.params.id);
+  const lectureSlug = ref(route.params.id);
   const record = ref(null);
   const articleHeight = ref(0);
   const articleElement = ref(null);
@@ -111,13 +112,20 @@
   });
   onMounted(async () => {
     await lecturesStore.fetchRecords();
-  const { records } = lecturesStore;
+    lectureSlug.value = route.params.id;
+    console.log('lectureSlug.value:', lectureSlug.value); // Debugging line
+    record.value = lecturesStore.getLectureBySlug(lectureSlug.value);
+    console.log('record.value:', record.value); // Debugging line
 
-  if (Array.isArray(records)) {
-    record.value = records.find(record => record.id === lectureId.value);
-  } else {
-    console.error("Records is not an array:", records);
-  }
+  // const { records } = lecturesStore;
+
+
+  // if (Array.isArray(records)) {
+  //   record.value = records.find(record => record.id === lectureId.value);
+  //   record.value = getLectureById();
+  // } else {
+  //   console.error("Records is not an array:", records);
+  // }
     // Update the iframe height when the page is rendered
   await nextTick();
       updateHeight();
@@ -127,9 +135,9 @@
 
   const title = computed(() => {
     // Check if record.value and record.value.fields are defined before accessing record.value.fields.name
-    if (record.value && record.value.fields) {
-      return 'Lecture: ' + record.value.fields.name
-    }
+    if (record.value && record.value.fields && record.value.fields.name) {
+    return 'Lecture: ' + record.value.fields.name
+  }
     // Return a default title if record.value or record.value.fields is not defined
     return 'Lecture'
   })

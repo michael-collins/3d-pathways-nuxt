@@ -10,6 +10,9 @@ export const useProjectsStore = defineStore('projects', {
     // Define a getter to find an project by its ID
     getProjectById: (state) => (id) => {
         return state.records.find(record => record.id === id);
+      },
+      getProjectBySlug: (state) => (slug) => {
+          return state.records.find(record => record.fields.slug === slug);
       }
   },
     actions: {

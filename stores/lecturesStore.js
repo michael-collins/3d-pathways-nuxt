@@ -10,7 +10,10 @@ export const useLecturesStore = defineStore('lectures', {
     // Define a getter to find an lecture by its ID
     getLectureById: (state) => (id)=> {
       return (id) => state.records.find((record) => record.id === id);
-    }
+    },
+    getLectureBySlug: (state) => (slug) => {
+      return state.records.find(record => record.fields.slug === slug);
+  }
   },
   actions: {
       async fetchRecords() {

@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxt/content',
     '@nuxtjs/mdc',
+    // 'nuxt-slugify',
   ],
   // buildModules: ["nuxt-hero-icons"],
   colorMode: {
@@ -36,7 +37,7 @@ export default defineNuxtConfig({
     }
   },
   // target: 'static', // default is 'server'
-  // ssr: false,
+  ssr: true,
   // mode: 'static',
 //   router: {
 //     base: '/3d-pathways-nuxt/'

@@ -184,7 +184,8 @@ definePageMeta({
 const route = useRoute();
 const pathwaysStore = usePathwaysStore();
 const pathwayId = ref(route.params.id);
-let record = ref(null);
+const pathwaySlug = ref(route.params.id);
+const record = ref(null);
 const competencyDetails = ref([]);
 const exerciseDetails = ref([]);
 const articleHeight = ref(0);
@@ -207,13 +208,16 @@ const updateHeight = () => {
 
 onMounted(async () => {
   await pathwaysStore.fetchRecords();
-  const { records } = pathwaysStore;
+  // const { records } = pathwaysStore;
+  pathwaySlug.value = route.params.id;
+  record.value = pathwaysStore.getPathwayBySlug(pathwaySlug.value);
 
-  if (Array.isArray(records)) {
-    record.value = records.find(record => record.id === pathwayId.value);
-  } else {
-    console.error("Records is not an array:", records);
-  }
+
+  // if (Array.isArray(records)) {
+  //   record.value = records.find(record => record.id === pathwayId.value);
+  // } else {
+  //   console.error("Records is not an array:", records);
+  // }
 
   // Importing the competenciesStore and ref from Vue
   const competenciesStore = useCompetenciesStore();
@@ -245,10 +249,10 @@ if (record.value && record.value.fields.exercises && exercises.value) {
   // Mapping the exercise IDs to their names and descriptions
 exerciseDetails.value = record.value.fields.exercises.map(exerciseId => {
   const matchedExercise = exercises.value.find(exercise => exercise.id === exerciseId);
-  return matchedExercise ? { id: matchedExercise.id, fields: { name: matchedExercise.fields.name, description: matchedExercise.fields.description } } : null;
+  return matchedExercise ? { id: matchedExercise.id, fields: { name: matchedExercise.fields.name, description: matchedExercise.fields.description, slug: matchedExercise.fields.slug } } : null;
 });
 }
-
+console.log(exerciseDetails)
   // Update the iframe height when the page is rendered
   await nextTick();
   updateHeight();

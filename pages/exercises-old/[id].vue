@@ -103,34 +103,35 @@
         <div v-if="record.fields.youtubePlaylistID">
           <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Tutorials:</h2>
           <p v-if="record.fields.youtubePlaylistID" class="text-md p-3">
-            <iframe 
-            width="100%" 
-            height="" 
-            class="aspect-video" 
-            :src="'https://www.youtube.com/embed/videoseries?si=qS1_gP2XR65V9BbI&amp;list=' + record.fields.youtubePlaylistID" 
-            title="YouTube video player" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            referrerpolicy="strict-origin-when-cross-origin" 
-            allowfullscreen>
-          </iframe>          </p>
-          <a class="mx-auto btn btn-ghost text-secondary hover:text-secondary:":href="'https://youtube.com/playlist?list=' + record.fields.youtubePlaylistID" target="_blank">Youtube.com playlist <Icon name="octicon:link-external-16" class=" text-sm" /></a>
+            <iframe width="100%" height="" class="aspect-video"
+              :src="'https://www.youtube.com/embed/videoseries?si=qS1_gP2XR65V9BbI&amp;list=' + record.fields.youtubePlaylistID"
+              title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            </iframe>
+          </p>
+          <a class="mx-auto btn btn-ghost text-secondary hover:text-secondary:"
+            :href="'https://youtube.com/playlist?list=' + record.fields.youtubePlaylistID" target="_blank">Youtube.com
+            playlist
+            <Icon name="octicon:link-external-16" class=" text-sm" />
+          </a>
         </div>
         <!-- Displaying the Vimeo Playlist -->
         <div v-if="record.fields.vimeoPlaylistID">
           <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Tutorials:</h2>
           <p v-if="record.fields.vimeoPlaylistID" class="text-md p-3">
-           
+
           <div style='padding:56.25% 0 0 0;position:relative;'>
-            <iframe 
-            :src="'https://vimeo.com/showcase/' + record.fields.vimeoPlaylistID + '/embed'" 
-            class="aspect-video" 
-            allowfullscreen frameborder='0' 
-            style='position:absolute;top:0;
+            <iframe :src="'https://vimeo.com/showcase/' + record.fields.vimeoPlaylistID + '/embed'" class="aspect-video"
+              allowfullscreen frameborder='0' style='position:absolute;top:0;
             left:0;width:100%;
             height:100%;'>
-            </iframe></div>
-          <a class="mx-auto  btn btn-ghost text-secondary hover:text-secondary:":href="'https://vimeo.com/showcase/' + record.fields.vimeoPlaylistID" target="_blank">Vimeo.com playlist <Icon name="octicon:link-external-16" class=" text-sm" /></a>
+            </iframe>
+          </div>
+          <a class="mx-auto  btn btn-ghost text-secondary hover:text-secondary:"
+            :href="'https://vimeo.com/showcase/' + record.fields.vimeoPlaylistID" target="_blank">Vimeo.com playlist
+            <Icon name="octicon:link-external-16" class=" text-sm" />
+          </a>
           </p>
         </div>
         <!-- Displaying the associatedMaterial -->
@@ -159,18 +160,21 @@
     child-list-ul-li-ul-li:pt-1" />
 
         </div>
-        <!-- Displaying the Downloads -->
-       <!-- Displaying the Files -->
-       <div  v-if="record.fields.files && record.fields.files.length">
+        <!-- Displaying the Files -->
+        <div  v-if="record.fields.files && record.fields.files.length">
           <h2 class="text-2xl font-semibold text-left uppercase mb-4">Downloads:</h2>
           <FileComponent :fileData="files" />
         </div>
-        <TableComponent :rubricData="rubric" :criteriaData="criteria" title="Rubric" />
+        <TableComponent :rubricData="rubric" :criteriaData="criteria" title="Rubric:" />
       </div>
       <!-- iframe -->
       <IframeComponent :articleHeight="articleHeight" :currentUrl="currentUrl" :record="record" />
       <LicenseComponent :work="record.fields.name" :currentUrl="currentUrl" :license="license" :author="record.fields.author" :authorURL="record.fields.authorURL" title="License" />
+
     </div>
+
+
+
   </article>
 </template>
 
@@ -181,10 +185,9 @@ definePageMeta({
 
 
 const route = useRoute();
-// const projectId = ref(route.params.id);
-const projectSlug = ref(route.params.id);
+const exerciseId = ref(route.params.id);
 
-const projectsStore = useProjectsStore();
+const exercisesStore = useExercisesStore();
 const criteriaStore = useCriteriaStore();
 const rubricsStore = useRubricsStore();
 const licensesStore = useLicensesStore();
@@ -192,26 +195,24 @@ const filesStore = useFilesStore();
 
 
 const record = ref(null);
-const criteria = ref(null);
 const rubric = ref(null);
+const criteria = ref(null);
 const license = ref(null);
 const files = ref(null);
 const projectAuthor = ref(null);
 const projectAuthorURL = ref(null);
 
-// console.log('License:', license.value);
-// console.log('Project Author:', projectAuthor.value);
-// console.log('Project Author URL:', projectAuthorURL.value);
-
 const articleHeight = ref(0);
 const articleElement = ref(null);
+// const criteriaRecord = ref(null);
+
 
 const updateHeight = () => {
   if (articleElement.value) {
     const rect = articleElement.value.getBoundingClientRect();
     articleHeight.value = Math.ceil(rect.height) + 1000;
   }
-  };
+};
 
 const currentUrl = computed(() => {
   // If you're running Nuxt in SSR mode, ensure window is defined before accessing it.
@@ -220,73 +221,80 @@ const currentUrl = computed(() => {
   }
   return '';
 });
+
 onMounted(async () => {
-  await projectsStore.fetchRecords();
-  // record.value = projectsStore.getProjectById(projectId.value);
-  projectSlug.value = route.params.id;
-  record.value = projectsStore.getProjectBySlug(projectSlug.value);
+  await exercisesStore.fetchRecords();
+  record.value = exercisesStore.getExerciseById(exerciseId.value);
+  const exerciseRecord = exercisesStore.getExerciseById(exerciseId.value);
 
-
-  const projectRecord = projectsStore.getProjectById(projectId.value);
-  if (projectRecord && projectRecord.fields.rubrics) {
-  await rubricsStore.fetchRecords();
-  rubric.value = projectRecord.fields.rubrics.map(rubricId => rubricsStore.getRubricById(rubricId));
-  console.log('Fetched rubrics:', rubric.value);
-}
-
-if (projectRecord && projectRecord.fields.licenses) {
-  await licensesStore.fetchRecords();
-  license.value = projectRecord.fields.licenses.map(licenseId => licensesStore.getLicenseById(licenseId));
-  console.log('Fetched licenses:', license.value);
-
-  if (projectRecord.fields.author) {
-    projectAuthor.value = projectRecord.fields.author;
-    console.log('Project Author:', projectAuthor.value);
-  }
-
-  if (projectRecord.fields.authorURL) {
-    projectAuthorURL.value = projectRecord.fields.authorURL;
-    console.log('Project Author URL:', projectAuthorURL.value);
-  }
-}
-
-// get the files
-if (projectRecord && projectRecord.fields.files) {
-    await filesStore.fetchRecords();
-    // Map the file IDs to the corresponding file records
-    files.value = projectRecord.fields.files.map(fileId => {
-      return filesStore.getFileById(fileId);
-    }).filter(file => file !== null && file !== undefined);
-    console.log('Fetched files:', files.value);
+  // get the rubric
+  if (exerciseRecord && exerciseRecord.fields.rubrics) {
+    await rubricsStore.fetchRecords();
+    rubric.value = exerciseRecord.fields.rubrics.map(rubricId => rubricsStore.getRubricById(rubricId));
+    console.log('Fetched rubrics:', rubric.value);
 
   }
 
-  const rubricId = projectRecord.fields.rubrics;
-  console.log('Rubric ID:', rubricId);
-
+  // Get rubric criteria
   if (rubric.value && rubric.value.length > 0) {
     await criteriaStore.fetchRecords();
     criteria.value = rubric.value[0].fields.criteria.map(criteriaId => criteriaStore.getCriteriaById(criteriaId));
     console.log('Fetched criteria:', criteria.value);
   }
+
+  // get the files
+  if (exerciseRecord && exerciseRecord.fields.files) {
+    await filesStore.fetchRecords();
+    // Map the file IDs to the corresponding file records
+    files.value = exerciseRecord.fields.files.map(fileId => {
+      return filesStore.getFileById(fileId);
+    }).filter(file => file !== null && file !== undefined);
+    console.log('Fetched files:', files.value);
+
+  }
+  // get the license and author
+  if (exerciseRecord && exerciseRecord.fields.licenses) {
+    await licensesStore.fetchRecords();
+    license.value = exerciseRecord.fields.licenses.map(licenseId => licensesStore.getLicenseById(licenseId));
+    console.log('Fetched licenses:', license.value);
+  
+  if (exerciseRecord.fields.author) {
+    projectAuthor.value = exerciseRecord.fields.author;
+    console.log('Project Author:', projectAuthor.value);
+    }
+
+  if (exerciseRecord.fields.authorURL) {
+    projectAuthorURL.value = exerciseRecord.fields.authorURL;
+    console.log('Project Author URL:', projectAuthorURL.value);
+    }
+  }
+
+  // const rubricId = exerciseRecord.fields.rubrics;
+  // console.log('Rubric ID:', rubricId);
+
   // Update the iframe height when the page is rendered
   await nextTick();
   updateHeight();
+
+
 });
+// const filteredCriteria = computed(() => {
+//   return criteriaStore.records.filter(criterion => criterion.fields.rubric.value === 'exercise');
+// });
 
 // Update the iframe height when the record changes
 watch(record, updateHeight, { immediate: true });
 
 const title = computed(() => {
   if (record.value && record.value.fields) {
-    return 'Project: ' + record.value.fields.name
+    return 'Exercise: ' + record.value.fields.name
   }
   // Return a default title if record.value or record.value.fields is not defined
-  return 'Project'
+  return 'Exercise'
 })
 
 useHead({
   title: title.value,
 })
-</script>
 
+</script>
