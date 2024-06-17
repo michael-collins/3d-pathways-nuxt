@@ -33,13 +33,10 @@ useHead({
   title: 'Projects'
 })
 const projectsStore = useProjectsStore(); // Use the dedicated projects store
-const isLoading = ref(true); // Initialize isLoading as true
 
-onMounted(() => {
-  projectsStore.fetchRecords(); // Call the fetchRecords action specific to pathways
-  isLoading.value = false; // Set isLoading to false when the records have been fetched
 
-});
+  await projectsStore.fetchRecords(); // Call the fetchRecords action specific to pathways
+
 // Toggle view mode
 const viewMode = ref('list') // Initialize viewMode as 'grid'
 const updateViewMode = (newViewMode) => {

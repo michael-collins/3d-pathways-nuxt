@@ -37,7 +37,14 @@ export default defineNuxtConfig({
     }
   },
   // target: 'static', // default is 'server'
-  ssr: true,
+  ssr: false,
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      routes: ['/'],
+      // ignore: ["/api"]
+    }
+  },
   // mode: 'static',
 //   router: {
 //     base: '/3d-pathways-nuxt/'

@@ -35,13 +35,9 @@ useHead({
   title: 'Pathways'
 })
 const pathwaysStore = usePathwaysStore(); // Use the dedicated pathways store
-const isLoading = ref(true); // Initialize isLoading as true
 
-onMounted(() => {
-  pathwaysStore.fetchRecords(); // Call the fetchRecords action specific to pathways
-  isLoading.value = false; // Set isLoading to false when the records have been fetched
 
-});
+await pathwaysStore.fetchRecords(); // Call the fetchRecords action specific to pathways
 
 // Toggle view mode
 const viewMode = ref('list') // Initialize viewMode as 'grid'

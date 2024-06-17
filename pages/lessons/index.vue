@@ -32,14 +32,11 @@ definePageMeta({
 useHead({
   title: 'Lessons' // Set the title of the page
 })
-// Loader
-const isLoading = ref(true)
 // Fetch records from the lessons store
 const lessonsStore = useLessonsStore()
-onMounted(() => {
-  lessonsStore.fetchRecords()
-  isLoading.value = false
-})
+
+await lessonsStore.fetchRecords()
+
 // Toggle view mode
 const viewMode = ref('list') // Initialize viewMode as 'grid'
 const updateViewMode = (newViewMode) => {

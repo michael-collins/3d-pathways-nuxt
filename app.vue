@@ -8,8 +8,8 @@ useHead( {
 
 <template>
   <div>
-    <NuxtLoadingIndicator v-if="isLoading" aria-label="Loading..." />
-    <NuxtLayout v-else>
+    <NuxtLoadingIndicator />
+    <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
   </div>

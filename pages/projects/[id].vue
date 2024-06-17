@@ -220,14 +220,14 @@ const currentUrl = computed(() => {
   }
   return '';
 });
-onMounted(async () => {
+
   await projectsStore.fetchRecords();
   // record.value = projectsStore.getProjectById(projectId.value);
   projectSlug.value = route.params.id;
   record.value = projectsStore.getProjectBySlug(projectSlug.value);
 
 
-  const projectRecord = projectsStore.getProjectById(projectId.value);
+  const projectRecord = projectsStore.getProjectById(record.value.id);
   if (projectRecord && projectRecord.fields.rubrics) {
   await rubricsStore.fetchRecords();
   rubric.value = projectRecord.fields.rubrics.map(rubricId => rubricsStore.getRubricById(rubricId));
@@ -272,7 +272,7 @@ if (projectRecord && projectRecord.fields.files) {
   // Update the iframe height when the page is rendered
   await nextTick();
   updateHeight();
-});
+
 
 // Update the iframe height when the record changes
 watch(record, updateHeight, { immediate: true });

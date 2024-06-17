@@ -206,8 +206,7 @@ const updateHeight = () => {
   return '';
 });
 
-onMounted(async () => {
-  await pathwaysStore.fetchRecords();
+pathwaysStore.fetchRecords();
   // const { records } = pathwaysStore;
   pathwaySlug.value = route.params.id;
   record.value = pathwaysStore.getPathwayBySlug(pathwaySlug.value);
@@ -256,7 +255,7 @@ console.log(exerciseDetails)
   // Update the iframe height when the page is rendered
   await nextTick();
   updateHeight();
-});
+
 
 // Update the iframe height when the record changes
 watch(record, updateHeight, { immediate: true });

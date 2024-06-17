@@ -35,14 +35,11 @@
     title: 'Lectures'
   })
   const lecturesStore = useLecturesStore(); // Use the dedicated lectures store
-  const isLoading = ref(true); // Initialize isLoading as true
   
   
-  onMounted(() => {
-    lecturesStore.fetchRecords(); // Call the fetchRecords action specific to lectures
-    isLoading.value = false; // Set isLoading to false when the records have been fetched
+
+  await lecturesStore.fetchRecords(); // Call the fetchRecords action specific to lectures
   
-  });
   // Toggle view mode
 const viewMode = ref('list') // Initialize viewMode as 'grid'
 const updateViewMode = (newViewMode) => {

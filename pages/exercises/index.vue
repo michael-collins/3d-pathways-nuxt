@@ -33,13 +33,9 @@ useHead({
   title: 'Exercises'
 })
 const exercisesStore = useExercisesStore(); // Use the dedicated exercises store
-const isLoading = ref(true); // Initialize isLoading as true
 
-onMounted(() => {
-  exercisesStore.fetchRecords(); // Call the fetchRecords action specific to pathways
-  isLoading.value = false; // Set isLoading to false when the records have been fetched
+  await exercisesStore.fetchRecords(); // Call the fetchRecords action specific to pathways
 
-});
 // Toggle view mode
 const viewMode = ref('list') // Initialize viewMode as 'grid'
 const updateViewMode = (newViewMode) => {

@@ -223,7 +223,6 @@ const currentUrl = computed(() => {
   return '';
 });
 
-onMounted(async () => {
   await exercisesStore.fetchRecords();
   exerciseSlug.value = route.params.id;
   console.log('exerciseSlug.value:', exerciseSlug.value); // Debugging line
@@ -282,7 +281,7 @@ onMounted(async () => {
   updateHeight();
 
   console.log(record.value)
-});
+
 // const filteredCriteria = computed(() => {
 //   return criteriaStore.records.filter(criterion => criterion.fields.rubric.value === 'exercise');
 // });

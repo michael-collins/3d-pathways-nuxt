@@ -110,7 +110,7 @@
     }
     return '';
   });
-  onMounted(async () => {
+  
     await lecturesStore.fetchRecords();
     lectureSlug.value = route.params.id;
     console.log('lectureSlug.value:', lectureSlug.value); // Debugging line
@@ -129,7 +129,7 @@
     // Update the iframe height when the page is rendered
   await nextTick();
       updateHeight();
-  });
+
      // Update the iframe height when the record changes
      watch(record, updateHeight, { immediate: true });
 

@@ -33,13 +33,8 @@ useHead({
   title: 'Specializations'
 })
 const specializationsStore = useSpecializationsStore(); // Use the dedicated specializations store
-const isLoading = ref(true); // Initialize isLoading as true
 
-onMounted(() => {
-  specializationsStore.fetchRecords(); // Call the fetchRecords action specific to specializations
-  isLoading.value = false; // Set isLoading to false when the records have been fetched
-
-});
+await specializationsStore.fetchRecords(); // Call the fetchRecords action specific to specializations
 
 // Toggle view mode
 const viewMode = ref('list') // Initialize viewMode as 'grid'
