@@ -18,6 +18,19 @@
           </ul>
         </div>
         <div v-else class="pb-8"><!-- I'm here to handle the divide style utility--></div>
+        <!-- Displaying the Tags -->
+        <div v-if="record.fields.tags" class="pb-8">
+          <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Software:</h2>
+
+          <!-- Displaying the tags -->
+          <ul class="space-x-2">
+            <li v-for="tag in record.fields.tags" :key="tag" class="badge bg-base-300 text-xs uppercase">
+              {{ tag }}
+            </li>
+
+          </ul>
+        </div>
+        <div v-else class="pb-8"><!-- I'm here to handle the divide style utility--></div>
 
         <!-- Displaying the Description -->
         <div v-if="record.fields.description">
