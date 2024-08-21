@@ -33,8 +33,7 @@ useHead({
   title: 'Exercises'
 })
 const exercisesStore = useExercisesStore(); // Use the dedicated exercises store
-
-  await exercisesStore.fetchRecords(); // Call the fetchRecords action specific to pathways
+await exercisesStore.fetchRecords(); // Call the fetchRecords action specific to pathways
 
 // Toggle view mode
 const viewMode = ref('list') // Initialize viewMode as 'grid'

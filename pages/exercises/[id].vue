@@ -1,7 +1,8 @@
 <template>
   <article ref="articleElement">
     <div v-if="record" class="container max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
-      <div v-if="showAlert" class="alert alert-warning">
+      <!-- Hidden items display alert -->
+      <div v-if="showAlert" class="alert alert-warning my-2">
         <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-6 w-6 shrink-0 stroke-current"
@@ -17,6 +18,7 @@
           Some items are hidden based on settings in the URL.
         </span>  
       </div>
+      
       <!-- Displaying the Name and Image -->
       <img v-if="showImage && record.fields.image" 
       :src="record.fields.image[0].thumbnails.large.url" class="w-full h-auto rounded-lg" 
@@ -457,7 +459,7 @@ const updateCheckboxesFromUrl = (query) => {
 const showAlert = computed(() => {
   const query = route.query;
   return (
-    (query.hideImage || query.hideTitle || query.hideDifficulty || query.hideTags || query.hideDescription) &&
+    (query.hideImage || query.hideTitle || query.hideDifficulty || query.hideTags || query.hideDescription || query.hideLearningObjectives || query.hideInstructions || query.hideYoutubePlaylist || query.hideVimeoPlaylist || query.hideAssociatedMaterial || query.hideFiles || query.hideRubric || query.hideLicense) &&
     !query.iframe
   );
 });
