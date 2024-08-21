@@ -11,7 +11,7 @@
       <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg> -->
       <Icon name="charm:menu-hamburger" class="text-xl" />
     </label>
-    <header v-if="!iframe">
+    <header v-if="!hidePageElements">
         <!-- <NavBar  /> -->
         <BreadcrumbsComponent 
           :pathwayName="pathwayName" 
@@ -29,12 +29,12 @@
       </div>
     </main>
     <footer>
-      <FooterComponent v-if="!iframe" />
+      <FooterComponent v-if="!hidePageElements" />
     </footer>  
     
   
   </div> 
-  <div class="drawer-side" v-if="!iframe">
+  <div class="drawer-side" v-if="!hidePageElements">
     <label for="side-navigation-drawer" aria-label="close sidebar" class="drawer-overlay"></label> 
     <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content " @focusin="toggleDrawer">
       <!-- Sidebar content here -->
@@ -114,9 +114,12 @@ const handleKeydown = (event) => {
     }
   };
 
-const iframe = computed(() => route.query.iframe === 'true');
-// v-if="!iframe"
+// const iframe = computed(() => route.query.iframe === 'true');
+// v-if="!hidePageElements"
 // ?iframe=true
+// Computed property for hidePageElements based on the URL query parameter
+const hidePageElements = computed(() => route.query.hidePageElements === 'true');
+
 
 const updateNames = async () => {
   const newId = route.params.id;

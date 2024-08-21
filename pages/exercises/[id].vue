@@ -2,7 +2,7 @@
   <article ref="articleElement">
     <div v-if="record" class="container max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
       <!-- Hidden items display alert -->
-      <div v-if="showAlert" class="alert alert-warning my-2">
+      <!-- <div v-if="showAlert" class="alert alert-warning my-2">
         <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-6 w-6 shrink-0 stroke-current"
@@ -17,7 +17,7 @@
         <span>
           Some items are hidden based on settings in the URL.
         </span>  
-      </div>
+      </div> -->
       
       <!-- Displaying the Name and Image -->
       <img v-if="showImage && record.fields.image" 
@@ -200,74 +200,84 @@
         <TableComponent v-if="showRubric" :rubricData="rubric" :criteriaData="criteria" title="Rubric:" />
       </div>
       <!-- iframe -->
-      <IframeComponent :articleHeight="articleHeight" :currentUrl="currentUrl" :record="record" >
+      <IframeComponent v-if="showIframe" :articleHeight="articleHeight" :iframeUrl="iframeUrl" :record="record" >
         <!-- Menu of Checkboxes -->
  
       
       <ul class="menu menu-xs bg-base-200 rounded-box">
         <li>
           <label>
-        <input tabindex="0" type="checkbox" v-model="showImage" @change="updateUrl" /> Show Image
+        <input tabindex="0" type="checkbox" v-model="iframeShowPageElements" @change="updateIframeUrl" /> Show Page Elements
           </label>
         </li>
         <li>
           <label>
-        <input tabindex="0" type="checkbox" v-model="showTitle" @change="updateUrl" /> Show Title
+        <input tabindex="0" type="checkbox" v-model="iframeShowImage" @change="updateIframeUrl" /> Show Image
           </label>
         </li>
         <li>
           <label>
-        <input tabindex="0" type="checkbox" v-model="showDifficulty" @change="updateUrl" /> Show Difficulty
+        <input tabindex="0" type="checkbox" v-model="iframeShowTitle" @change="updateIframeUrl" /> Show Title
           </label>
         </li>
         <li>
           <label>
-        <input tabindex="0" type="checkbox" v-model="showTags" @change="updateUrl" /> Show Tags
+        <input tabindex="0" type="checkbox" v-model="iframeShowDifficulty" @change="updateIframeUrl" /> Show Difficulty
           </label>
         </li>
         <li>
           <label>
-        <input tabindex="0" type="checkbox" v-model="showDescription" @change="updateUrl" /> Show Description
+        <input tabindex="0" type="checkbox" v-model="iframeShowTags" @change="updateIframeUrl" /> Show Tags
           </label>
         </li>
         <li>
           <label>
-        <input tabindex="0" type="checkbox" v-model="showLearningObjectives" @change="updateUrl" /> Show Learning Objectives
+        <input tabindex="0" type="checkbox" v-model="iframeShowDescription" @change="updateIframeUrl" /> Show Description
           </label>
         </li>
         <li>
           <label>
-        <input tabindex="0" type="checkbox" v-model="showInstructions" @change="updateUrl" /> Show Instructions
+        <input tabindex="0" type="checkbox" v-model="iframeShowLearningObjectives" @change="updateIframeUrl" /> Show Learning Objectives
           </label>
         </li>
         <li>
           <label>
-        <input tabindex="0" type="checkbox" v-model="showYoutubePlaylist" @change="updateUrl" /> Show YouTube Playlist
+        <input tabindex="0" type="checkbox" v-model="iframeShowInstructions" @change="updateIframeUrl" /> Show Instructions
           </label>
         </li>
         <li>
           <label>
-        <input tabindex="0" type="checkbox" v-model="showVimeoPlaylist" @change="updateUrl" /> Show Vimeo Playlist
+        <input tabindex="0" type="checkbox" v-model="iframeShowYoutubePlaylist" @change="updateIframeUrl" /> Show YouTube Playlist
           </label>
         </li>
         <li>
           <label>
-        <input tabindex="0" type="checkbox" v-model="showAssociatedMaterial" @change="updateUrl" /> Show Associated Material
+        <input tabindex="0" type="checkbox" v-model="iframeShowVimeoPlaylist" @change="updateIframeUrl" /> Show Vimeo Playlist
           </label>
         </li>
         <li>
           <label>
-        <input tabindex="0" type="checkbox" v-model="showFiles" @change="updateUrl" /> Show Files
+        <input tabindex="0" type="checkbox" v-model="iframeShowAssociatedMaterial" @change="updateIframeUrl" /> Show Associated Material
           </label>
         </li>
         <li>
           <label>
-        <input tabindex="0" type="checkbox" v-model="showRubric" @change="updateUrl" /> Show Rubric
+        <input tabindex="0" type="checkbox" v-model="iframeShowFiles" @change="updateIframeUrl" /> Show Files
           </label>
         </li>
         <li>
           <label>
-        <input tabindex="0" type="checkbox" v-model="showLicense" @change="updateUrl" /> Show License
+        <input tabindex="0" type="checkbox" v-model="iframeShowRubric" @change="updateIframeUrl" /> Show Rubric
+          </label>
+        </li>
+        <li>
+          <label>
+        <input tabindex="0" type="checkbox" v-model="iframeShowIframe" @change="updateIframeUrl" /> Show iFrame
+          </label>
+        </li>
+        <li>
+          <label>
+        <input tabindex="0" type="checkbox" v-model="iframeShowLicense" @change="updateIframeUrl" /> Show License
           </label>
         </li>
       </ul>
@@ -291,7 +301,7 @@ definePageMeta({
 
 
 const route = useRoute();
-const router = useRouter();
+// const router = useRouter();
 // const exerciseId = ref(route.params.id);
 const exerciseSlug = ref(route.params.id);
 
@@ -325,7 +335,11 @@ const updateHeight = () => {
 const currentUrl = computed(() => {
   // If you're running Nuxt in SSR mode, ensure window is defined before accessing it.
   if (typeof window !== 'undefined') {
-    return window.location.origin + route.fullPath;
+    const url = new URL(window.location.origin + route.fullPath);
+    url.searchParams.forEach((value, key) => {
+      url.searchParams.set(key, encodeURIComponent(value));
+    });
+    return url.toString();
   }
   return '';
 });
@@ -396,6 +410,8 @@ const currentUrl = computed(() => {
 // Update the iframe height when the record changes
 watch(record, updateHeight, { immediate: true });
 
+
+
 const title = computed(() => {
   if (record.value && record.value.fields) {
     return 'Exercise: ' + record.value.fields.name
@@ -407,7 +423,7 @@ const title = computed(() => {
 useHead({
   title: title.value,
 })
-
+const showPageElements = ref(true);
 const showImage = ref(true);
 const showTitle = ref(true);
 const showDifficulty = ref(true);
@@ -420,55 +436,143 @@ const showVimeoPlaylist = ref(true);
 const showAssociatedMaterial = ref(true);
 const showFiles = ref(true);
 const showRubric = ref(true);
+const showIframe = ref(true);
 const showLicense = ref(true);
 
-const updateUrl = () => {
+const iframeShowPageElements = ref(true);
+const iframeShowImage = ref(true);
+const iframeShowTitle = ref(true);
+const iframeShowDifficulty = ref(true);
+const iframeShowTags = ref(true);
+const iframeShowDescription = ref(true);
+const iframeShowLearningObjectives = ref(true);
+const iframeShowInstructions = ref(true);
+const iframeShowYoutubePlaylist = ref(true);
+const iframeShowVimeoPlaylist = ref(true);
+const iframeShowAssociatedMaterial = ref(true);
+const iframeShowFiles = ref(true);
+const iframeShowRubric = ref(true);
+const iframeShowIframe = ref(true);
+const iframeShowLicense = ref(true);
+
+const updateIframeUrl = () => {
   const query = {};
-  if (!showImage.value) query.hideImage = true;
-  if (!showTitle.value) query.hideTitle = true;
-  if (!showDifficulty.value) query.hideDifficulty = true;
-  if (!showTags.value) query.hideTags = true;
-  if (!showDescription.value) query.hideDescription = true;
-  if (!showLearningObjectives.value) query.hideLearningObjectives = true;
-  if (!showInstructions.value) query.hideInstructions = true;
-  if (!showYoutubePlaylist.value) query.hideYoutubePlaylist = true;
-  if (!showVimeoPlaylist.value) query.hideVimeoPlaylist = true;
-  if (!showAssociatedMaterial.value) query.hideAssociatedMaterial = true;
-  if (!showFiles.value) query.hideFiles = true;
-  if (!showRubric.value) query.hideRubric = true;
-  if (!showLicense.value) query.hideLicense = true;
-  router.push({ query });
+  if (!iframeShowPageElements.value) query.hidePageElements = true;
+  if (!iframeShowImage.value) query.hideImage = true;
+  if (!iframeShowTitle.value) query.hideTitle = true;
+  if (!iframeShowDifficulty.value) query.hideDifficulty = true;
+  if (!iframeShowTags.value) query.hideTags = true;
+  if (!iframeShowDescription.value) query.hideDescription = true;
+  if (!iframeShowLearningObjectives.value) query.hideLearningObjectives = true;
+  if (!iframeShowInstructions.value) query.hideInstructions = true;
+  if (!iframeShowYoutubePlaylist.value) query.hideYoutubePlaylist = true;
+  if (!iframeShowVimeoPlaylist.value) query.hideVimeoPlaylist = true;
+  if (!iframeShowAssociatedMaterial.value) query.hideAssociatedMaterial = true;
+  if (!iframeShowFiles.value) query.hideFiles = true;
+  if (!iframeShowRubric.value) query.hideRubric = true;
+  if (!iframeShowIframe.value) query.hideIframe = true;
+  if (!iframeShowLicense.value) query.hideLicense = true;
+  iframeUrl.value = constructUrlWithQuery(query);
+};
+
+const constructUrlWithQuery = (query) => {
+  const url = new URL(window.location.origin + route.fullPath);
+  Object.keys(query).forEach(key => {
+    url.searchParams.set(key, encodeURIComponent(query[key]));
+  });
+  return url.toString();
 };
 
 const updateCheckboxesFromUrl = (query) => {
-  showImage.value = !query.hideImage;
-  showTitle.value = !query.hideTitle;
-  showDifficulty.value = !query.hideDifficulty;
-  showTags.value = !query.hideTags;
-  showDescription.value = !query.hideDescription;
-  showLearningObjectives.value = !query.hideLearningObjectives;
-  showInstructions.value = !query.hideInstructions;
-  showYoutubePlaylist.value = !query.hideYoutubePlaylist;
-  showVimeoPlaylist.value = !query.hideVimeoPlaylist;
-  showAssociatedMaterial.value = !query.hideAssociatedMaterial;
-  showFiles.value = !query.hideFiles;
-  showRubric.value = !query.hideRubric;
-  showLicense.value = !query.hideLicense;
+  iframeShowPageElements.value = !query.hidePageElements;
+  iframeShowImage.value = !query.hideImage;
+  iframeShowTitle.value = !query.hideTitle;
+  iframeShowDifficulty.value = !query.hideDifficulty;
+  iframeShowTags.value = !query.hideTags;
+  iframeShowDescription.value = !query.hideDescription;
+  iframeShowLearningObjectives.value = !query.hideLearningObjectives;
+  iframeShowInstructions.value = !query.hideInstructions;
+  iframeShowYoutubePlaylist.value = !query.hideYoutubePlaylist;
+  iframeShowVimeoPlaylist.value = !query.hideVimeoPlaylist;
+  iframeShowAssociatedMaterial.value = !query.hideAssociatedMaterial;
+  iframeShowFiles.value = !query.hideFiles;
+  iframeShowRubric.value = !query.hideRubric;
+  iframeShowIframe.value = !query.hideIframe;
+  iframeShowLicense.value = !query.hideLicense;
 };
 
-const showAlert = computed(() => {
-  const query = route.query;
-  return (
-    (query.hideImage || query.hideTitle || query.hideDifficulty || query.hideTags || query.hideDescription || query.hideLearningObjectives || query.hideInstructions || query.hideYoutubePlaylist || query.hideVimeoPlaylist || query.hideAssociatedMaterial || query.hideFiles || query.hideRubric || query.hideLicense) &&
-    !query.iframe
-  );
-});
+// const showAlert = computed(() => {
+//   const query = route.query;
+//   return (
+//     (query.hidePageElements || query.hideImage || query.hideTitle || query.hideDifficulty || query.hideTags || query.hideDescription || query.hideLearningObjectives || query.hideInstructions || query.hideYoutubePlaylist || query.hideVimeoPlaylist || query.hideAssociatedMaterial || query.hideFiles || query.hideIframe || query.hideRubric || query.hideLicense) &&
+//     !query.iframe
+//   );
+// });
+
+
+const iframeUrl = ref('');
+
 watch(route, (to) => {
   updateCheckboxesFromUrl(to.query);
 });
 
-onMounted(() => {
+watch([
+  iframeShowPageElements,
+  iframeShowImage,
+  iframeShowTitle,
+  iframeShowDifficulty,
+  iframeShowTags,
+  iframeShowDescription,
+  iframeShowLearningObjectives,
+  iframeShowInstructions,
+  iframeShowYoutubePlaylist,
+  iframeShowVimeoPlaylist,
+  iframeShowAssociatedMaterial,
+  iframeShowFiles,
+  iframeShowRubric,
+  iframeShowIframe,
+  iframeShowLicense
+], () => {
+  updateIframeUrl();
+});
+
+// Function to hide elements based on URL parameters
+const applyUrlParameters = () => {
+  const query = route.query;  // Fetch the query parameters from the route
+
+  if (query.hidePageElements) showPageElements.value = false;
+  if (query.hideImage) showImage.value = false;
+  if (query.hideTitle) showTitle.value = false;
+  if (query.hideDifficulty) showDifficulty.value = false;
+  if (query.hideTags) showTags.value = false;
+  if (query.hideDescription) showDescription.value = false;
+  if (query.hideLearningObjectives) showLearningObjectives.value = false;
+  if (query.hideInstructions) showInstructions.value = false;
+  if (query.hideYoutubePlaylist) showYoutubePlaylist.value = false;
+  if (query.hideVimeoPlaylist) showVimeoPlaylist.value = false;
+  if (query.hideAssociatedMaterial) showAssociatedMaterial.value = false;
+  if (query.hideFiles) showFiles.value = false;
+  if (query.hideRubric) showRubric.value = false;
+  if (query.hideIframe) showIframe.value = false;
+  if (query.hideLicense) showLicense.value = false;
+};
+
+// Watch the route for changes to apply URL parameters if the URL changes
+watch(route, () => {
+  applyUrlParameters();
+});
+
+onMounted(async () => {
+  await exercisesStore.fetchRecords();
+  exerciseSlug.value = route.params.id;
+  console.log('exerciseSlug.value:', exerciseSlug.value); // Debugging line
+  record.value = exercisesStore.getExerciseBySlug(exerciseSlug.value);
+  console.log('record.value:', record.value); // Debugging line
+
   updateCheckboxesFromUrl(route.query);
   updateHeight();
+  updateIframeUrl();
+  applyUrlParameters();
+
 });
 </script>

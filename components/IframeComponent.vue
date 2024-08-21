@@ -9,7 +9,7 @@
         <div class="overflow-x-scroll " role="region" aria-label="iFrame embed">
           <pre class="language-html text-primary-content">
           <code tabindex="0" ref="iframeCode">
-              &lt;iframe width="100%" height="{{articleHeight}}px" src="{{currentUrl}}?iframe=true" style="border:none;" title="{{ record.fields && record.fields.name ? record.fields.name : 'Exercise' }}" &gt;&lt;/iframe&gt;
+              &lt;iframe width="100%" height="{{articleHeight}}px" src="{{iframeUrl}}" style="border:none;" title="{{ record.fields && record.fields.name ? record.fields.name : 'Exercise' }}" &gt;&lt;/iframe&gt;
           </code>
           </pre>  
        </div>
@@ -28,7 +28,7 @@
   import { ref } from 'vue';
   
   export default {
-    props: ['articleHeight', 'currentUrl', 'record'],
+    props: ['articleHeight', 'iframeUrl', 'record'],
     setup() {
       const iframeCode = ref(null);
   
