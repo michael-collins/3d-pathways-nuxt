@@ -3,7 +3,7 @@
     <div v-if="record" class="container max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
       <!-- Displaying the Name and Image -->
       <img v-if="record.fields.image" 
-      :src="record.fields.image[0].url" class="w-full h-auto rounded-lg" 
+      :src="record.fields.image[0].thumbnails.large.url" class="w-full h-auto rounded-lg" 
       :aria-label="`Image for ${record.fields.name ? record.fields.name : 'article content.'}. ${record.fields.imageAlt ? record.fields.imageAlt : 'Image for decoration only.'}`"
       />
       <h1 v-if="record.fields.name" class="text-5xl font-bold mt-8 mb-4">{{ record.fields.name }}</h1>
@@ -116,19 +116,19 @@
         </div>
 
         <!-- Displaying the YouTube Playlist -->
-        <div v-if="record.fields.youtubePlaylistID">
+        <div class="flex flex-col justify-items-stretch" v-if="record.fields.youtubePlaylistID">
           <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Tutorials:</h2>
           <p v-if="record.fields.youtubePlaylistID" class="text-md p-3">
-            <iframe width="100%" height="" class="aspect-video"
+            <iframe width="100%" height="" class="aspect-video" 
               :src="'https://www.youtube.com/embed/videoseries?si=qS1_gP2XR65V9BbI&amp;list=' + record.fields.youtubePlaylistID"
               title="YouTube video player" frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
             </iframe>
           </p>
-          <a class="mx-auto btn btn-ghost text-secondary hover:text-secondary:"
-            :href="'https://youtube.com/playlist?list=' + record.fields.youtubePlaylistID" target="_blank">Youtube.com
-            playlist
+          <a class="justify-self-auto mx-auto btn btn-ghost text-primary hover:text-secondary:"
+            aria-label="View on Youtube" 
+            :href="'https://youtube.com/playlist?list=' + record.fields.youtubePlaylistID" target="_blank">View playlist on Youtube.com
             <Icon name="octicon:link-external-16" class=" text-sm" />
           </a>
         </div>

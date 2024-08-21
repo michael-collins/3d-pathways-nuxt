@@ -3,11 +3,11 @@
     <div class="flex flex-col h-screen">
       
       <div class="drawer lg:drawer-open" role="navigation" :aria-expanded="drawerOpen">
-  <input id="nav-drawer-2" type="checkbox" class="drawer-toggle" v-model="drawerOpen" />
+  <input id="side-navigation-drawer" type="checkbox" class="drawer-toggle" v-model="drawerOpen" />
   <div class="drawer-content">
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <label for="nav-drawer-2" class="btn btn-ghost drawer-button lg:hidden left m-1">
+    <label for="side-navigation-drawer" class="btn btn-ghost drawer-button lg:hidden left m-1">
       <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg> -->
       <Icon name="charm:menu-hamburger" class="text-xl" />
     </label>
@@ -35,10 +35,10 @@
   
   </div> 
   <div class="drawer-side" v-if="!iframe">
-    <label for="nav-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label> 
+    <label for="side-navigation-drawer" aria-label="close sidebar" class="drawer-overlay"></label> 
     <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content " @focusin="toggleDrawer">
       <!-- Sidebar content here -->
-      <label for="nav-drawer-2" class="btn btn-ghost lg:hidden">Close <Icon name="material-symbols:close-small" class="text-xl" />
+      <label for="side-navigation-drawer" class="btn btn-ghost lg:hidden">Close <Icon name="material-symbols:close-small" class="text-xl" />
         <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg> -->
       </label>
       <NavMenu  />

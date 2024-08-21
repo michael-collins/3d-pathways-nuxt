@@ -2,15 +2,15 @@
   <div v-if="rubricData && rubricData.length">
     <h2 class="text-2xl font-semibold text-left uppercase mb-4"> {{ title }}</h2>
     <div class="border border-base-300 rounded-lg m-8 p-4">
-      <h3 class="prose pt-8 uppercase text-center text-lg" v-for="record in rubricData" :key="record.id">{{ record.fields.name }} Rubric</h3>
-      <p class="prose pt-2 pb-8 px-6 text-center" v-for="record in rubricData" :key="record.id">{{ record.fields.description }}</p>
+      <h3 class="prose pt-8 uppercase text-left text-lg pl-4" v-for="record in rubricData" :key="record.id">{{ record.fields.name }} Rubric</h3>
+      <p class="prose pt-2 pb-8 px-6 text-left" v-for="record in rubricData" :key="record.id">{{ record.fields.description }}</p>
 
     <div class="overflow-x-auto">
       <table class="table table-sm" v-if="criteriaData && criteriaData.length">
         <thead>
           <tr>
-            <th>Criterion</th>
-            <th>Description</th>
+            <th class="text-base-content">Criterion</th>
+            <th class="text-base-content">Description</th>
           </tr>
         </thead>
         <tbody>
