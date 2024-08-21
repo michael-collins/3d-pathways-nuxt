@@ -1,17 +1,33 @@
 <template>
   <article ref="articleElement">
     <div v-if="record" class="container max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
+      <div v-if="showAlert" class="alert alert-warning">
+        <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 shrink-0 stroke-current"
+        fill="none"
+        viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+        <span>
+          Some items are hidden based on settings in the URL.
+        </span>  
+      </div>
       <!-- Displaying the Name and Image -->
-      <img v-if="record.fields.image" 
+      <img v-if="showImage && record.fields.image" 
       :src="record.fields.image[0].thumbnails.large.url" class="w-full h-auto rounded-lg" 
       :aria-label="`Image for ${record.fields.name ? record.fields.name : 'article content.'}. ${record.fields.imageAlt ? record.fields.imageAlt : 'Image for decoration only.'}`"
       />
-      <h1 v-if="record.fields.name" class="text-5xl font-bold mt-8 mb-4">{{ record.fields.name }}</h1>
+      <h1 v-if="showTitle && record.fields.name" class="text-5xl font-bold mt-8 mb-4">{{ record.fields.name }}</h1>
 
       <div v-if="record && record.fields" :key="record.id" class="space-y-10 divide-y-4 divide-neutral">
 
         <!-- Displaying the Difficulty -->
-        <div v-if="record.fields.difficulty" class="pb-8">
+        <div v-if="showDifficulty && record.fields.difficulty" class="pb-8">
           <!-- Displaying the difficulty levels -->
           <ul class="space-x-2">
             <li v-for="level in record.fields.difficulty" :key="level" class="badge badge-outline text-xs uppercase">
@@ -22,7 +38,7 @@
         </div>
         <div v-else class="pb-8"><!-- I'm here to handle the divide style utility--></div>
         <!-- Displaying the Tags -->
-        <div v-if="record.fields.tags" class="pb-8">
+        <div v-if="showTags && record.fields.tags" class="pb-8">
           <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Software:</h2>
 
           <!-- Displaying the tags -->
@@ -33,10 +49,8 @@
 
           </ul>
         </div>
-        <div v-else class="pb-8"><!-- I'm here to handle the divide style utility--></div>
-
         <!-- Displaying the Description -->
-        <div v-if="record.fields.description">
+        <div v-if="showDescription && record.fields.description">
           <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Description:</h2>
           <MDC :value="record.fields.description" class="markdown mx-2 
     child-a:font-medium 
@@ -62,7 +76,7 @@
         </div>
 
         <!-- Displaying the Learning Objectives -->
-        <div v-if="record.fields.learningObjectives">
+        <div v-if="showLearningObjectives && record.fields.learningObjectives">
           <h2 class="text-2xl font-semibold text-left uppercase mb-4">Learning Objectives:</h2>
           <MDC :value="record.fields.learningObjectives" class="markdown mx-2 
           child-a:font-medium 
@@ -90,7 +104,7 @@
         </div>
 
         <!-- Displaying the Instructions -->
-        <div v-if="record.fields.instructions">
+        <div v-if="showInstructions && record.fields.instructions">
           <h2 class="text-2xl font-semibold text-left uppercase mb-4">Instructions:</h2>
           <MDC :value="record.fields.instructions" class="markdown mx-2 
     child-a:font-medium 
@@ -116,7 +130,7 @@
         </div>
 
         <!-- Displaying the YouTube Playlist -->
-        <div class="flex flex-col justify-items-stretch" v-if="record.fields.youtubePlaylistID">
+        <div class="flex flex-col justify-items-stretch" v-if="showYoutubePlaylist && record.fields.youtubePlaylistID">
           <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Tutorials:</h2>
           <p v-if="record.fields.youtubePlaylistID" class="text-md p-3">
             <iframe width="100%" height="" class="aspect-video" 
@@ -133,7 +147,7 @@
           </a>
         </div>
         <!-- Displaying the Vimeo Playlist -->
-        <div v-if="record.fields.vimeoPlaylistID">
+        <div v-if="showVimeoPlaylist && record.fields.vimeoPlaylistID">
           <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Tutorials:</h2>
           <p v-if="record.fields.vimeoPlaylistID" class="text-md p-3">
 
@@ -151,7 +165,7 @@
           </p>
         </div>
         <!-- Displaying the associatedMaterial -->
-        <div v-if="record.fields.associatedMaterial">
+        <div v-if="showAssociatedMaterial && record.fields.associatedMaterial">
           <h2 class="text-2xl font-semibold text-left uppercase mb-4">Associated Material:</h2>
           <MDC :value="record.fields.associatedMaterial" class="p-3 markdown mx-2 
     child-a:font-medium 
@@ -177,15 +191,89 @@
 
         </div>
         <!-- Displaying the Files -->
-        <div  v-if="record.fields.files && record.fields.files.length">
+        <div  v-if="showFiles && record.fields.files && record.fields.files.length">
           <h2 class="text-2xl font-semibold text-left uppercase mb-4">Downloads:</h2>
           <FileComponent :fileData="files" />
         </div>
-        <TableComponent :rubricData="rubric" :criteriaData="criteria" title="Rubric:" />
+        <TableComponent v-if="showRubric" :rubricData="rubric" :criteriaData="criteria" title="Rubric:" />
       </div>
       <!-- iframe -->
-      <IframeComponent :articleHeight="articleHeight" :currentUrl="currentUrl" :record="record" />
-      <LicenseComponent :work="record.fields.name" :currentUrl="currentUrl" :license="license" :author="record.fields.author" :authorURL="record.fields.authorURL" title="License" />
+      <IframeComponent :articleHeight="articleHeight" :currentUrl="currentUrl" :record="record" >
+        <!-- Menu of Checkboxes -->
+ 
+      
+      <ul class="menu menu-xs bg-base-200 rounded-box">
+        <li>
+          <label>
+        <input tabindex="0" type="checkbox" v-model="showImage" @change="updateUrl" /> Show Image
+          </label>
+        </li>
+        <li>
+          <label>
+        <input tabindex="0" type="checkbox" v-model="showTitle" @change="updateUrl" /> Show Title
+          </label>
+        </li>
+        <li>
+          <label>
+        <input tabindex="0" type="checkbox" v-model="showDifficulty" @change="updateUrl" /> Show Difficulty
+          </label>
+        </li>
+        <li>
+          <label>
+        <input tabindex="0" type="checkbox" v-model="showTags" @change="updateUrl" /> Show Tags
+          </label>
+        </li>
+        <li>
+          <label>
+        <input tabindex="0" type="checkbox" v-model="showDescription" @change="updateUrl" /> Show Description
+          </label>
+        </li>
+        <li>
+          <label>
+        <input tabindex="0" type="checkbox" v-model="showLearningObjectives" @change="updateUrl" /> Show Learning Objectives
+          </label>
+        </li>
+        <li>
+          <label>
+        <input tabindex="0" type="checkbox" v-model="showInstructions" @change="updateUrl" /> Show Instructions
+          </label>
+        </li>
+        <li>
+          <label>
+        <input tabindex="0" type="checkbox" v-model="showYoutubePlaylist" @change="updateUrl" /> Show YouTube Playlist
+          </label>
+        </li>
+        <li>
+          <label>
+        <input tabindex="0" type="checkbox" v-model="showVimeoPlaylist" @change="updateUrl" /> Show Vimeo Playlist
+          </label>
+        </li>
+        <li>
+          <label>
+        <input tabindex="0" type="checkbox" v-model="showAssociatedMaterial" @change="updateUrl" /> Show Associated Material
+          </label>
+        </li>
+        <li>
+          <label>
+        <input tabindex="0" type="checkbox" v-model="showFiles" @change="updateUrl" /> Show Files
+          </label>
+        </li>
+        <li>
+          <label>
+        <input tabindex="0" type="checkbox" v-model="showRubric" @change="updateUrl" /> Show Rubric
+          </label>
+        </li>
+        <li>
+          <label>
+        <input tabindex="0" type="checkbox" v-model="showLicense" @change="updateUrl" /> Show License
+          </label>
+        </li>
+      </ul>
+  
+      </IframeComponent>
+     
+      
+      <LicenseComponent v-if="showLicense" :work="record.fields.name" :currentUrl="currentUrl" :license="license" :author="record.fields.author" :authorURL="record.fields.authorURL" title="License" />
 
     </div>
 
@@ -201,6 +289,7 @@ definePageMeta({
 
 
 const route = useRoute();
+const router = useRouter();
 // const exerciseId = ref(route.params.id);
 const exerciseSlug = ref(route.params.id);
 
@@ -317,4 +406,67 @@ useHead({
   title: title.value,
 })
 
+const showImage = ref(true);
+const showTitle = ref(true);
+const showDifficulty = ref(true);
+const showTags = ref(true);
+const showDescription = ref(true);
+const showLearningObjectives = ref(true);
+const showInstructions = ref(true);
+const showYoutubePlaylist = ref(true);
+const showVimeoPlaylist = ref(true);
+const showAssociatedMaterial = ref(true);
+const showFiles = ref(true);
+const showRubric = ref(true);
+const showLicense = ref(true);
+
+const updateUrl = () => {
+  const query = {};
+  if (!showImage.value) query.hideImage = true;
+  if (!showTitle.value) query.hideTitle = true;
+  if (!showDifficulty.value) query.hideDifficulty = true;
+  if (!showTags.value) query.hideTags = true;
+  if (!showDescription.value) query.hideDescription = true;
+  if (!showLearningObjectives.value) query.hideLearningObjectives = true;
+  if (!showInstructions.value) query.hideInstructions = true;
+  if (!showYoutubePlaylist.value) query.hideYoutubePlaylist = true;
+  if (!showVimeoPlaylist.value) query.hideVimeoPlaylist = true;
+  if (!showAssociatedMaterial.value) query.hideAssociatedMaterial = true;
+  if (!showFiles.value) query.hideFiles = true;
+  if (!showRubric.value) query.hideRubric = true;
+  if (!showLicense.value) query.hideLicense = true;
+  router.push({ query });
+};
+
+const updateCheckboxesFromUrl = (query) => {
+  showImage.value = !query.hideImage;
+  showTitle.value = !query.hideTitle;
+  showDifficulty.value = !query.hideDifficulty;
+  showTags.value = !query.hideTags;
+  showDescription.value = !query.hideDescription;
+  showLearningObjectives.value = !query.hideLearningObjectives;
+  showInstructions.value = !query.hideInstructions;
+  showYoutubePlaylist.value = !query.hideYoutubePlaylist;
+  showVimeoPlaylist.value = !query.hideVimeoPlaylist;
+  showAssociatedMaterial.value = !query.hideAssociatedMaterial;
+  showFiles.value = !query.hideFiles;
+  showRubric.value = !query.hideRubric;
+  showLicense.value = !query.hideLicense;
+};
+
+const showAlert = computed(() => {
+  const query = route.query;
+  return (
+    (query.hideImage || query.hideTitle || query.hideDifficulty || query.hideTags || query.hideDescription) &&
+    !query.iframe
+  );
+});
+watch(route, (to) => {
+  updateCheckboxesFromUrl(to.query);
+});
+
+onMounted(() => {
+  updateCheckboxesFromUrl(route.query);
+  updateHeight();
+});
 </script>

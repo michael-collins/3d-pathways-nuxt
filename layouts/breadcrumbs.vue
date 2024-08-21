@@ -3,7 +3,7 @@
     <div class="flex flex-col h-screen">
       
       <div class="drawer lg:drawer-open" role="navigation" :aria-expanded="drawerOpen">
-  <input id="side-navigation-drawer" type="checkbox" class="drawer-toggle" v-model="drawerOpen" />
+  <input id="side-navigation-drawer" type="checkbox" aria-label="Navigation drawer toggle" class="drawer-toggle" v-model="drawerOpen" />
   <div class="drawer-content">
     <a href="#main-content" class="skip-link">Skip to main content</a>
 

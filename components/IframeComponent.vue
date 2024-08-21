@@ -1,18 +1,27 @@
 <template>
-    <div class="mt-[12rem]">
-        <div tabindex="0" class="collapse collapse-arrow bg-neutral rounded-xl p-2 grid justify-items-stretch">
-            <button class="btn btn-neutral border-neutral border-2 flex justify-self-start focus:bg-base-100 focus:text-base-content" @click="copyCode" role="button" aria-label="Copy iFrame embed"><Icon name="material-symbols:content-copy-outline" class="text-xl" /> Copy iframe embed</button>
-            <div class="overflow-x-scroll collapse-content" role="region" aria-label="iFrame embed">
+  <div class="mt-[12rem] rounded-xl p-2 grid justify-items-stretch">
+  <details  class="collapse collapse-arrow bg-neutral ">
+        <summary  class="collapse-title text-neutral-content border-neutral ">iframe</summary>
+        <div class="collapse-content bg-neutral">
+       
+      <button class="btn btn-info border-2 flex justify-self-start focus:bg-base-100 focus:text-base-content mt-2" @click="copyCode" role="button" aria-label="Copy iFrame embed"><Icon name="material-symbols:content-copy-outline" class="text-xl" /> Copy iframe embed</button>
 
-            <pre class="language-html text-primary-content">
-            <code ref="iframeCode">
-                &lt;iframe width="100%" height="{{articleHeight}}px" src="{{currentUrl}}?iframe=true" style="border:none;" title="{{ record.fields && record.fields.name ? record.fields.name : 'Exercise' }}" &gt;&lt;/iframe&gt;
-            </code>
-            </pre>
+        <div class="overflow-x-scroll " role="region" aria-label="iFrame embed">
+          <pre class="language-html text-primary-content">
+          <code tabindex="0" ref="iframeCode">
+              &lt;iframe width="100%" height="{{articleHeight}}px" src="{{currentUrl}}?iframe=true" style="border:none;" title="{{ record.fields && record.fields.name ? record.fields.name : 'Exercise' }}" &gt;&lt;/iframe&gt;
+          </code>
+          </pre>  
+       </div>
+      <details  class="collapse collapse-arrow bg-base-200 rounded mt-2 ">
+        <summary  class="collapse-title text-base-neutral focus:bg-info">Configure iframe display settings</summary>
+        <div class="collapse-content">
+          <slot></slot> 
         </div>
-      </div>
-    </div>
-    
+      </details>
+  </div>
+</details>
+</div>
   </template>
   
   <script>
