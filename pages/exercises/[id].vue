@@ -2,7 +2,10 @@
   <article ref="articleElement">
     <div v-if="record" class="container max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
       <!-- Displaying the Name and Image -->
-      <img v-if="record.fields.image" :src="record.fields.image[0].url" class="w-full h-auto rounded-lg" />
+      <img v-if="record.fields.image" 
+      :src="record.fields.image[0].url" class="w-full h-auto rounded-lg" 
+      :aria-label="`Image for ${record.fields.name ? record.fields.name : 'article content.'}. ${record.fields.imageAlt ? record.fields.imageAlt : 'Image for decoration only.'}`"
+      />
       <h1 v-if="record.fields.name" class="text-5xl font-bold mt-8 mb-4">{{ record.fields.name }}</h1>
 
       <div v-if="record && record.fields" :key="record.id" class="space-y-10 divide-y-4 divide-neutral">

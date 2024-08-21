@@ -5,7 +5,13 @@
     <!-- Show the actual content when isLoading is false -->
     <div  v-else v-for="record in records" :key="record.id" class="border-b-2 border-base-300 pb-4 flex md:flex-row flex-col">
         <div v-if="record.fields.image && record.fields.image[0].thumbnails" class="flex ">
-          <div :style="{ backgroundImage: `url(${record.fields.image[0].thumbnails.large.url})` }" class="bg-cover bg-no-repeat bg-center p-4 mb-4 md:mb-0 md:mr-4 md:w-[90px] md:min-h-[90px] lg:w-[120px] lg:min-h-[120px] rounded-lg w-full h-[90px]"></div>  <!-- <img :src="record.fields.image[0].thumbnails.large.url" :alt="record.fields.name" class=" h-90 w-90 bg-clip-padding rounded-lg" /> -->
+          <div 
+          :style="{ backgroundImage: `url(${record.fields.image[0].thumbnails.large.url})` }" 
+          class="bg-cover bg-no-repeat bg-center p-4 mb-4 md:mb-0 md:mr-4 md:w-[90px] md:min-h-[90px] lg:w-[120px] lg:min-h-[120px] rounded-lg w-full h-[90px]"
+          :aria-label="`Thumbnail image. ${record.fields.imageAlt ? record.fields.imageAlt : 'Image for decoration only.'}`"
+          >
+            
+          </div>  <!-- <img :src="record.fields.image[0].thumbnails.large.url" :alt="record.fields.name" class=" h-90 w-90 bg-clip-padding rounded-lg" /> -->
         </div>
         <div class="block float-none md:grow">
           <NuxtLink :to="`/${destination}/${record.fields.slug}`" :key="record.id" :aria-label="`Link to ${record.fields.name}`" :aria-live="'polite'" class="hover:underline ">
