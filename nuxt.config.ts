@@ -33,6 +33,9 @@ export default defineNuxtConfig({
     // baseURL: '/3d-pathways-nuxt/', // baseURL: '/<repository>/'
     // buildAssetsDir: 'assets', // don't use "_" at the begining of the folder name to avoids nojkill conflict
     head: {
+      htmlAttrs: {
+        lang: 'en'
+      },
       link: [
         { rel: "icon", type: "image/png", href: "/favicon.ico" }
       ]
