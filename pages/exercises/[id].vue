@@ -423,6 +423,7 @@ const title = computed(() => {
 useHead({
   title: title.value,
 })
+
 const showPageElements = ref(true);
 const showImage = ref(true);
 const showTitle = ref(true);
@@ -439,7 +440,8 @@ const showRubric = ref(true);
 const showIframe = ref(true);
 const showLicense = ref(true);
 
-const iframeShowPageElements = ref(true);
+
+const iframeShowPageElements = ref(false); // Initialize iframeShowPageElements to false, so the checkbox is unchecked by default
 const iframeShowImage = ref(true);
 const iframeShowTitle = ref(true);
 const iframeShowDifficulty = ref(true);
@@ -499,6 +501,11 @@ const updateCheckboxesFromUrl = (query) => {
   iframeShowRubric.value = !query.hideRubric;
   iframeShowIframe.value = !query.hideIframe;
   iframeShowLicense.value = !query.hideLicense;
+
+  console.log('updateCheckboxesFromUrl called with query:', query);
+  if (query.hidePageElements !== undefined) iframeShowPageElements.value = !query.hidePageElements;
+  console.log('iframeShowPageElements after updateCheckboxesFromUrl:', iframeShowPageElements.value);
+
 };
 
 // const showAlert = computed(() => {
@@ -513,7 +520,7 @@ const updateCheckboxesFromUrl = (query) => {
 const iframeUrl = ref('');
 
 watch(route, (to) => {
-  updateCheckboxesFromUrl(to.query);
+  applyUrlParameters();
 });
 
 watch([
@@ -539,40 +546,29 @@ watch([
 // Function to hide elements based on URL parameters
 const applyUrlParameters = () => {
   const query = route.query;  // Fetch the query parameters from the route
+  updateCheckboxesFromUrl(query);
 
-  if (query.hidePageElements) showPageElements.value = false;
-  if (query.hideImage) showImage.value = false;
-  if (query.hideTitle) showTitle.value = false;
-  if (query.hideDifficulty) showDifficulty.value = false;
-  if (query.hideTags) showTags.value = false;
-  if (query.hideDescription) showDescription.value = false;
-  if (query.hideLearningObjectives) showLearningObjectives.value = false;
-  if (query.hideInstructions) showInstructions.value = false;
-  if (query.hideYoutubePlaylist) showYoutubePlaylist.value = false;
-  if (query.hideVimeoPlaylist) showVimeoPlaylist.value = false;
-  if (query.hideAssociatedMaterial) showAssociatedMaterial.value = false;
-  if (query.hideFiles) showFiles.value = false;
-  if (query.hideRubric) showRubric.value = false;
-  if (query.hideIframe) showIframe.value = false;
-  if (query.hideLicense) showLicense.value = false;
 };
 
-// Watch the route for changes to apply URL parameters if the URL changes
-watch(route, () => {
-  applyUrlParameters();
+onMounted(() => {
+  // console.log('Initial value of iframeShowPageElements:', iframeShowPageElements.value);
+  updateIframeUrl();
 });
 
 onMounted(async () => {
   await exercisesStore.fetchRecords();
   exerciseSlug.value = route.params.id;
-  console.log('exerciseSlug.value:', exerciseSlug.value); // Debugging line
+  // console.log('exerciseSlug.value:', exerciseSlug.value); // Debugging line
   record.value = exercisesStore.getExerciseBySlug(exerciseSlug.value);
-  console.log('record.value:', record.value); // Debugging line
+  // console.log('record.value:', record.value); // Debugging line
 
-  updateCheckboxesFromUrl(route.query);
+  // updateCheckboxesFromUrl(route.query);
   updateHeight();
-  updateIframeUrl();
-  applyUrlParameters();
+  // updateIframeUrl();
+  // applyUrlParameters();
 
 });
+
+
+
 </script>

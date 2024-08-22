@@ -15,9 +15,9 @@
   </div>
   </template>
   <script setup> 
-  const route = useRoute();
+  // const route = useRoute();
 
-  const iframe = computed(() => route.query.iframe === 'true');
+  // const iframe = computed(() => route.query.iframe === 'true');
 // v-if="!iframe"
 // ?iframe=true
   </script>
