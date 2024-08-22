@@ -207,7 +207,7 @@
       <ul class="menu menu-xs bg-base-200 rounded-box">
         <li>
           <label>
-        <input tabindex="0" type="checkbox" v-model="iframeShowPageElements" @change="updateIframeUrl" /> Show Page Elements
+        <input tabindex="0" type="checkbox" v-model="iframeShowPageElements" @change="updateIframeUrl" /> Show Page Elements (Navigation)
           </label>
         </li>
         <li>
