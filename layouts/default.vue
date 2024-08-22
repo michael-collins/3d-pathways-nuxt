@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col h-screen">
-      <header v-if="!iframe">
+      <header v-if="!hidePageElements">
         <NavBar />
       </header>
       <main class="flex-grow">
@@ -9,7 +9,7 @@
         
       </div>
     </main>
-    <footer v-if="!iframe">
+    <footer v-if="!hidePageElements">
       <FooterComponent />
     </footer>  
   </div>
@@ -17,7 +17,7 @@
   <script setup> 
   // const route = useRoute();
 
-  // const iframe = computed(() => route.query.iframe === 'true');
-// v-if="!iframe"
-// ?iframe=true
+ // Computed property for hidePageElements based on the URL query parameter
+const hidePageElements = computed(() => route.query.hidePageElements === 'true');
+
   </script>
