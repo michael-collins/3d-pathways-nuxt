@@ -454,7 +454,7 @@ const iframeShowVimeoPlaylist = ref(true);
 const iframeShowAssociatedMaterial = ref(true);
 const iframeShowFiles = ref(true);
 const iframeShowRubric = ref(true);
-const iframeShowIframe = ref(true);
+const iframeShowIframe = ref(false);
 const iframeShowLicense = ref(true);
 
 const updateIframeUrl = () => {

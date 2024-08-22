@@ -1,59 +1,57 @@
 <template>
-  
-    <div class="flex flex-col h-screen">
-      
-      <div class="drawer lg:drawer-open" role="navigation" :aria-expanded="drawerOpen">
-  <input id="side-navigation-drawer" type="checkbox" aria-label="Navigation drawer toggle" class="drawer-toggle" v-model="drawerOpen" />
-  <div class="drawer-content">
-    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <label for="side-navigation-drawer" class="btn btn-ghost drawer-button lg:hidden left m-1">
-      <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg> -->
-      <Icon name="charm:menu-hamburger" class="text-xl" />
-    </label>
-    <header v-if="!hidePageElements">
-        <!-- <NavBar  /> -->
-        <BreadcrumbsComponent 
-          :pathwayName="pathwayName" 
-          :exerciseName="exerciseName" 
-          :lectureName="lectureName" 
-          :lessonName="lessonName" 
-          :breadcrumbs="breadcrumbs" 
-          :defaultBreadcrumbs="{ show: true, showBackButton: true }" 
-        />
-      </header>
-    <main id="main-content" class="flex-grow">
-        <div>
-        <slot />
-        
+  <div v-if="!hidePageElements" class="flex flex-col h-screen">
+    <div class="drawer lg:drawer-open" role="navigation" :aria-expanded="drawerOpen">
+      <input id="side-navigation-drawer" type="checkbox" aria-label="Navigation drawer toggle" class="drawer-toggle"
+        v-model="drawerOpen" />
+      <div class="drawer-content">
+        <a href="#main-content" class="skip-link">Skip to main content</a>
+
+        <label for="side-navigation-drawer" class="btn btn-ghost drawer-button lg:hidden left m-1">
+          <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg> -->
+          <Icon name="charm:menu-hamburger" class="text-xl" />
+        </label>
+        <header>
+          <!-- <NavBar  /> -->
+          <BreadcrumbsComponent :pathwayName="pathwayName" :exerciseName="exerciseName" :lectureName="lectureName"
+            :lessonName="lessonName" :breadcrumbs="breadcrumbs"
+            :defaultBreadcrumbs="{ show: true, showBackButton: true }" />
+        </header>
+        <main id="main-content" class="flex-grow">
+          <div>
+            <slot />
+
+          </div>
+        </main>
+        <footer>
+          <FooterComponent />
+        </footer>
       </div>
-    </main>
-    <footer>
-      <FooterComponent v-if="!hidePageElements" />
-    </footer>  
-    
-  
-  </div> 
-  <div class="drawer-side" v-if="!hidePageElements">
-    <label for="side-navigation-drawer" aria-label="close sidebar" class="drawer-overlay"></label> 
-    <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content " @focusin="toggleDrawer">
-      <!-- Sidebar content here -->
-      <label for="side-navigation-drawer" class="btn btn-ghost lg:hidden">Close <Icon name="material-symbols:close-small" class="text-xl" />
-        <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg> -->
-      </label>
-      <NavMenu  />
-    </ul>
-  
+      <div class="drawer-side">
+        <label for="side-navigation-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+        <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content " @focusin="toggleDrawer">
+          <!-- Sidebar content here -->
+          <label for="side-navigation-drawer" class="btn btn-ghost lg:hidden">Close
+            <Icon name="material-symbols:close-small" class="text-xl" />
+            <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg> -->
+          </label>
+          <NavMenu />
+        </ul>
+      </div>
+    </div>
   </div>
-</div>
-      
-  </div>
-  </template>
-  <script setup>
+  <main v-else id="main-content" class="flex-grow">
+    <div>
+      <slot />
 
-  // Default breadcrumbs data
-  const defaultBreadcrumbs = { show: true, showBackButton: false };
-  const props = defineProps({
+    </div>
+  </main>
+</template>
+<script setup>
+
+// Default breadcrumbs data
+const defaultBreadcrumbs = { show: true, showBackButton: false };
+const props = defineProps({
   breadcrumbs: {
     type: Array,
     default: () => [],
@@ -63,10 +61,10 @@
     default: '',
   },
 });
-  // Reactive reference to the breadcrumbs data
-  const breadcrumbs = ref(defaultBreadcrumbs);
-  // Inject the name
-  // const recordName = inject('recordName')
+// Reactive reference to the breadcrumbs data
+const breadcrumbs = ref(defaultBreadcrumbs);
+// Inject the name
+// const recordName = inject('recordName')
 // Inject the name
 // let recordName = ref('');
 // provide('recordName', recordName);
@@ -81,7 +79,7 @@
 // });
 
 const route = useRoute();
-console.log('breadcrumbs layout route',route);
+console.log('breadcrumbs layout route', route);
 const pathwaysStore = usePathwaysStore();
 const exercisesStore = useExercisesStore();
 const lecturesStore = useLecturesStore();
@@ -95,11 +93,11 @@ const lessonName = ref('');
 const drawerOpen = ref(false);
 
 const toggleDrawer = () => {
-    const checkbox = document.getElementById('nav-drawer-2');
-    if (checkbox) {
-      checkbox.checked = true;
-    }
-  };
+  const checkbox = document.getElementById('nav-drawer-2');
+  if (checkbox) {
+    checkbox.checked = true;
+  }
+};
 const closeDrawer = () => {
   const checkbox = document.getElementById('nav-drawer-2');
   if (checkbox) {
@@ -108,11 +106,11 @@ const closeDrawer = () => {
 };
 
 const handleKeydown = (event) => {
-    if (event.key === 'Escape') {
-      closeDrawer();
-      document.activeElement.blur();
-    }
-  };
+  if (event.key === 'Escape') {
+    closeDrawer();
+    document.activeElement.blur();
+  }
+};
 
 // const iframe = computed(() => route.query.iframe === 'true');
 // v-if="!hidePageElements"
@@ -156,30 +154,30 @@ const updateNames = async () => {
   }
 };
 onMounted(() => {
-    window.addEventListener('keydown', handleKeydown);
-  });
+  window.addEventListener('keydown', handleKeydown);
+});
 
-  onUnmounted(() => {
-    window.removeEventListener('keydown', handleKeydown);
-  });
-    onMounted(updateNames);
-    
-    watch(() => route.params.id, updateNames, { immediate: true });
-  </script>
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown);
+});
+onMounted(updateNames);
 
-  <style scoped>
-  .skip-link {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: #000;
-    color: #fff;
-    padding: 8px;
-    z-index: 100;
-    transition: top 0.3s;
-  }
-  
-  .skip-link:focus {
-    top: 0;
-  }
-  </style>
+watch(() => route.params.id, updateNames, { immediate: true });
+</script>
+
+<style scoped>
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  z-index: 100;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+</style>

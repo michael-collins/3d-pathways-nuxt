@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-[12rem] rounded-xl p-2 grid justify-items-stretch">
+  <div class="mt-[12rem] grid justify-items-stretch">
   <details  class="collapse collapse-arrow bg-neutral ">
         <summary  class="collapse-title text-neutral-content border-neutral ">iframe</summary>
         <div class="collapse-content bg-neutral">
@@ -14,7 +14,7 @@
           </pre>  
        </div>
       <details  class="collapse collapse-arrow bg-base-200 rounded mt-2 ">
-        <summary  class="collapse-title text-base-neutral focus:bg-info">Configure iframe display settings</summary>
+        <summary  class="collapse-title text-base-neutral focus:bg-info focus:text-info-content">Configure iframe display settings</summary>
         <div class="collapse-content">
           <slot></slot> 
         </div>
