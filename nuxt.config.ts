@@ -8,9 +8,10 @@ export default defineNuxtConfig({
     'nuxt-icon',
     '@pinia/nuxt',
     '@nuxt/content',
-    '@nuxtjs/mdc',
     // 'nuxt-slugify',
+    '@nuxtjs/mdc',
   ],
+  
   // buildModules: ["nuxt-hero-icons"],
   colorMode: {
     dataValue: 'theme', // activate data-theme in <html> tag
