@@ -5,15 +5,35 @@
     <!-- Show the actual content when isLoading is false -->
     <div  v-else v-for="record in records" :key="record.id" class="border-b-2 border-base-300 pb-4 flex md:flex-row flex-col">
         <div v-if="record.fields.image && record.fields.image[0].thumbnails" class="flex ">
-          <div 
+          <!-- <div 
           :style="{ backgroundImage: `url(${record.fields.image[0].thumbnails.large.url})` }" 
           class="bg-cover bg-no-repeat bg-center p-4 mb-4 md:mb-0 md:mr-4 md:w-[90px] md:min-h-[90px] lg:w-[120px] lg:min-h-[120px] rounded-lg w-full h-[90px]"
           :aria-label="`Thumbnail image. ${record.fields.imageAlt ? record.fields.imageAlt : 'Image for decoration only.'}`"
           >
             
-          </div>  <!-- <img :src="record.fields.image[0].thumbnails.large.url" :alt="record.fields.name" class=" h-90 w-90 bg-clip-padding rounded-lg" /> -->
+          </div>  -->
+          <div class="bg-cover bg-no-repeat bg-center mb-4 md:mb-0 md:mr-4 md:w-[90px] md:h-[90px] lg:w-[120px] lg:h-[120px] rounded-lg w-full h-[120px]">
+            <nuxtLink :to="`/${destination}/${record.fields.slug}`" :key="record.id" :aria-label="`Link to ${record.fields.name}`" :aria-live="'polite'" class="hover:underline ">
+              <nuxtImg lazy v-if="record.fields.image" 
+              
+              height="120"
+              width="120"
+              :src="record.fields.image[0].thumbnails.large.url" 
+              :alt="`Image for ${record.fields.name ? record.fields.name : 'list thumbnail.'}. ${record.fields.imageAlt ? record.fields.imageAlt : 'Image for decoration only.'}`"
+              class="object-cover size-full rounded-lg"
+              />
+            </nuxtLink>
+          </div>
+
+          <!-- <nuxtImg v-if="showImage && record.fields.image" 
+          height="360"
+          width="720"
+          :src="record.fields.image[0].thumbnails.large.url" class="w-full h-auto rounded-lg" 
+          :alt="`Image for ${record.fields.name ? record.fields.name : 'article content.'}. ${record.fields.imageAlt ? record.fields.imageAlt : 'Image for decoration only.'}`"
+          /> -->
+
         </div>
-        <div class="block float-none md:grow">
+        <div class="w-full md:grow">
           <NuxtLink :to="`/${destination}/${record.fields.slug}`" :key="record.id" :aria-label="`Link to ${record.fields.name}`" :aria-live="'polite'" class="hover:underline ">
             <h3 class="font-semibold self-center text-2xl">
             {{ record.fields.name ? record.fields.name : 'Name not available' }}

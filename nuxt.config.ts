@@ -1,71 +1,85 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
-  plugins: ['~/plugins/airtable.js'],
-  modules: [
-    '@nuxtjs/tailwindcss',
-    '@nuxtjs/color-mode',
-    'nuxt-icon',
-    '@pinia/nuxt',
-    '@nuxt/content',
-    // 'nuxt-slugify',
-    '@nuxtjs/mdc',
+ devtools: { enabled: true },
+ plugins: ['~/plugins/airtable.js'],
+
+ modules: [
+  '@nuxtjs/tailwindcss',
+  '@nuxtjs/color-mode',
+  'nuxt-icon',
+  '@pinia/nuxt',
+  '@nuxt/content',
+  // 'nuxt-slugify',
+  '@nuxtjs/mdc',
+  '@nuxt/image'
+],
+
+ image: {
+  domains: [
+    'v5.airtableusercontent.com'
   ],
-  
-  // buildModules: ["nuxt-hero-icons"],
-  colorMode: {
-    dataValue: 'theme', // activate data-theme in <html> tag
-    preference: 'system', // default value of $colorMode.preference
-    // fallback: 'light', // fallback value if not system preference found
-    hid: 'nuxt-color-mode-script',
-    // globalName: '__NUXT_COLOR_MODE__',
-    componentName: 'ColorScheme',
-    classPrefix: '',
-    classSuffix: '-mode',
-    storageKey: 'nuxt-color-mode'
-  },
-  postcss: {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {},
-    },
-  },
-  app: {
-    // baseURL: '/3d-pathways-nuxt/', // baseURL: '/<repository>/'
-    // buildAssetsDir: 'assets', // don't use "_" at the begining of the folder name to avoids nojkill conflict
-    head: {
-      htmlAttrs: {
-        lang: 'en'
-      },
-      link: [
-        { rel: "icon", type: "image/png", href: "/favicon.ico" }
-      ]
-    }
-  },
-  // target: 'static', // default is 'server'
-  ssr: false,
-  nitro: {
-    prerender: {
-      crawlLinks: true,
-      routes: ['/'],
-      // ignore: ["/api"]
-    }
-  },
-  // mode: 'static',
-//   router: {
-//     base: '/3d-pathways-nuxt/'
-//  },
-//  deploy with nuxt build, You can statically generate Nuxt routes at build time using the prerender option
-//  routeRules: {
-//   // prerender index route by default
-//   '/': { prerender: true },
-//   // prerender this route and all child routes
-//   '/prerender-multiple/**': { prerender: true },
-// },
-// build your project with nuxt generate. You should set nitro.static to true to enable Vercel features
+  format: ['webp']
+},
+
+ // buildModules: ["nuxt-hero-icons"],
+ colorMode: {
+   dataValue: 'theme', // activate data-theme in <html> tag
+   preference: 'system', // default value of $colorMode.preference
+   // fallback: 'light', // fallback value if not system preference found
+   hid: 'nuxt-color-mode-script',
+   // globalName: '__NUXT_COLOR_MODE__',
+   componentName: 'ColorScheme',
+   classPrefix: '',
+   classSuffix: '-mode',
+   storageKey: 'nuxt-color-mode'
+ },
+
+ postcss: {
+   plugins: {
+     tailwindcss: {},
+     autoprefixer: {},
+   },
+ },
+
+ app: {
+   // baseURL: '/3d-pathways-nuxt/', // baseURL: '/<repository>/'
+   // buildAssetsDir: 'assets', // don't use "_" at the begining of the folder name to avoids nojkill conflict
+   head: {
+     htmlAttrs: {
+       lang: 'en'
+     },
+     link: [
+       { rel: "icon", type: "image/png", href: "/favicon.ico" }
+     ]
+   }
+ },
+
+ // target: 'static', // default is 'server'
+ ssr: true,
+
 //  nitro: {
-//   serveStatic: true,
-// },
+//   static: true,
+//    prerender: {
+//      crawlLinks: true,
+//      routes: ['/'],
+//      // ignore: ["/api"]
+//    }
+//  },
+
+ //   router: {
+ //     base: '/3d-pathways-nuxt/'
+ //  },
+ //  deploy with nuxt build, You can statically generate Nuxt routes at build time using the prerender option
+ //  routeRules: {
+ //   // prerender index route by default
+ //   '/': { prerender: true },
+ //   // prerender this route and all child routes
+ //   '/prerender-multiple/**': { prerender: true },
+ // },
+ // build your project with nuxt generate. You should set nitro.static to true to enable Vercel features
+ //  nitro: {
+ //   serveStatic: true,
+ // },
  runtimeConfig: {
   // Public keys that will be exposed to the client, prefix with 'public'
   public: {
@@ -74,4 +88,6 @@ export default defineNuxtConfig({
   // Private keys, kept server-side
   AirtableApiKey: process.env.AIRTABLE_API_KEY,
 },
+
+ compatibilityDate: '2024-08-27',
 })

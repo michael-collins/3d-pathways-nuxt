@@ -7,7 +7,7 @@
       <div class="drawer-content">
         <a href="#main-content" class="skip-link">Skip to main content</a>
 
-        <label for="side-navigation-drawer" class="btn btn-ghost drawer-button lg:hidden left m-1">
+        <label for="side-navigation-drawer" class="btn btn-ghost drawer-button lg:hidden left m-1 sticky top-0">
           <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg> -->
           <Icon name="charm:menu-hamburger" class="text-xl" />
         </label>
@@ -28,10 +28,10 @@
         </footer>
       </div>
       <div class="drawer-side">
-        <label for="side-navigation-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+        <label for="side-navigation-drawer"  class="drawer-overlay"></label>
         <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content " @focusin="toggleDrawer">
           <!-- Sidebar content here -->
-          <label for="side-navigation-drawer" class="btn btn-ghost lg:hidden">Close
+            <label id="side-navigation-drawer-close-btn" role="button" tabindex="0" for="side-navigation-drawer" aria-label="close sidebar" class="btn btn-ghost lg:hidden">Close
             <Icon name="material-symbols:close-small" class="text-xl" />
             <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg> -->
           </label>
@@ -93,13 +93,13 @@ const lessonName = ref('');
 const drawerOpen = ref(false);
 
 const toggleDrawer = () => {
-  const checkbox = document.getElementById('nav-drawer-2');
+  const checkbox = document.getElementById('side-navigation-drawer');
   if (checkbox) {
     checkbox.checked = true;
   }
 };
 const closeDrawer = () => {
-  const checkbox = document.getElementById('nav-drawer-2');
+  const checkbox = document.getElementById('side-navigation-drawer');
   if (checkbox) {
     checkbox.checked = false;
   }
@@ -110,7 +110,12 @@ const handleKeydown = (event) => {
     closeDrawer();
     document.activeElement.blur();
   }
+  if (event.key === 'Enter' && event.target.id === 'side-navigation-drawer-close-btn') {
+    closeDrawer();
+  }
 };
+
+
 
 // const iframe = computed(() => route.query.iframe === 'true');
 // v-if="!hidePageElements"
