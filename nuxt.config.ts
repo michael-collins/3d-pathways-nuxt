@@ -15,10 +15,11 @@ export default defineNuxtConfig({
 ],
 
  image: {
-  domains: [
-    'v5.airtableusercontent.com'
-  ],
-  format: ['webp']
+  // unoptimized: true, // Disable all image optimization. Default: false
+  // domains: [
+  //   'v5.airtableusercontent.com'
+  // ],
+  // format: ['webp']
 },
 
  // buildModules: ["nuxt-hero-icons"],
