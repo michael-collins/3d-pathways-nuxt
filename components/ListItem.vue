@@ -40,9 +40,9 @@
           </h3>
           </NuxtLink>
           <p class="text-sm lg:w-1/2 min-h-[100px]">
-            {{ record.fields.description ? record.fields.description : 'Description not available' }}
-            <!-- {{ record.fields.description ? record.fields.description.slice(0, 100) + (record.fields.description.length > 100 ? '...' : '') : 'Description not available' }} -->
-
+            
+            <!-- {{ record.fields.description ? record.fields.description : 'Description not available' }} -->
+            {{ record.fields.description ? record.fields.description.slice(0, 100) + (record.fields.description.length > 100 ? '...' : '') : 'Description not available' }}
           </p>
         </div>
         <div class="mx-auto mt-4  flex items-end">
