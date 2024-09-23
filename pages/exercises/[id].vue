@@ -28,7 +28,6 @@
       :alt="`Image for ${record.fields.name ? record.fields.name : 'article content.'}. ${record.fields.imageAlt ? record.fields.imageAlt : 'Image for decoration only.'}`"
       />
       <h1 v-if="showTitle && record.fields.name" class="text-5xl font-bold mt-8 mb-4">{{ record.fields.name }}</h1>
-
       <div v-if="record && record.fields" :key="record.id" class="space-y-10 divide-y-4 divide-neutral">
 
         <!-- Displaying the Difficulty -->
@@ -38,10 +37,10 @@
             <li v-for="level in record.fields.difficulty" :key="level" class="badge badge-outline text-xs uppercase">
               {{ level }}
             </li>
-
           </ul>
         </div>
         <div v-else class="pb-8"><!-- I'm here to handle the divide style utility--></div>
+        
         <!-- Displaying the Tags -->
         <div v-if="showTags && record.fields.tags" class="pb-8">
           <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Software:</h2>
@@ -51,87 +50,25 @@
             <li v-for="tag in record.fields.tags" :key="tag" class="badge bg-base-300 text-xs uppercase">
               {{ tag }}
             </li>
-
           </ul>
         </div>
+
         <!-- Displaying the Description -->
         <div v-if="showDescription && record.fields.description">
           <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Description:</h2>
-          <MDC :value="record.fields.description" class="markdown mx-2 
-    child-a:font-medium 
-    child-a:link 
-    child-a:text-secondary 
-    hover:child-a:text-base-content 
-    child-list-ol:list-decimal 
-    child-list-ol-li-marker:font-medium 
-    child-list-ol-li-marker:text-info 
-    child-list-ol:mx-6 
-    child-list-ul:mx-6 
-    child-list-ul:list-disc 
-    child-list-ol-li:pt-1 
-    child-list-ul-li:pt-1 
-    child-list-ol-li-ul:list-[circle] 
-    child-list-ol-li-ul:px-4 
-    child-list-ol-li-ul:py-1 
-    child-list-ul-li-ul:list-[circle] 
-    child-list-ul-li-ul:px-4 
-    child-list-ul-li-ul:py-1 
-    child-list-ol-li-ul-li:pt-1 
-    child-list-ul-li-ul-li:pt-1" />
+          <MarkdownRenderer :value="record.fields.description" />
         </div>
 
         <!-- Displaying the Learning Objectives -->
         <div v-if="showLearningObjectives && record.fields.learningObjectives">
           <h2 class="text-2xl font-semibold text-left uppercase mb-4">Learning Objectives:</h2>
-          <MDC :value="record.fields.learningObjectives" class="markdown mx-2 
-          child-a:font-medium 
-    child-a:link 
-    child-a:text-secondary 
-    hover:child-a:text-base-content 
-    child-list-ol:list-decimal 
-    child-list-ol-li-marker:font-medium 
-    child-list-ol-li-marker:text-info 
-    child-list-ol:mx-6 
-    child-list-ul:mx-6 
-    child-list-ul:list-disc 
-    child-list-ol-li:pt-1 
-    child-list-ul-li:pt-1 
-    child-list-ol-li-ul:list-[circle] 
-    child-list-ol-li-ul:px-4 
-    child-list-ol-li-ul:py-1 
-    child-list-ul-li-ul:list-[circle] 
-    child-list-ul-li-ul:px-4 
-    child-list-ul-li-ul:py-1 
-    child-list-ol-li-ul-li:pt-1 
-    child-list-ul-li-ul-li:pt-1" />
-
-
+          <MarkdownRenderer :value="record.fields.learningObjectives" />
         </div>
 
         <!-- Displaying the Instructions -->
         <div v-if="showInstructions && record.fields.instructions">
           <h2 class="text-2xl font-semibold text-left uppercase mb-4">Instructions:</h2>
-          <MDC :value="record.fields.instructions" class="markdown mx-2 
-    child-a:font-medium 
-    child-a:link 
-    child-a:text-secondary 
-    hover:child-a:text-base-content 
-    child-list-ol:list-decimal 
-    child-list-ol-li-marker:font-medium 
-    child-list-ol-li-marker:text-info 
-    child-list-ol:mx-6 
-    child-list-ul:mx-6 
-    child-list-ul:list-disc 
-    child-list-ol-li:pt-1 
-    child-list-ul-li:pt-1 
-    child-list-ol-li-ul:list-[circle] 
-    child-list-ol-li-ul:px-4 
-    child-list-ol-li-ul:py-1 
-    child-list-ul-li-ul:list-[circle] 
-    child-list-ul-li-ul:px-4 
-    child-list-ul-li-ul:py-1 
-    child-list-ol-li-ul-li:pt-1 
-    child-list-ul-li-ul-li:pt-1" />
+          <MarkdownRenderer :value="record.fields.instructions" />
         </div>
 
         <!-- Displaying the YouTube Playlist -->
@@ -151,11 +88,11 @@
             <Icon name="octicon:link-external-16" class=" text-sm" />
           </a>
         </div>
+
         <!-- Displaying the Vimeo Playlist -->
         <div v-if="showVimeoPlaylist && record.fields.vimeoPlaylistID">
           <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Tutorials:</h2>
           <p v-if="record.fields.vimeoPlaylistID" class="text-md p-3">
-
           <div style='padding:56.25% 0 0 0;position:relative;'>
             <iframe :src="'https://vimeo.com/showcase/' + record.fields.vimeoPlaylistID + '/embed'" class="aspect-video"
               allowfullscreen frameborder='0' style='position:absolute;top:0;
@@ -169,32 +106,13 @@
           </a>
           </p>
         </div>
+
         <!-- Displaying the associatedMaterial -->
         <div v-if="showAssociatedMaterial && record.fields.associatedMaterial">
           <h2 class="text-2xl font-semibold text-left uppercase mb-4">Associated Material:</h2>
-          <MDC :value="record.fields.associatedMaterial" class="p-3 markdown mx-2 
-    child-a:font-medium 
-    child-a:link 
-    child-a:text-secondary 
-    hover:child-a:text-base-content 
-    child-list-ol:list-decimal 
-    child-list-ol-li-marker:font-medium 
-    child-list-ol-li-marker:text-info 
-    child-list-ol:mx-6 
-    child-list-ul:mx-6 
-    child-list-ul:list-disc 
-    child-list-ol-li:pt-1 
-    child-list-ul-li:pt-1 
-    child-list-ol-li-ul:list-[circle] 
-    child-list-ol-li-ul:px-4 
-    child-list-ol-li-ul:py-1 
-    child-list-ul-li-ul:list-[circle] 
-    child-list-ul-li-ul:px-4 
-    child-list-ul-li-ul:py-1 
-    child-list-ol-li-ul-li:pt-1 
-    child-list-ul-li-ul-li:pt-1" />
-
+          <MarkdownRenderer :value="record.fields.associatedMaterial" />
         </div>
+
         <!-- Displaying the Files -->
         <div  v-if="showFiles && record.fields.files && record.fields.files.length">
           <h2 class="text-2xl font-semibold text-left uppercase mb-4">Downloads:</h2>
@@ -202,98 +120,90 @@
         </div>
         <TableComponent v-if="showRubric" :rubricData="rubric" :criteriaData="criteria" title="Rubric:" />
       </div>
+
       <!-- iframe -->
       <IframeComponent v-if="showIframe" :articleHeight="articleHeight" :iframeUrl="iframeUrl" :record="record" >
         <!-- Menu of Checkboxes -->
- 
-      
-      <ul class="menu menu-xs bg-base-200 rounded-box">
-        <li>
-          <label>
-        <input tabindex="0" type="checkbox" v-model="iframeShowPageElements" @change="updateIframeUrl" /> Show Page Elements (Navigation)
-          </label>
-        </li>
-        <li>
-          <label>
-        <input tabindex="0" type="checkbox" v-model="iframeShowImage" @change="updateIframeUrl" /> Show Image
-          </label>
-        </li>
-        <li>
-          <label>
-        <input tabindex="0" type="checkbox" v-model="iframeShowTitle" @change="updateIframeUrl" /> Show Title
-          </label>
-        </li>
-        <li>
-          <label>
-        <input tabindex="0" type="checkbox" v-model="iframeShowDifficulty" @change="updateIframeUrl" /> Show Difficulty
-          </label>
-        </li>
-        <li>
-          <label>
-        <input tabindex="0" type="checkbox" v-model="iframeShowTags" @change="updateIframeUrl" /> Show Tags
-          </label>
-        </li>
-        <li>
-          <label>
-        <input tabindex="0" type="checkbox" v-model="iframeShowDescription" @change="updateIframeUrl" /> Show Description
-          </label>
-        </li>
-        <li>
-          <label>
-        <input tabindex="0" type="checkbox" v-model="iframeShowLearningObjectives" @change="updateIframeUrl" /> Show Learning Objectives
-          </label>
-        </li>
-        <li>
-          <label>
-        <input tabindex="0" type="checkbox" v-model="iframeShowInstructions" @change="updateIframeUrl" /> Show Instructions
-          </label>
-        </li>
-        <li>
-          <label>
-        <input tabindex="0" type="checkbox" v-model="iframeShowYoutubePlaylist" @change="updateIframeUrl" /> Show YouTube Playlist
-          </label>
-        </li>
-        <li>
-          <label>
-        <input tabindex="0" type="checkbox" v-model="iframeShowVimeoPlaylist" @change="updateIframeUrl" /> Show Vimeo Playlist
-          </label>
-        </li>
-        <li>
-          <label>
-        <input tabindex="0" type="checkbox" v-model="iframeShowAssociatedMaterial" @change="updateIframeUrl" /> Show Associated Material
-          </label>
-        </li>
-        <li>
-          <label>
-        <input tabindex="0" type="checkbox" v-model="iframeShowFiles" @change="updateIframeUrl" /> Show Files
-          </label>
-        </li>
-        <li>
-          <label>
-        <input tabindex="0" type="checkbox" v-model="iframeShowRubric" @change="updateIframeUrl" /> Show Rubric
-          </label>
-        </li>
-        <li>
-          <label>
-        <input tabindex="0" type="checkbox" v-model="iframeShowIframe" @change="updateIframeUrl" /> Show iFrame
-          </label>
-        </li>
-        <li>
-          <label>
-        <input tabindex="0" type="checkbox" v-model="iframeShowLicense" @change="updateIframeUrl" /> Show License
-          </label>
-        </li>
-      </ul>
-  
+        <ul class="menu menu-xs bg-base-200 rounded-box">
+          <li>
+            <label>
+          <input tabindex="0" type="checkbox" v-model="iframeShowPageElements" @change="updateIframeUrl" /> Show Page Elements (Navigation)
+            </label>
+          </li>
+          <li>
+            <label>
+          <input tabindex="0" type="checkbox" v-model="iframeShowImage" @change="updateIframeUrl" /> Show Image
+            </label>
+          </li>
+          <li>
+            <label>
+          <input tabindex="0" type="checkbox" v-model="iframeShowTitle" @change="updateIframeUrl" /> Show Title
+            </label>
+          </li>
+          <li>
+            <label>
+          <input tabindex="0" type="checkbox" v-model="iframeShowDifficulty" @change="updateIframeUrl" /> Show Difficulty
+            </label>
+          </li>
+          <li>
+            <label>
+          <input tabindex="0" type="checkbox" v-model="iframeShowTags" @change="updateIframeUrl" /> Show Tags
+            </label>
+          </li>
+          <li>
+            <label>
+          <input tabindex="0" type="checkbox" v-model="iframeShowDescription" @change="updateIframeUrl" /> Show Description
+            </label>
+          </li>
+          <li>
+            <label>
+          <input tabindex="0" type="checkbox" v-model="iframeShowLearningObjectives" @change="updateIframeUrl" /> Show Learning Objectives
+            </label>
+          </li>
+          <li>
+            <label>
+          <input tabindex="0" type="checkbox" v-model="iframeShowInstructions" @change="updateIframeUrl" /> Show Instructions
+            </label>
+          </li>
+          <li>
+            <label>
+          <input tabindex="0" type="checkbox" v-model="iframeShowYoutubePlaylist" @change="updateIframeUrl" /> Show YouTube Playlist
+            </label>
+          </li>
+          <li>
+            <label>
+          <input tabindex="0" type="checkbox" v-model="iframeShowVimeoPlaylist" @change="updateIframeUrl" /> Show Vimeo Playlist
+            </label>
+          </li>
+          <li>
+            <label>
+          <input tabindex="0" type="checkbox" v-model="iframeShowAssociatedMaterial" @change="updateIframeUrl" /> Show Associated Material
+            </label>
+          </li>
+          <li>
+            <label>
+          <input tabindex="0" type="checkbox" v-model="iframeShowFiles" @change="updateIframeUrl" /> Show Files
+            </label>
+          </li>
+          <li>
+            <label>
+          <input tabindex="0" type="checkbox" v-model="iframeShowRubric" @change="updateIframeUrl" /> Show Rubric
+            </label>
+          </li>
+          <li>
+            <label>
+          <input tabindex="0" type="checkbox" v-model="iframeShowIframe" @change="updateIframeUrl" /> Show iFrame
+            </label>
+          </li>
+          <li>
+            <label>
+          <input tabindex="0" type="checkbox" v-model="iframeShowLicense" @change="updateIframeUrl" /> Show License
+            </label>
+          </li>
+        </ul>
       </IframeComponent>
-     
-      
       <LicenseComponent v-if="showLicense" :work="record.fields.name" :currentUrl="route.path" :license="license" :author="record.fields.author" :authorURL="record.fields.authorURL" title="License" />
-
     </div>
-
-
-
   </article>
 </template>
 

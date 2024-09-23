@@ -35,84 +35,20 @@
         <!-- Displaying the Instructions -->
         <div v-if="record.fields.instructions">
           <h2 class="text-2xl font-semibold text-left uppercase mb-4">Instructions:</h2>
-          <MDC :value="record.fields.instructions" class="markdown mx-2 
-    child-a:font-medium 
-    child-a:link 
-    child-a:text-secondary 
-    hover:child-a:text-base-content 
-    child-list-ol:list-decimal 
-    child-list-ol-li-marker:font-medium 
-    child-list-ol-li-marker:text-info 
-    child-list-ol:mx-6 
-    child-list-ul:mx-6 
-    child-list-ul:list-disc 
-    child-list-ol-li:pt-1 
-    child-list-ul-li:pt-1 
-    child-list-ol-li-ul:list-[circle] 
-    child-list-ol-li-ul:px-4 
-    child-list-ol-li-ul:py-1 
-    child-list-ul-li-ul:list-[circle] 
-    child-list-ul-li-ul:px-4 
-    child-list-ul-li-ul:py-1 
-    child-list-ol-li-ul-li:pt-1 
-    child-list-ul-li-ul-li:pt-1" />
+          <MarkdownRenderer :value="record.fields.instructions" />
         </div>
         
         <!-- Displaying the Description -->
         <div v-if="record.fields.description">
           <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Description:</h2>
-          <MDC :value="record.fields.description" class="markdown mx-2 
-    child-a:font-medium 
-    child-a:link 
-    child-a:text-secondary 
-    hover:child-a:text-base-content 
-    child-list-ol:list-decimal 
-    child-list-ol-li-marker:font-medium 
-    child-list-ol-li-marker:text-info 
-    child-list-ol:mx-6 
-    child-list-ul:mx-6 
-    child-list-ul:list-disc 
-    child-list-ol-li:pt-1 
-    child-list-ul-li:pt-1 
-    child-list-ol-li-ul:list-[circle] 
-    child-list-ol-li-ul:px-4 
-    child-list-ol-li-ul:py-1 
-    child-list-ul-li-ul:list-[circle] 
-    child-list-ul-li-ul:px-4 
-    child-list-ul-li-ul:py-1 
-    child-list-ol-li-ul-li:pt-1 
-    child-list-ul-li-ul-li:pt-1" />
+          <MarkdownRenderer :value="record.fields.description" />
         </div>
 
         <!-- Displaying the Requirements -->
         <div v-if="record.fields.requirements">
           <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Requirements:</h2>
-          <MDC :value="record.fields.requirements" class="markdown mx-2 
-    child-a:font-medium 
-    child-a:link 
-    child-a:text-secondary 
-    hover:child-a:text-base-content 
-    child-list-ol:list-decimal 
-    child-list-ol-li-marker:font-medium 
-    child-list-ol-li-marker:text-info 
-    child-list-ol:mx-6 
-    child-list-ul:mx-6 
-    child-list-ul:list-disc 
-    child-list-ol-li:pt-1 
-    child-list-ul-li:pt-1 
-    child-list-ol-li-ul:list-[circle] 
-    child-list-ol-li-ul:px-4 
-    child-list-ol-li-ul:py-1 
-    child-list-ul-li-ul:list-[circle] 
-    child-list-ul-li-ul:px-4 
-    child-list-ul-li-ul:py-1 
-    child-list-ol-li-ul-li:pt-1 
-    child-list-ul-li-ul-li:pt-1" />
+          <MarkdownRenderer :value="record.fields.requirements" />
         </div>
-
-        
-
-        
 
         <!-- Displaying the YouTube Playlist -->
         <div v-if="record.fields.youtubePlaylistID">
@@ -131,11 +67,11 @@
           </iframe>          </p>
           <a class="mx-auto btn btn-ghost text-secondary hover:text-secondary:":href="'https://youtube.com/playlist?list=' + record.fields.youtubePlaylistID" target="_blank">Youtube.com playlist <Icon name="octicon:link-external-16" class=" text-sm" /></a>
         </div>
+
         <!-- Displaying the Vimeo Playlist -->
         <div v-if="record.fields.vimeoPlaylistID">
           <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Tutorials:</h2>
           <p v-if="record.fields.vimeoPlaylistID" class="text-md p-3">
-           
           <div style='padding:56.25% 0 0 0;position:relative;'>
             <iframe 
             :src="'https://vimeo.com/showcase/' + record.fields.vimeoPlaylistID + '/embed'" 
@@ -148,33 +84,13 @@
           <a class="mx-auto  btn btn-ghost text-secondary hover:text-secondary:":href="'https://vimeo.com/showcase/' + record.fields.vimeoPlaylistID" target="_blank">Vimeo.com playlist <Icon name="octicon:link-external-16" class=" text-sm" /></a>
           </p>
         </div>
+
         <!-- Displaying the associatedMaterial -->
         <div v-if="record.fields.associatedMaterial">
           <h2 class="text-2xl font-semibold text-left uppercase mb-4">Associated Material:</h2>
-          <MDC :value="record.fields.associatedMaterial" class="p-3 markdown mx-2 
-    child-a:font-medium 
-    child-a:link 
-    child-a:text-secondary 
-    hover:child-a:text-base-content 
-    child-list-ol:list-decimal 
-    child-list-ol-li-marker:font-medium 
-    child-list-ol-li-marker:text-info 
-    child-list-ol:mx-6 
-    child-list-ul:mx-6 
-    child-list-ul:list-disc 
-    child-list-ol-li:pt-1 
-    child-list-ul-li:pt-1 
-    child-list-ol-li-ul:list-[circle] 
-    child-list-ol-li-ul:px-4 
-    child-list-ol-li-ul:py-1 
-    child-list-ul-li-ul:list-[circle] 
-    child-list-ul-li-ul:px-4 
-    child-list-ul-li-ul:py-1 
-    child-list-ol-li-ul-li:pt-1 
-    child-list-ul-li-ul-li:pt-1" />
-
+          <MarkdownRenderer :value="record.fields.associatedMaterial" />
         </div>
-        <!-- Displaying the Downloads -->
+
        <!-- Displaying the Files -->
        <div  v-if="record.fields.files && record.fields.files.length">
           <h2 class="text-2xl font-semibold text-left uppercase mb-4">Downloads:</h2>
@@ -184,40 +100,16 @@
         <!-- Displaying the Learning Objectives -->
         <div v-if="record.fields.learningObjectives">
           <h2 class="text-2xl font-semibold text-left uppercase mb-4">Learning Objectives:</h2>
-          <MDC :value="record.fields.learningObjectives" class="markdown mx-2 
-          child-a:font-medium 
-    child-a:link 
-    child-a:text-secondary 
-    hover:child-a:text-base-content 
-    child-list-ol:list-decimal 
-    child-list-ol-li-marker:font-medium 
-    child-list-ol-li-marker:text-info 
-    child-list-ol:mx-6 
-    child-list-ul:mx-6 
-    child-list-ul:list-disc 
-    child-list-ol-li:pt-1 
-    child-list-ul-li:pt-1 
-    child-list-ol-li-ul:list-[circle] 
-    child-list-ol-li-ul:px-4 
-    child-list-ol-li-ul:py-1 
-    child-list-ul-li-ul:list-[circle] 
-    child-list-ul-li-ul:px-4 
-    child-list-ul-li-ul:py-1 
-    child-list-ol-li-ul-li:pt-1 
-    child-list-ul-li-ul-li:pt-1" />
-
-
+          <MarkdownRenderer :value="record.fields.learningObjectives" />
         </div>
         
+        <!-- Displaying the Rubric -->
         <TableComponent :rubricData="rubric" :criteriaData="criteria" title="Rubric" />
       
-
       </div>
       <!-- iframe -->
       <IframeComponent v-if="showIframe" :articleHeight="articleHeight" :iframeUrl="iframeUrl" :record="record" >
-        <!-- Menu of Checkboxes -->
- 
-      
+      <!-- Menu of Checkboxes -->
       <ul class="menu menu-xs bg-base-200 rounded-box">
         <li>
           <label>

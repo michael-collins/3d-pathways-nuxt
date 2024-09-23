@@ -23,6 +23,7 @@ export default {
     require("daisyui"),
     plugin(function({ addVariant }) {addVariant('child-p', '&>p')}),
     plugin(function({ addVariant }) {addVariant('child-a', '& a')}),
+    plugin(function({ addVariant }) {addVariant('child-list-ul', '&>ul')}),
     plugin(function({ addVariant }) {addVariant('child-list-ol', '&>ol')}),
     plugin(function({ addVariant }) {addVariant('child-list-ol-li', '&>ol>li')}),
     plugin(function({ addVariant }) {addVariant('child-list-ol-li-marker', '&>ol>li>::marker')}),
