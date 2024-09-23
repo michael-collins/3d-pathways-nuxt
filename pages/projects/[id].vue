@@ -1,6 +1,7 @@
 <template>
   <article ref="articleElement">
     <div v-if="record" class="container max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
+      
       <!-- Displaying the Name and Image -->
       <img v-if="record.fields.image" :src="record.fields.image[0].url" class="w-full h-auto rounded-lg" />
       <h1 v-if="record.fields.name" class="text-5xl font-bold mt-8 mb-4">{{ record.fields.name }}</h1>
@@ -9,15 +10,16 @@
 
         <!-- Displaying the Difficulty -->
         <div v-if="record.fields.difficulty" class="pb-8">
+          
           <!-- Displaying the difficulty levels -->
           <ul class="space-x-2">
             <li v-for="level in record.fields.difficulty" :key="level" class="badge badge-outline text-xs uppercase">
               {{ level }}
             </li>
-
           </ul>
         </div>
         <div v-else class="pb-8"><!-- I'm here to handle the divide style utility--></div>
+        
         <!-- Displaying the Tags -->
         <div v-if="record.fields.tags" class="pb-8">
           <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Software:</h2>
@@ -107,9 +109,11 @@
         <TableComponent :rubricData="rubric" :criteriaData="criteria" title="Rubric" />
       
       </div>
+      
       <!-- iframe -->
       <IframeComponent v-if="showIframe" :articleHeight="articleHeight" :iframeUrl="iframeUrl" :record="record" >
-      <!-- Menu of Checkboxes -->
+      
+        <!-- Menu of Checkboxes -->
       <ul class="menu menu-xs bg-base-200 rounded-box">
         <li>
           <label>
