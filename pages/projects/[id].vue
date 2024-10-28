@@ -34,10 +34,10 @@
         </div>
         <div v-else class="pb-8"><!-- I'm here to handle the divide style utility--></div>
         
-        <!-- Displaying the Instructions -->
-        <div v-if="record.fields.instructions">
-          <h2 class="text-2xl font-semibold text-left uppercase mb-4">Instructions:</h2>
-          <MarkdownRenderer :value="record.fields.instructions" />
+         <!-- Displaying the Learning Objectives -->
+         <div v-if="record.fields.learningObjectives">
+          <h2 class="text-2xl font-semibold text-left uppercase mb-4">Learning Objectives:</h2>
+          <MarkdownRenderer :value="record.fields.learningObjectives" />
         </div>
         
         <!-- Displaying the Description -->
@@ -50,6 +50,12 @@
         <div v-if="record.fields.requirements">
           <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Requirements:</h2>
           <MarkdownRenderer :value="record.fields.requirements" />
+        </div>
+
+        <!-- Displaying the Instructions -->
+        <div v-if="record.fields.instructions">
+          <h2 class="text-2xl font-semibold text-left uppercase mb-4">Production Process:</h2>
+          <MarkdownRenderer :value="record.fields.instructions" />
         </div>
 
         <!-- Displaying the YouTube Playlist -->
@@ -99,11 +105,7 @@
           <FileComponent :fileData="files" />
         </div>
         
-        <!-- Displaying the Learning Objectives -->
-        <div v-if="record.fields.learningObjectives">
-          <h2 class="text-2xl font-semibold text-left uppercase mb-4">Learning Objectives:</h2>
-          <MarkdownRenderer :value="record.fields.learningObjectives" />
-        </div>
+       
         
         <!-- Displaying the Rubric -->
         <TableComponent :rubricData="rubric" :criteriaData="criteria" title="Rubric" />
