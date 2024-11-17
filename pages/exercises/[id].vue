@@ -25,7 +25,7 @@
       width="720"
       placeholder
       :src="record.fields.image[0].thumbnails.large.url" class="w-full h-auto rounded-lg" 
-      :alt="`Image for ${record.fields.name ? record.fields.name : 'article content.'}. ${record.fields.imageAlt ? record.fields.imageAlt : 'Image for decoration only.'}`"
+      :alt="`Image for exercise ${record.fields.name ? record.fields.name : 'content.'}. ${record.fields.imageAlt ? record.fields.imageAlt : 'Image for decoration only.'}`"
       />
       <h1 v-if="showTitle && record.fields.name" class="text-5xl font-bold mt-8 mb-4">{{ record.fields.name }}</h1>
       <div v-if="record && record.fields" :key="record.id" class="space-y-10 divide-y-4 divide-neutral">
