@@ -265,6 +265,7 @@ async function generateCache() {
     'exercises',
     'criteria',
     'lectures',
+    'licenses',
     'lessons',
     'pathways',
     'rubrics',

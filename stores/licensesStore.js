@@ -1,5 +1,6 @@
 // stores/licensesStore.js
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
+import licensesData from '~/public/cache/licenses.json';
 
 export const useLicensesStore = defineStore('licenses', {
   state: () => ({
@@ -17,38 +18,23 @@ export const useLicensesStore = defineStore('licenses', {
   actions: {
     async fetchRecords() {
       if (this.records.length) {
-        console.log('Using cached licenses:', this.records.length)
-        return
+        console.log('Using cached licenses:', this.records.length);
+        return;
       }
 
-      this.isLoading = true
-      this.error = null
+      this.isLoading = true;
+      this.error = null;
 
       try {
-        console.log('Fetching licenses from cache...')
-        const response = await fetch('/cache/licenses.json')
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
-
-        const data = await response.json()
-        console.log('Cache data:', data)
-
-        const licenses = data.licenses || []
-        console.log('Licenses array:', licenses)
-
-        // Store records
-        this.records = licenses
-
-        console.log('Final records count:', this.records.length)
-      } catch (error) {
-        console.error('Error fetching licenses from cache:', error)
-        this.error = error.message
-        this.records = []
+        // Assuming licensesData has a 'licenses' array
+        this.records = licensesData.licenses;
+        console.log('Licenses loaded from cache:', this.records.length);
+      } catch (err) {
+        this.error = 'Failed to load licenses.';
+        console.error(err);
       } finally {
-        this.isLoading = false
+        this.isLoading = false;
       }
     }
   }
-})
+});
