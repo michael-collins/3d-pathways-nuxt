@@ -54,10 +54,38 @@ export default defineNuxtConfig({
      ]
    }
  },
-
- // target: 'static', // default is 'server'
+ public: {
+  baseURL: process.env.BASE_URL || 'http://localhost:3000',
+},
+ target: 'static', // default is 'server'
  ssr: true,
+ nitro: {
+  storage: {
+    'data': {
+      driver: 'fs',
+      base: './data'
+    }
+  },
+  routeRules: {
+    '/api/**': {
+      cors: true,
+      headers: {
+        'Access-Control-Allow-Methods': 'GET',
+        'Cache-Control': 'public, max-age=3600'
+      }
+    }
+  },
+  devStorage: {
+    data: {
+      driver: 'fs',
+      base: './data'
+    }
+  }
+},
 
+serverMiddleware: [
+  { path: '/api', handler: '~/server/api/airtable-projects' }
+],
 //  nitro: {
 //   static: true,
 //    prerender: {

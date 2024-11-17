@@ -256,7 +256,7 @@ const currentUrl = computed(() => {
   }
   return '';
 });
-
+onMounted(async () => {
   await exercisesStore.fetchRecords();
   exerciseSlug.value = route.params.id;
   console.log('exerciseSlug.value:', exerciseSlug.value); // Debugging line
@@ -309,7 +309,7 @@ const currentUrl = computed(() => {
 
   // const rubricId = exerciseRecord.fields.rubrics;
   // console.log('Rubric ID:', rubricId);
-
+})
   // Update the iframe height when the page is rendered
   await nextTick();
   updateHeight();

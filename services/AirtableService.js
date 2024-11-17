@@ -1,21 +1,16 @@
-// Retrieves records from Airtable for a given table name and API key.
-// @param {string} tableName - The name of the table in Airtable.
-//  @param {string} apiKey - The API key for accessing Airtable.
-//  @returns {Promise<Array>} - A promise that resolves to an array of records.
-// @throws {Error} - If an error occurs during the API request.
+// services/AirtableService.js
+import Airtable from 'airtable'
 
-export const getAirtableRecords = async (tableName, apiKey) => {
-    const baseURL = `https://api.airtable.com/v0/appErImxpeRDom8je/${tableName}`;
+export async function getAirtableRecords(tableName, apiKey) {
+  if (!apiKey) {
+    throw new Error('Airtable API key is required')
+  }
+
+  const base = new Airtable({ apiKey }).base('appErImxpeRDom8je')
+  const records = await base(tableName).select({ view: 'Grid view' }).all()
   
-    try {
-        const response = await $fetch(baseURL, {
-            headers: {
-                Authorization: `Bearer ${apiKey}`,
-            },
-        });
-        return response.records;
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
-};
+  return records.map(record => ({
+    id: record.id,
+    fields: record.fields
+  }))
+}

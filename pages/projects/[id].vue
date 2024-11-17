@@ -248,7 +248,7 @@ const currentUrl = computed(() => {
   }
   return '';
 });
-
+onMounted(async () => {
   await projectsStore.fetchRecords();
   // record.value = projectsStore.getProjectById(projectId.value);
   projectSlug.value = route.params.id;
@@ -297,6 +297,7 @@ if (projectRecord && projectRecord.fields.files) {
     criteria.value = rubric.value[0].fields.criteria.map(criteriaId => criteriaStore.getCriteriaById(criteriaId));
     console.log('Fetched criteria:', criteria.value);
   }
+})
   // Update the iframe height when the page is rendered
   await nextTick();
   updateHeight();

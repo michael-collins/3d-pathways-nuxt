@@ -33,7 +33,7 @@ useHead({
   title: 'Specializations'
 })
 const specializationsStore = useSpecializationsStore(); // Use the dedicated specializations store
-
+onMounted(async () => {
 await specializationsStore.fetchRecords(); // Call the fetchRecords action specific to specializations
 
 // Toggle view mode
@@ -42,4 +42,5 @@ const updateViewMode = (newViewMode) => {
   viewMode.value = newViewMode
   console.log('View mode changed:', viewMode.value) // Log the new view mode
 }
+})
 </script>

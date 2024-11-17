@@ -273,6 +273,7 @@ if (record.value && record.value.fields.exercises && exercises.value) {
     })
     .filter(item => item !== null); // Filter out null values
 }
+
   // Update the iframe height when the page is rendered
   await nextTick();
   updateHeight();
