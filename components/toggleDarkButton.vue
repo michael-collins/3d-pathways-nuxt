@@ -21,6 +21,7 @@
     const colorMode = useColorMode();
     const themes = [
     'customdark',
+    'customlight',
     'system',
     "light",
     "dark",

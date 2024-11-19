@@ -41,7 +41,24 @@ export default defineNuxtConfig({
      autoprefixer: {},
    },
  },
-
+ mdc: {
+  headings: {
+    components: {
+      prose: false, // Disable predefined prose components
+      // map: {
+      //   p: 'MyCustomPComponent'
+      // }
+    },
+    anchorLinks: {
+      // Enable/Disable heading anchor links. { h1: true, h2: false }
+      h1: false, h2: false, h3: false, h4: false, h5: false, h6: false
+    }
+  },
+  // toc: {
+  //   enable: true, maxDepth: 3
+  //   // Enable/Disable table of contents. { enable: true, maxDepth: 3 }
+  // },
+},
  app: {
    // baseURL: '/3d-pathways-nuxt/', // baseURL: '/<repository>/'
    // buildAssetsDir: 'assets', // don't use "_" at the begining of the folder name to avoids nojkill conflict
@@ -54,6 +71,7 @@ export default defineNuxtConfig({
      ]
    }
  },
+
  public: {
   baseURL: process.env.BASE_URL || 'http://localhost:3000',
 },

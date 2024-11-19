@@ -1,6 +1,6 @@
 <template>
 
-  <div v-if="!hidePageElements" class="flex flex-col h-screen">
+  <div v-if="!hidePageElements" class="flex flex-col min-h-screen">
     <div class="drawer lg:drawer-open" role="navigation" :aria-expanded="drawerOpen">
       <input id="side-navigation-drawer" type="checkbox" aria-label="Navigation drawer toggle" class="drawer-toggle"
         v-model="drawerOpen" />

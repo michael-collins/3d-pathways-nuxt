@@ -38,7 +38,13 @@ export default {
   ],
   daisyui: {
     themes: [
-      "light",
+      {
+        light: {
+          ...require("daisyui/src/theming/themes")["light"],
+          primary: "blue",
+          secondary: "#167ac6",
+        },
+      },
       "dark",
         {customdark: {
           ...require("daisyui/src/theming/themes")["dark"],
@@ -86,6 +92,9 @@ export default {
       "nord",
       "sunset",
     ],
+    darkTheme: "customdark",
+    lightTheme: "customlight",
+
   },
 }
 
