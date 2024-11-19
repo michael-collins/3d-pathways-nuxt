@@ -28,18 +28,50 @@
 
   <!-- Grid View -->
   <GridContainer v-if="viewMode === 'grid'">
-    <LinkedCardComponent :records="filteredRecords" :isLoading="isLoading" destination="exercises" />
+    <LinkedCardComponent :records="paginatedRecords" :isLoading="isLoading" destination="exercises" />
   </GridContainer>
 
   <!-- List View -->
   <div v-else>
     <div >
       <ListContainer>
-        <ListItem :records="filteredRecords" :isLoading="isLoading" destination="exercises" />
+        <ListItem :records="paginatedRecords" :isLoading="isLoading" destination="exercises" />
       </ListContainer>
     </div>
   </div>
-  <!-- <pre class="mockup-code m-8">{{ exercisesStore.records }}</pre> -->
+  <!-- Pagination Controls -->
+  <div class="flex justify-center mt-6">
+   <div class="join" role="navigation" aria-label="Pagination Navigation">
+        <button
+          class="join-item btn btn-md"
+          @click="prevPage"
+          :disabled="currentPage === 1"
+          aria-label="Previous Page"
+        >
+          ←
+        </button>
+        <!-- Display up to 5 page buttons for better UX -->
+        <button
+          v-for="page in paginationRange"
+          :key="page"
+          class="join-item btn btn-md"
+          :class="{ 'btn-primary': currentPage === page }"
+          @click="goToPage(page)"
+          :aria-current="currentPage === page ? 'page' : false"
+        :aria-label="'Page ' + page"
+        >
+          {{ page }}
+        </button>
+        <button
+          class="join-item btn btn-md "
+          @click="nextPage"
+          :disabled="currentPage === totalPages"
+          aria-label="Next Page"
+        >
+          →
+        </button>
+    </div>
+    </div>
 </div>
 </template>
 
@@ -50,26 +82,89 @@ definePageMeta({
 useHead({
   title: 'Exercises'
 })
-const exercisesStore = useExercisesStore(); // Use the dedicated exercises store
-await exercisesStore.fetchRecords(); // Call the fetchRecords action specific to pathways
+// Initialize the store and fetch records
+const exercisesStore = useExercisesStore()
+await exercisesStore.fetchRecords()
 
-// Toggle view mode
-const viewMode = ref('list') // Initialize viewMode as 'grid'
+// State for view mode and search query
+const viewMode = ref('list') // 'list' or 'grid'
 const searchQuery = ref('')
 
-// Computed filtered records
+// Pagination state
+const currentPage = ref(1)
+const itemsPerPage = 30
+
+// Watch searchQuery to reset currentPage to 1 when it changes
+watch(searchQuery, () => {
+  currentPage.value = 1
+})
+
+// Computed filtered records based on search query
 const filteredRecords = computed(() => {
   if (!searchQuery.value) return exercisesStore.records
-  
+
   const query = searchQuery.value.toLowerCase()
   return exercisesStore.records.filter(record => {
-    return record.fields.name?.toLowerCase().includes(query) || 
-           record.fields.description?.toLowerCase().includes(query)
+    return (
+      record.fields.name?.toLowerCase().includes(query) ||
+      record.fields.description?.toLowerCase().includes(query)
+    )
   })
 })
+
+// Total number of pages
+const totalPages = computed(() => Math.ceil(filteredRecords.value.length / itemsPerPage))
+
+// Generate a range of page numbers for pagination buttons (e.g., currentPage ±2)
+const paginationRange = computed(() => {
+  const range = []
+  const delta = 2
+  const start = Math.max(1, currentPage.value - delta)
+  const end = Math.min(totalPages.value, currentPage.value + delta)
+
+  for (let i = start; i <= end; i++) {
+    range.push(i)
+  }
+
+  return range
+})
+
+// Computed paginated records for the current page
+const paginatedRecords = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  return filteredRecords.value.slice(start, start + itemsPerPage)
+})
+
+// Pagination control methods
+const goToPage = (page) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page
+    window.scrollTo({ top: 0, behavior: 'smooth' }) // Optional: Scroll to top on page change
+  }
+}
+
+const nextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+}
+
+const prevPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+}
+
+// Update view mode method
 const updateViewMode = (newViewMode) => {
   viewMode.value = newViewMode
-  console.log('View mode changed:', viewMode.value) // Log the new view mode
+  console.log('View mode changed:', viewMode.value)
 }
 </script>
+
+<style scoped>
+/* Optional: Customize pagination button styles if needed */
+</style>
 
