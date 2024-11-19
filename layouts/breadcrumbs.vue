@@ -4,12 +4,12 @@
     <div class="drawer lg:drawer-open" role="navigation" :aria-expanded="drawerOpen">
       <input id="side-navigation-drawer" type="checkbox" aria-label="Navigation drawer toggle" class="drawer-toggle"
         v-model="drawerOpen" />
-      <div class="drawer-content">
+      <div class="drawer-content flex flex-col min-h-screen">
         <a href="#main-content" class="skip-link">Skip to main content</a>
 
-        <label for="side-navigation-drawer" class="btn btn-ghost drawer-button lg:hidden left m-1">
+        <label for="side-navigation-drawer" class="drawer-button btn btn-ghost w-fit lg:hidden left m-1 flex-none ">
           <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg> -->
-          <Icon name="charm:menu-hamburger" class="text-xl" />
+          <Icon name="charm:menu-hamburger" class="text-xl flex-none " />
         </label>
         <header>
           <!-- <NavBar  /> -->

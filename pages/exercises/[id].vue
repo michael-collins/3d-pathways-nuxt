@@ -309,10 +309,10 @@ onMounted(async () => {
 
   // const rubricId = exerciseRecord.fields.rubrics;
   // console.log('Rubric ID:', rubricId);
-})
-  // Update the iframe height when the page is rendered
   await nextTick();
   updateHeight();
+})
+  // Update the iframe height when the page is rendered
 
   console.log(record.value)
 

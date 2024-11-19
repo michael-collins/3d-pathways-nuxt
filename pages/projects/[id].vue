@@ -304,10 +304,10 @@ if (projectRecord && projectRecord.fields.files) {
     criteria.value = rubric.value[0].fields.criteria.map(criteriaId => criteriaStore.getCriteriaById(criteriaId));
     console.log('Fetched criteria:', criteria.value);
   }
-})
   // Update the iframe height when the page is rendered
   await nextTick();
   updateHeight();
+})
 
 
 

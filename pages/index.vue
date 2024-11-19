@@ -18,7 +18,7 @@ const breadcrumbs = ref({
 provide('breadcrumbs', breadcrumbs);
 
 useHead({
-  title: 'Welcome',
+  title: 'Learning records',
   // layout: 'breadcrumbs', 
 })
 definePageMeta({

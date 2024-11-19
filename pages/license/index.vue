@@ -9,7 +9,9 @@
     </template>
     
     <script setup lang="ts">
-    
+    definePageMeta({
+    layout: 'breadcrumbs',
+  })
     const breadcrumbs = ref({
       show: false, // Set this to false to hide the BreadcrumbsComponent on this page
       showBackButton: false, // Set this to false to hide the back button on this page
