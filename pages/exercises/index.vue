@@ -39,39 +39,12 @@
       </ListContainer>
     </div>
   </div>
-  <!-- Pagination Controls -->
-  <div class="flex justify-center mt-6">
-   <div class="join" role="navigation" aria-label="Pagination Navigation">
-        <button
-          class="join-item btn btn-md"
-          @click="prevPage"
-          :disabled="currentPage === 1"
-          aria-label="Previous Page"
-        >
-          ←
-        </button>
-        <!-- Display up to 5 page buttons for better UX -->
-        <button
-          v-for="page in paginationRange"
-          :key="page"
-          class="join-item btn btn-md"
-          :class="{ 'btn-primary': currentPage === page }"
-          @click="goToPage(page)"
-          :aria-current="currentPage === page ? 'page' : false"
-        :aria-label="'Page ' + page"
-        >
-          {{ page }}
-        </button>
-        <button
-          class="join-item btn btn-md "
-          @click="nextPage"
-          :disabled="currentPage === totalPages"
-          aria-label="Next Page"
-        >
-          →
-        </button>
-    </div>
-    </div>
+
+    <PaginationButtonGroup
+    :currentPage="currentPage"
+    :totalPages="totalPages"
+    @update:currentPage="currentPage = $event"
+  />
 </div>
 </template>
 
