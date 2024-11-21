@@ -62,10 +62,10 @@ export default defineNuxtConfig({
  app: {
    // baseURL: '/3d-pathways-nuxt/', // baseURL: '/<repository>/'
    // buildAssetsDir: 'assets', // don't use "_" at the begining of the folder name to avoids nojkill conflict
-    pageTransition: { 
-      name: 'page',
-      mode: 'out-in' 
-  },
+  //   pageTransition: { 
+  //     name: 'page',
+  //     mode: 'out-in' 
+  // },
    head: {
      htmlAttrs: {
        lang: 'en'
