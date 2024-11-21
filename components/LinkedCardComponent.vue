@@ -18,11 +18,11 @@
               class="object-cover bg-cover size-full w-full h-30 rounded-t-lg"
               />
           <div class="sm:m-1 p-4 md:p-5">
-            <h3 class="group-hover:text-primary font-semibold self-center">
+            <h3  v-if="record.fields.name" class="group-hover:text-primary font-semibold self-center text-xl">
             {{ record.fields.name ? record.fields.name : 'Name not available' }}
             </h3>
-            <p class="group-hover:text-primary text-sm">
-              {{ record.fields.description ? record.fields.description : 'Description not available' }}
+            <p v-if="record.fields.name" class="group-hover:text-primary text-sm pt-2">
+              {{ record.fields.description ? record.fields.description.slice(0, 100) + (record.fields.description.length > 100 ? '...' : '') : '' }}
             </p>
           </div>
         </div>
