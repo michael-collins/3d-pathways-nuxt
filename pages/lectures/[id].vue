@@ -126,10 +126,10 @@
   // } else {
   //   console.error("Records is not an array:", records);
   // }
+  // Update the iframe height when the page is rendered
+await nextTick();
+    updateHeight();
 })
-    // Update the iframe height when the page is rendered
-  await nextTick();
-      updateHeight();
 
      // Update the iframe height when the record changes
      watch(record, updateHeight, { immediate: true });

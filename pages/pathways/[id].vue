@@ -251,11 +251,11 @@ exerciseDetails.value = record.value.fields.exercises.map(exerciseId => {
   return matchedExercise ? { id: matchedExercise.id, fields: { name: matchedExercise.fields.name, description: matchedExercise.fields.description, slug: matchedExercise.fields.slug } } : null;
 });
 }
-console.log(exerciseDetails)
-  // Update the iframe height when the page is rendered
+// console.log(exerciseDetails)
+// Update the iframe height when the page is rendered
+await nextTick();
+updateHeight();
 })
-  await nextTick();
-  updateHeight();
 
 
 // Update the iframe height when the record changes
