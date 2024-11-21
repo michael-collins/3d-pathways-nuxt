@@ -9,20 +9,7 @@
     <!-- Search and View Toggle Container -->
   <div class="flex justify-end items-center mb-4">
     <!-- Search Bar with Icon -->
-    <div class="form-control w-full max-w-lg relative">
-      <div class="relative">
-        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-          <Icon name="material-symbols:filter-alt" class="text-gray-400 text-xl" />
-        </span>
-        <input
-          type="text"
-          placeholder="Search exercises..."
-         class="input input-bordered input-sm w-full max-w-xs pl-10"
-          v-model="searchQuery"
-        />
-      </div>
-    </div>
-
+    <SearchBar :searchQuery="searchQuery" @update:searchQuery="searchQuery = $event" />    
     <GridListToggle :viewMode="viewMode" @viewModeChanged="updateViewMode" />
   </div>
 
@@ -40,11 +27,7 @@
     </div>
   </div>
 
-    <PaginationButtonGroup
-    :currentPage="currentPage"
-    :totalPages="totalPages"
-    @update:currentPage="currentPage = $event"
-  />
+    <PaginationButtonGroup v-if="totalPages > 1" :currentPage="currentPage" :totalPages="totalPages" @update:currentPage="currentPage = $event" />
 </div>
 </template>
 
@@ -88,47 +71,11 @@ const filteredRecords = computed(() => {
 // Total number of pages
 const totalPages = computed(() => Math.ceil(filteredRecords.value.length / itemsPerPage))
 
-// Generate a range of page numbers for pagination buttons (e.g., currentPage ±2)
-const paginationRange = computed(() => {
-  const range = []
-  const delta = 2
-  const start = Math.max(1, currentPage.value - delta)
-  const end = Math.min(totalPages.value, currentPage.value + delta)
-
-  for (let i = start; i <= end; i++) {
-    range.push(i)
-  }
-
-  return range
-})
-
 // Computed paginated records for the current page
 const paginatedRecords = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage
   return filteredRecords.value.slice(start, start + itemsPerPage)
 })
-
-// Pagination control methods
-const goToPage = (page) => {
-  if (page >= 1 && page <= totalPages.value) {
-    currentPage.value = page
-    window.scrollTo({ top: 0, behavior: 'smooth' }) // Optional: Scroll to top on page change
-  }
-}
-
-const nextPage = () => {
-  if (currentPage.value < totalPages.value) {
-    currentPage.value++
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-}
-
-const prevPage = () => {
-  if (currentPage.value > 1) {
-    currentPage.value--
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-}
 
 // Update view mode method
 const updateViewMode = (newViewMode) => {
@@ -136,8 +83,3 @@ const updateViewMode = (newViewMode) => {
   console.log('View mode changed:', viewMode.value)
 }
 </script>
-
-<style scoped>
-/* Optional: Customize pagination button styles if needed */
-</style>
-

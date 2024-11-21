@@ -18,7 +18,7 @@ export const useLicensesStore = defineStore('licenses', {
   actions: {
     async fetchRecords() {
       if (this.records.length) {
-        console.log('Using cached licenses:', this.records.length);
+        // console.log('Using cached licenses:', this.records.length);
         return;
       }
 
@@ -28,7 +28,7 @@ export const useLicensesStore = defineStore('licenses', {
       try {
         // Assuming licensesData has a 'licenses' array
         this.records = licensesData.licenses;
-        console.log('Licenses loaded from cache:', this.records.length);
+        // console.log('Licenses loaded from cache:', this.records.length);
       } catch (err) {
         this.error = 'Failed to load licenses.';
         console.error(err);

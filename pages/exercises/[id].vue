@@ -20,7 +20,7 @@
       </div> -->
       
       <!-- Displaying the Name and Image -->
-      <nuxtImg v-if="showImage && record.fields.image" 
+      <NuxtImg v-if="showImage && record.fields.image" 
       height="360"
       width="720"
       placeholder
@@ -259,9 +259,9 @@ const currentUrl = computed(() => {
 onMounted(async () => {
   await exercisesStore.fetchRecords();
   exerciseSlug.value = route.params.id;
-  console.log('exerciseSlug.value:', exerciseSlug.value); // Debugging line
+  // console.log('exerciseSlug.value:', exerciseSlug.value); // Debugging line
   record.value = exercisesStore.getExerciseBySlug(exerciseSlug.value);
-  console.log('record.value:', record.value); // Debugging line
+  // console.log('record.value:', record.value); // Debugging line
 
   const exerciseRecord =  record.value;
 
@@ -269,7 +269,7 @@ onMounted(async () => {
   if (exerciseRecord && exerciseRecord.fields.rubrics) {
     await rubricsStore.fetchRecords();
     rubric.value = exerciseRecord.fields.rubrics.map(rubricId => rubricsStore.getRubricById(rubricId));
-    console.log('Fetched rubrics:', rubric.value);
+    // console.log('Fetched rubrics:', rubric.value);
 
   }
 
@@ -277,7 +277,7 @@ onMounted(async () => {
   if (rubric.value && rubric.value.length > 0) {
     await criteriaStore.fetchRecords();
     criteria.value = rubric.value[0].fields.criteria.map(criteriaId => criteriaStore.getCriteriaById(criteriaId));
-    console.log('Fetched criteria:', criteria.value);
+    // console.log('Fetched criteria:', criteria.value);
   }
 
   // get the files
@@ -287,23 +287,23 @@ onMounted(async () => {
     files.value = exerciseRecord.fields.files.map(fileId => {
       return filesStore.getFileById(fileId);
     }).filter(file => file !== null && file !== undefined);
-    console.log('Fetched files:', files.value);
+    // console.log('Fetched files:', files.value);
 
   }
   // get the license and author
   if (exerciseRecord && exerciseRecord.fields.licenses) {
     await licensesStore.fetchRecords();
     license.value = exerciseRecord.fields.licenses.map(licenseId => licensesStore.getLicenseById(licenseId));
-    console.log('Fetched licenses:', license.value);
+    // console.log('Fetched licenses:', license.value);
   
   if (exerciseRecord.fields.author) {
     projectAuthor.value = exerciseRecord.fields.author;
-    console.log('Project Author:', projectAuthor.value);
+    // console.log('Project Author:', projectAuthor.value);
     }
 
   if (exerciseRecord.fields.authorURL) {
     projectAuthorURL.value = exerciseRecord.fields.authorURL;
-    console.log('Project Author URL:', projectAuthorURL.value);
+    // console.log('Project Author URL:', projectAuthorURL.value);
     }
   }
 
@@ -314,7 +314,7 @@ onMounted(async () => {
 })
   // Update the iframe height when the page is rendered
 
-  console.log(record.value)
+  // console.log(record.value)
 
 // const filteredCriteria = computed(() => {
 //   return criteriaStore.records.filter(criterion => criterion.fields.rubric.value === 'exercise');
@@ -415,9 +415,9 @@ const updateCheckboxesFromUrl = (query) => {
   iframeShowIframe.value = !query.hideIframe;
   iframeShowLicense.value = !query.hideLicense;
 
-  console.log('updateCheckboxesFromUrl called with query:', query);
+  // console.log('updateCheckboxesFromUrl called with query:', query);
   if (query.hidePageElements !== undefined) iframeShowPageElements.value = !query.hidePageElements;
-  console.log('iframeShowPageElements after updateCheckboxesFromUrl:', iframeShowPageElements.value);
+  // console.log('iframeShowPageElements after updateCheckboxesFromUrl:', iframeShowPageElements.value);
 
 };
 
@@ -485,7 +485,7 @@ watch(route, () => {
 
 
 onMounted(() => {
-  console.log('Initial value of iframeShowPageElements:', iframeShowPageElements.value);
+  // console.log('Initial value of iframeShowPageElements:', iframeShowPageElements.value);
   applyUrlParameters();
   // updateCheckboxesFromUrl(route.query); // This overrides the defaults, leave disabled
   updateIframeUrl();
@@ -494,9 +494,9 @@ onMounted(() => {
 onMounted(async () => {
   await exercisesStore.fetchRecords();
   exerciseSlug.value = route.params.id;
-  console.log('exerciseSlug.value:', exerciseSlug.value); // Debugging line
+  // console.log('exerciseSlug.value:', exerciseSlug.value); // Debugging line
   record.value = exercisesStore.getExerciseBySlug(exerciseSlug.value);
-  console.log('record.value:', record.value); // Debugging line
+  // console.log('record.value:', record.value); // Debugging line
 
   updateHeight();
   

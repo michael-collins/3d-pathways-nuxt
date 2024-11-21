@@ -63,33 +63,16 @@ const props = defineProps({
 });
 // Reactive reference to the breadcrumbs data
 const breadcrumbs = ref(defaultBreadcrumbs);
-// Inject the name
-// const recordName = inject('recordName')
-// Inject the name
-// let recordName = ref('');
-// provide('recordName', recordName);
-
-// // Assume you have a `record` ref that holds the actual record data
-// let record = ref(null);
-// // Update recordName when the actual record name is available
-// watch(() => record.value, (newVal, oldVal) => {
-//   if (newVal && newVal.fields && newVal.fields.name) {
-//     recordName.value = newVal.fields.name;
-//   }
-// });
-
 const route = useRoute();
-console.log('breadcrumbs layout route', route);
+// console.log('breadcrumbs layout route', route);
 const pathwaysStore = usePathwaysStore();
 const exercisesStore = useExercisesStore();
 const lecturesStore = useLecturesStore();
 const lessonsStore = useLessonsStore();
-
 const pathwayName = ref('');
 const exerciseName = ref('');
 const lectureName = ref('');
 const lessonName = ref('');
-
 const drawerOpen = ref(false);
 
 const toggleDrawer = () => {
@@ -114,30 +97,21 @@ const handleKeydown = (event) => {
     closeDrawer();
   }
 };
-
-
-
-// const iframe = computed(() => route.query.iframe === 'true');
-// v-if="!hidePageElements"
-// ?iframe=true
-// Computed property for hidePageElements based on the URL query parameter
 const hidePageElements = computed(() => route.query.hidePageElements === 'true');
-
-
 const updateNames = async () => {
   const newId = route.params.id;
   if (newId) {
     const pathway = await pathwaysStore.getPathwayById(newId);
-    console.log('pathway:', pathway); // Log the fetched pathway
+    // console.log('pathway:', pathway); // Log the fetched pathway
 
     const exercise = await exercisesStore.getExerciseById(newId);
-    console.log('exercise:', exercise); // Log the fetched exercise
+    // console.log('exercise:', exercise); // Log the fetched exercise
 
     const lecture = await lecturesStore.getLectureById(newId);
-    console.log('lecture:', lecture); // Log the fetched lecture
+    // console.log('lecture:', lecture); // Log the fetched lecture
 
     const lesson = await lessonsStore.getLessonById(newId);
-    console.log('lesson:', lesson); // Log the fetched lesson
+    // console.log('lesson:', lesson); // Log the fetched lesson
     if (pathway && pathway.fields && pathway.fields.name) {
       pathwayName.value = pathway.fields.name;
     }

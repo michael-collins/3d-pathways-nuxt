@@ -55,8 +55,6 @@ const props = defineProps({
     required: true
   },
 });
-// let recordName = inject('recordName');
-// console.log('breadcrumbscomponent recordName:', recordName?.value);
 
 
 const route = useRoute();
@@ -93,7 +91,4 @@ const breadcrumbList = computed(() => {
     return [];
   }
 });
-// console.log('name:', props.name);
-console.log('breadcrumbs:', props.exerciseName);
-// console.log('breadcrumbList:', breadcrumbList.value);
 </script>

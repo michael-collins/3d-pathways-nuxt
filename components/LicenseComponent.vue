@@ -22,7 +22,7 @@
     currentUrl: String,
     title: String,
   });
-  console.log('Props:', props);
-  console.log('License data:', props.license);
+  // console.log('Props:', props);
+  // console.log('License data:', props.license);
   // console.log('Rubric data prop:', props.rubricData);
   </script>

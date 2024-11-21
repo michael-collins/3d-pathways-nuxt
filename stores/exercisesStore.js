@@ -23,7 +23,7 @@ export const useExercisesStore = defineStore('exercises', {
   actions: {
     async fetchRecords() {
       if (this.records.length) {
-        console.log('Using cached exercises:', this.records.length)
+        // console.log('Using cached exercises:', this.records.length)
         return
       }
       
@@ -31,7 +31,7 @@ export const useExercisesStore = defineStore('exercises', {
       this.error = null
 
       try {
-        console.log('Fetching exercises from cache...')
+        // console.log('Fetching exercises from cache...')
         const response = await fetch('/cache/exercises.json')
         
         if (!response.ok) {
@@ -39,19 +39,19 @@ export const useExercisesStore = defineStore('exercises', {
         }
 
         const data = await response.json()
-        console.log('Cache data:', data)
+        // console.log('Cache data:', data)
 
         const exercises = data.exercises || []
-        console.log('Exercises array:', exercises)
+        // console.log('Exercises array:', exercises)
         
         // Filter and store exercises
         this.records = exercises.filter(record => {
           const isPublished = record?.fields?.published === true;
-          console.log(`Record ${record?.id}: published = ${isPublished}`)
+          // console.log(`Record ${record?.id}: published = ${isPublished}`)
           return isPublished
         })
         
-        console.log('Final records count:', this.records.length)
+        // console.log('Final records count:', this.records.length)
       } catch (error) {
         console.error('Error fetching exercises from cache:', error)
         this.error = error.message

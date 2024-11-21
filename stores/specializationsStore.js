@@ -34,26 +34,26 @@ export const useSpecializationsStore = defineStore('specializations', {
       this.error = null;
 
       try {
-        console.log('Fetching specializations from cache...');
+        // console.log('Fetching specializations from cache...');
         
         const config = useRuntimeConfig();
         const data = await $fetch('/cache/specializations.json', {
           baseURL: config.public.baseURL,
         });
 
-        console.log('Cache data:', data);
+        // console.log('Cache data:', data);
 
         const specializations = data.specializations || [];
-        console.log('Specializations array:', specializations);
+        // console.log('Specializations array:', specializations);
 
         // Filter and store specializations
         this.records = specializations.filter((record) => {
           const isPublished = record?.fields?.published === true;
-          console.log(`Record ${record?.id}: published = ${isPublished}`);
+          // console.log(`Record ${record?.id}: published = ${isPublished}`);
           return isPublished;
         });
 
-        console.log('Final records count:', this.records.length);
+        // console.log('Final records count:', this.records.length);
       } catch (error) {
         console.error('Error fetching specializations from cache:', error);
         this.error = error.message;

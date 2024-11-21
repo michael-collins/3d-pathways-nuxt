@@ -19,7 +19,7 @@ export const useCriteriaStore = defineStore('criteria', {
   actions: {
     async fetchRecords() {
       if (this.records.length) {
-        console.log('Using cached criteria:', this.records.length)
+        // console.log('Using cached criteria:', this.records.length)
         return
       }
 
@@ -27,7 +27,7 @@ export const useCriteriaStore = defineStore('criteria', {
       this.error = null
 
       try {
-        console.log('Fetching criteria from cache...')
+        // console.log('Fetching criteria from cache...')
         const response = await fetch('/cache/criteria.json')
 
         if (!response.ok) {
@@ -35,19 +35,19 @@ export const useCriteriaStore = defineStore('criteria', {
         }
 
         const data = await response.json()
-        console.log('Cache data:', data)
+        // console.log('Cache data:', data)
 
         const criteria = data.criteria || []
-        console.log('Criteria array:', criteria)
+        // console.log('Criteria array:', criteria)
 
         // Filter and store criteria
         this.records = criteria.filter(record => {
           const isPublished = record?.fields?.published === true;
-          console.log(`Record ${record?.id}: published = ${isPublished}`)
+          // console.log(`Record ${record?.id}: published = ${isPublished}`)
           return isPublished
         })
 
-        console.log('Final records count:', this.records.length)
+        // console.log('Final records count:', this.records.length)
       } catch (error) {
         console.error('Error fetching criteria from cache:', error)
         this.error = error.message

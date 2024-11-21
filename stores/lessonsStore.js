@@ -21,7 +21,7 @@ export const useLessonsStore = defineStore('lessons', {
   actions: {
     async fetchRecords() {
       if (this.records.length) {
-        console.log('Using cached lessons:', this.records.length);
+        // console.log('Using cached lessons:', this.records.length);
         return;
       }
 
@@ -29,7 +29,7 @@ export const useLessonsStore = defineStore('lessons', {
       this.error = null;
 
       try {
-        console.log('Fetching lessons from cache...');
+        // console.log('Fetching lessons from cache...');
         const response = await fetch('/cache/lessons.json');
 
         if (!response.ok) {
@@ -37,19 +37,19 @@ export const useLessonsStore = defineStore('lessons', {
         }
 
         const data = await response.json();
-        console.log('Cache data:', data);
+        // console.log('Cache data:', data);
 
         const lessons = data.lessons || [];
-        console.log('Lessons array:', lessons);
+        // console.log('Lessons array:', lessons);
 
         // Filter and store lessons
         this.records = lessons.filter((record) => {
           const isPublished = record?.fields?.published === true;
-          console.log(`Record ${record?.id}: published = ${isPublished}`);
+          // console.log(`Record ${record?.id}: published = ${isPublished}`);
           return isPublished;
         });
 
-        console.log('Final records count:', this.records.length);
+        // console.log('Final records count:', this.records.length);
       } catch (error) {
         console.error('Error fetching lessons from cache:', error);
         this.error = error.message;

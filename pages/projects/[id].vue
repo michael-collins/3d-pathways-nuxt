@@ -3,7 +3,7 @@
     <div v-if="record" class="container max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
       
       <!-- Displaying the Name and Image -->
-      <nuxtImg v-if="showImage && record.fields.image" 
+      <NuxtImg v-if="showImage && record.fields.image" 
       height="360"
       width="720"
       placeholder
@@ -266,22 +266,22 @@ onMounted(async () => {
   if (projectRecord && projectRecord.fields.rubrics) {
   await rubricsStore.fetchRecords();
   rubric.value = projectRecord.fields.rubrics.map(rubricId => rubricsStore.getRubricById(rubricId));
-  console.log('Fetched rubrics:', rubric.value);
+  // console.log('Fetched rubrics:', rubric.value);
 }
 
 if (projectRecord && projectRecord.fields.licenses) {
   await licensesStore.fetchRecords();
   license.value = projectRecord.fields.licenses.map(licenseId => licensesStore.getLicenseById(licenseId));
-  console.log('Fetched licenses:', license.value);
+  // console.log('Fetched licenses:', license.value);
 
   if (projectRecord.fields.author) {
     projectAuthor.value = projectRecord.fields.author;
-    console.log('Project Author:', projectAuthor.value);
+    // console.log('Project Author:', projectAuthor.value);
   }
 
   if (projectRecord.fields.authorURL) {
     projectAuthorURL.value = projectRecord.fields.authorURL;
-    console.log('Project Author URL:', projectAuthorURL.value);
+    // console.log('Project Author URL:', projectAuthorURL.value);
   }
 }
 
@@ -292,17 +292,17 @@ if (projectRecord && projectRecord.fields.files) {
     files.value = projectRecord.fields.files.map(fileId => {
       return filesStore.getFileById(fileId);
     }).filter(file => file !== null && file !== undefined);
-    console.log('Fetched files:', files.value);
+    // console.log('Fetched files:', files.value);
 
   }
 
   const rubricId = projectRecord.fields.rubrics;
-  console.log('Rubric ID:', rubricId);
+  // console.log('Rubric ID:', rubricId);
 
   if (rubric.value && rubric.value.length > 0) {
     await criteriaStore.fetchRecords();
     criteria.value = rubric.value[0].fields.criteria.map(criteriaId => criteriaStore.getCriteriaById(criteriaId));
-    console.log('Fetched criteria:', criteria.value);
+    // console.log('Fetched criteria:', criteria.value);
   }
   // Update the iframe height when the page is rendered
   await nextTick();
@@ -389,9 +389,9 @@ const updateCheckboxesFromUrl = (query) => {
   iframeShowIframe.value = !query.hideIframe;
   iframeShowLicense.value = !query.hideLicense;
 
-  console.log('updateCheckboxesFromUrl called with query:', query);
+  // console.log('updateCheckboxesFromUrl called with query:', query);
   if (query.hidePageElements !== undefined) iframeShowPageElements.value = !query.hidePageElements;
-  console.log('iframeShowPageElements after updateCheckboxesFromUrl:', iframeShowPageElements.value);
+  // console.log('iframeShowPageElements after updateCheckboxesFromUrl:', iframeShowPageElements.value);
 
 };
 
@@ -459,7 +459,7 @@ watch(route, () => {
 
 
 onMounted(() => {
-  console.log('Initial value of iframeShowPageElements:', iframeShowPageElements.value);
+  // console.log('Initial value of iframeShowPageElements:', iframeShowPageElements.value);
   applyUrlParameters();
   // updateCheckboxesFromUrl(route.query); // This overrides the defaults, leave disabled
   updateIframeUrl();

@@ -18,7 +18,7 @@ export const useFilesStore = defineStore('files', {
   actions: {
     async fetchRecords() {
       if (this.records.length) {
-        console.log('Using cached files:', this.records.length);
+        // console.log('Using cached files:', this.records.length);
         return;
       }
 
@@ -27,7 +27,7 @@ export const useFilesStore = defineStore('files', {
 
       try {
         this.records = filesData.files; // Adjust based on your JSON structure
-        console.log('Files loaded from cache:', this.records.length);
+        // console.log('Files loaded from cache:', this.records.length);
       } catch (err) {
         this.error = 'Failed to load files.';
         console.error(err);

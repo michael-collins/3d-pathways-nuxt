@@ -19,7 +19,7 @@ export const useCompetenciesStore = defineStore('competencies', {
   actions: {
     async fetchRecords() {
       if (this.competencies.length) {
-        console.log('Using cached competencies:', this.competencies.length);
+        // console.log('Using cached competencies:', this.competencies.length);
         return;
       }
 
@@ -27,7 +27,7 @@ export const useCompetenciesStore = defineStore('competencies', {
       this.error = null;
 
       try {
-        console.log('Fetching competencies from cache...');
+        // console.log('Fetching competencies from cache...');
         const response = await fetch('/cache/competencies.json');
 
         if (!response.ok) {
@@ -35,19 +35,19 @@ export const useCompetenciesStore = defineStore('competencies', {
         }
 
         const data = await response.json();
-        console.log('Cache data:', data);
+        // console.log('Cache data:', data);
 
         const competencies = data.competencies || [];
-        console.log('Competencies array:', competencies);
+        // console.log('Competencies array:', competencies);
 
         // Filter and store competencies
         this.competencies = competencies.filter((record) => {
           const isPublished = record?.fields?.published === true;
-          console.log(`Record ${record?.id}: published = ${isPublished}`);
+          // console.log(`Record ${record?.id}: published = ${isPublished}`);
           return isPublished;
         });
 
-        console.log('Final records count:', this.competencies.length);
+        // console.log('Final records count:', this.competencies.length);
       } catch (error) {
         console.error('Error fetching competencies from cache:', error);
         this.error = error.message;

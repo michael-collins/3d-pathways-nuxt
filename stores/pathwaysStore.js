@@ -21,7 +21,7 @@ export const usePathwaysStore = defineStore('pathways', {
   actions: {
     async fetchRecords() {
       if (this.records.length) {
-        console.log('Using cached pathways:', this.records.length);
+        // console.log('Using cached pathways:', this.records.length);
         return;
       }
 
@@ -29,7 +29,7 @@ export const usePathwaysStore = defineStore('pathways', {
       this.error = null;
 
       try {
-        console.log('Fetching pathways from cache...');
+        // console.log('Fetching pathways from cache...');
         const response = await fetch('/cache/pathways.json');
 
         if (!response.ok) {
@@ -37,19 +37,19 @@ export const usePathwaysStore = defineStore('pathways', {
         }
 
         const data = await response.json();
-        console.log('Cache data:', data);
+        // console.log('Cache data:', data);
 
         const pathways = data.pathways || [];
-        console.log('Pathways array:', pathways);
+        // console.log('Pathways array:', pathways);
 
         // Filter and store pathways
         this.records = pathways.filter((record) => {
           const isPublished = record?.fields?.published === true; // Updated condition
-          console.log(`Record ${record?.id}: published = ${isPublished}`);
+          // console.log(`Record ${record?.id}: published = ${isPublished}`);
           return isPublished;
         });
 
-        console.log('Final records count:', this.records.length);
+        // console.log('Final records count:', this.records.length);
       } catch (error) {
         console.error('Error fetching pathways from cache:', error);
         this.error = error.message;
