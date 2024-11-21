@@ -2,7 +2,7 @@
   <div class="w-full p-10">
     <HeroComponent title="Lectures">
       <template #description>
-        <p>This is the description for the lectures page.</p>
+        <p>Slides, screenings, and vocabulary for 3D production fundamentals.</p>
       </template>
     </HeroComponent>
     <div class="flex justify-end items-center mb-4">

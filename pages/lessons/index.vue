@@ -2,7 +2,7 @@
   <div class="w-full p-10">
     <HeroComponent title="Lessons">
       <template #description>
-        <p>This is the description for the lessons page.</p>
+        <p>Work in progress.</p>
       </template>
     </HeroComponent>
     <div class="flex justify-end items-center mb-4">

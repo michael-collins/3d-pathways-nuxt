@@ -3,7 +3,7 @@
   
   <HeroComponent title="Projects">
       <template #description>
-        <p>This is the description for the projects page.</p>
+        <p>Multi-week assignments for critical issues, and creative themes, and visual storytelling explored through CGI.</p>
       </template>
     </HeroComponent>
     <div class="flex justify-end items-center mb-4">

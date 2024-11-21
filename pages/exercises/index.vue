@@ -3,7 +3,7 @@
   
   <HeroComponent title="Exercises">
       <template #description>
-        <p>This is the description for the exercises page.</p>
+        <p>Mastery practice assignments.</p>
       </template>
     </HeroComponent>
     <!-- Search and View Toggle Container -->

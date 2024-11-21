@@ -2,7 +2,7 @@
   <div class="w-full p-10">
     <HeroComponent title="Specializations">
       <template #description>
-        <p>This is the description for the specializations page.</p>
+        <p>Work in progress.</p>
       </template>
     </HeroComponent>
     <!-- <pre class="mockup-code m-8">{{ specializationsStore.records }}</pre> -->
