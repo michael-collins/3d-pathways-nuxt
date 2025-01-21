@@ -43,7 +43,7 @@
         
         <!-- Displaying the Tags -->
         <div v-if="showTags && record.fields.tags" class="pb-8">
-          <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Software:</h2>
+          <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Tags:</h2>
 
           <!-- Displaying the tags -->
           <ul class="space-x-2">
