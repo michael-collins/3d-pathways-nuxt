@@ -86,7 +86,7 @@
         <!-- Displaying the Vimeo Playlist -->
         <div v-if="record.fields.vimeoPlaylistID">
           <h2 class="text-2xl font-semibold mb-2 text-left uppercase ">Tutorials:</h2>
-          <p v-if="record.fields.vimeoPlaylistID" class="text-md p-3">
+          <div v-if="record.fields.vimeoPlaylistID" class="text-md p-3">
           <div style='padding:56.25% 0 0 0;position:relative;'>
             <iframe 
             :src="'https://vimeo.com/showcase/' + record.fields.vimeoPlaylistID + '/embed'" 
@@ -97,7 +97,7 @@
             height:100%;'>
             </iframe></div>
           <a class="mx-auto  btn btn-ghost text-secondary hover:text-secondary:":href="'https://vimeo.com/showcase/' + record.fields.vimeoPlaylistID" target="_blank">Vimeo.com playlist <Icon name="octicon:link-external-16" class=" text-sm" /></a>
-          </p>
+          </div>
         </div>
 
         <!-- Displaying the associatedMaterial -->

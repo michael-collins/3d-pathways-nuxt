@@ -81,7 +81,6 @@ content: {
  public: {
   baseURL: process.env.BASE_URL || 'http://localhost:3000',
 },
- target: 'static', // default is 'server'
  ssr: true,
  nitro: {
   storage: {
@@ -106,10 +105,6 @@ content: {
     }
   }
 },
-
-serverMiddleware: [
-  { path: '/api', handler: '~/server/api/airtable-projects' }
-],
 //  nitro: {
 //   static: true,
 //    prerender: {

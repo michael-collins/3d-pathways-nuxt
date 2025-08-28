@@ -1,2 +1,86 @@
+# Build outputs
+.output
+.nuxt
+dist
+
+# Development files
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules
+.pnpm-store
+
+# IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage
+*.lcov
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Nuxt.js specific
+.nuxt/
+.output/
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/
+
+# Cache directories
+.cache/
+.nitro/
+
+# Public assets that are generated/downloaded
 public/assets
 public/cache
+
+# Testing
+coverage/
+.nyc_output
+
+# Misc
+*.tgz
+*.tar.gzl

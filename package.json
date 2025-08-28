@@ -2,6 +2,9 @@
   "name": "nuxt-app",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "generate:cache": "node scripts/generateAirtableCache.js",
     "dev": "npm run generate:cache && nuxt dev",
