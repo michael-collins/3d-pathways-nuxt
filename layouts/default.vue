@@ -15,7 +15,7 @@
   </div>
   </template>
   <script setup> 
-  // const route = useRoute();
+  const route = useRoute();
 
  // Computed property for hidePageElements based on the URL query parameter
 const hidePageElements = computed(() => route.query.hidePageElements === 'true');

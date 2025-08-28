@@ -9,11 +9,13 @@ export default defineNuxtConfig({
   'nuxt-icon',
   '@pinia/nuxt',
   '@nuxt/content',
-  // 'nuxt-slugify',
   '@nuxtjs/mdc',
   '@nuxt/image'
 ],
-
+content: {
+  debug: true, // Enable for detailed logging during development
+  // ...other options if needed
+},
  image: {
   // unoptimized: true, // Disable all image optimization. Default: false
   // domains: [
