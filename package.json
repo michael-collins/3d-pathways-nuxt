@@ -16,7 +16,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-    "@nuxt/content": "^2.13.4",
+    "@nuxt/content": "^3.11.0",
     "@nuxt/ui": "^2.14.2",
     "@pinia/nuxt": "^0.5.1",
     "@vueuse/core": "^10.9.0",
@@ -26,20 +26,25 @@
     "path": "^0.12.7",
     "pinia": "^2.1.7",
     "slugify": "^1.6.6",
-    "vercel": "^37.1.2",
+    "vercel": "^50.4.5",
     "vue": "^3.4.19",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
+    "@iconify-json/ant-design": "^1.2.5",
+    "@iconify-json/charm": "^1.2.3",
+    "@iconify-json/entypo-social": "^1.2.3",
+    "@iconify-json/material-symbols": "^1.2.51",
+    "@iconify-json/octicon": "^1.2.20",
+    "@nuxt/icon": "^1.10.2",
     "@nuxt/image": "^1.7.1",
     "@nuxtjs/color-mode": "^3.3.2",
-    "@nuxtjs/mdc": "^0.6.1",
+    "@nuxtjs/mdc": "^0.20.0",
     "@nuxtjs/tailwindcss": "^6.11.4",
     "@tailwindcss/typography": "^0.5.10",
     "daisyui": "^4.7.2",
     "gh-pages": "^6.1.1",
-    "nuxt": "^3.12.4",
-    "nuxt-icon": "^0.6.9",
+    "nuxt": "^4.2.2",
     "nuxt-slugify": "^1.1.0"
   }
 }
