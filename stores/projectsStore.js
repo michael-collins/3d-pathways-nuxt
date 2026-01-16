@@ -1,6 +1,5 @@
 // stores/projectsStore.js
 import { defineStore } from 'pinia'
-import { useRuntimeConfig } from '#app' // Import useRuntimeConfig
 
 export const useProjectsStore = defineStore('projects', {
   state: () => ({
@@ -30,10 +29,7 @@ export const useProjectsStore = defineStore('projects', {
       try {
         // console.log('Fetching projects from cache...')
 
-        const config = useRuntimeConfig()
-        const data = await $fetch('/cache/projects.json', {
-          baseURL: config.public.baseURL,
-        })
+        const data = await $fetch('/cache/projects.json')
 
         // console.log('Cache data:', data)
 

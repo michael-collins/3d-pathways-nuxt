@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { useNuxtApp } from '#app';
 import { getAirtableRecords } from '@/services/AirtableService';
 
 
@@ -17,13 +18,16 @@ export const useAirtableStore = defineStore({
     },
     actions: {
       async fetchRecords(tableName) {
-        const config = useRuntimeConfig();
-        const data = await getAirtableRecords(tableName, config.public.AirtableApiKey);
+        const { $config } = useNuxtApp();
+        const data = await getAirtableRecords(tableName, $config.public.AirtableApiKey);
         // Filter out records where the published field is not true
         // const filteredData = data.filter(record => record.fields.published === true);
         
         // this.records[tableName] = filteredData;
         this.records[tableName] = data;
+      },
+      setRecords(data) {
+        this.records = data;
       },
     },
   });

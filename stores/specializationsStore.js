@@ -1,6 +1,5 @@
 // stores/specializationsStore.js
 import { defineStore } from 'pinia'
-import { useRuntimeConfig } from '#app' // Import useRuntimeConfig
 
 export const useSpecializationsStore = defineStore('specializations', {
   state: () => ({
@@ -36,10 +35,7 @@ export const useSpecializationsStore = defineStore('specializations', {
       try {
         // console.log('Fetching specializations from cache...');
         
-        const config = useRuntimeConfig();
-        const data = await $fetch('/cache/specializations.json', {
-          baseURL: config.public.baseURL,
-        });
+        const data = await $fetch('/cache/specializations.json');
 
         // console.log('Cache data:', data);
 
