@@ -51,7 +51,7 @@ const route = useRoute()
 const slug = route.params.slug as string
 
 const { data: page, error } = await useAsyncData(`docs-${slug}`, () =>
-  queryContent('docs').where({ slug }).findOne()
+  queryCollection('docs').where('path', '=', `/docs/${slug}`).first()
 )
 
 useHead({

@@ -132,6 +132,7 @@ content: {
   // Public keys that will be exposed to the client, prefix with 'public'
   public: {
     AirtableApiKey: process.env.AIRTABLE_API_KEY, // Keep this empty if you don't need it on the client-side
+    siteUrl: process.env.SITE_URL || 'http://localhost:3000',
   },
   // Private keys, kept server-side
   AirtableApiKey: process.env.AIRTABLE_API_KEY,

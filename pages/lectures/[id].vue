@@ -74,7 +74,7 @@
           </div>
         </div>
           <!-- iframe -->
-          <IframeComponent :articleHeight="articleHeight" :currentUrl="currentUrl" :record="record" />
+          <IframeConfigGenerator :articleHeight="articleHeight" :currentUrl="currentUrl" :record="record" />
 
       </div>
     </article>

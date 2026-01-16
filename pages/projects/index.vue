@@ -1,85 +1,129 @@
 <template>
-<div class="w-full p-10">
-  
-  <HeroComponent title="Projects">
+  <div class="w-full p-10">
+    <HeroComponent title="Projects">
       <template #description>
-        <p>Multi-week assignments for critical issues, and creative themes, and visual storytelling explored through CGI.</p>
+        <p>Comprehensive assessment projects to demonstrate your mastery of 3D design and animation.</p>
       </template>
     </HeroComponent>
+
     <div class="flex justify-end items-center mb-4">
-    <!-- Search Bar with Icon -->
-    <SearchBar :searchQuery="searchQuery" @update:searchQuery="searchQuery = $event" />    
-    <GridListToggle :viewMode="viewMode" @viewModeChanged="updateViewMode" />
-  </div>
+      <SearchBar :searchQuery="searchQuery" @update:searchQuery="searchQuery = $event" />    
+      <GridListToggle :viewMode="viewMode" @viewModeChanged="updateViewMode" />
+    </div>
 
-  <!-- Grid View -->
-  <GridContainer v-if="viewMode === 'grid'">
-    <LinkedCardComponent :records="paginatedRecords"  destination="projects" />
-  </GridContainer>
-
-  <!-- List View -->
-  <div v-else>
-    <div >
-      <ListContainer>
-        <ListItem :records="paginatedRecords"  destination="projects" />
+    <!-- Grid View -->
+    <GridContainer v-if="viewMode === 'grid'">
+      <div v-if="isLoading" class="text-center py-12">
+        <LoaderComponent />
+      </div>
+      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <NuxtLink v-for="project in paginatedProjects" :key="project.path" 
+                  :to="project.path"
+                  class="card bg-base-200 shadow-xl hover:shadow-2xl transition-all">
+          <figure v-if="project.image">
+            <img :src="project.image" :alt="project.imageAlt || project.title" class="w-full h-48 object-cover" />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title">{{ project.title }}</h2>
+            <div v-if="project.difficulty" class="badge badge-secondary">{{ project.difficulty }}</div>
+            <p v-if="project.description" class="line-clamp-3">{{ project.description }}</p>
+          </div>
+        </NuxtLink>
+      </div>
+    </GridContainer>
+    
+    <!-- List View -->
+    <div v-else>
+      <div v-if="isLoading" class="text-center py-12">
+        <LoaderComponent />
+      </div>
+      <ListContainer v-else>
+        <NuxtLink v-for="project in paginatedProjects" :key="project.path"
+                  :to="project.path"
+                  class="block p-4 hover:bg-base-200 rounded-lg transition-all">
+          <div class="flex gap-4 items-center">
+            <img v-if="project.image" :src="project.image" :alt="project.imageAlt || project.title" 
+                 class="w-24 h-24 object-cover rounded" />
+            <div class="flex-1">
+              <h3 class="text-xl font-bold">{{ project.title }}</h3>
+              <div v-if="project.difficulty" class="badge badge-sm badge-secondary mt-1">{{ project.difficulty }}</div>
+              <p v-if="project.description" class="mt-2 line-clamp-2">{{ project.description }}</p>
+            </div>
+          </div>
+        </NuxtLink>
       </ListContainer>
     </div>
-  </div>
-  <PaginationButtonGroup v-if="totalPages > 1" :currentPage="currentPage" :totalPages="totalPages" @update:currentPage="currentPage = $event" />
 
-  <!-- <pre class="mockup-code m-8">{{ projectsStore.records }}</pre> -->
-</div>
+    <PaginationButtonGroup v-if="totalPages > 1" 
+                          :currentPage="currentPage" 
+                          :totalPages="totalPages" 
+                          @update:currentPage="currentPage = $event" />
+  </div>
 </template>
 
 <script setup>
 definePageMeta({
   layout: 'breadcrumbs',
 })
+
 useHead({
   title: 'Projects'
 })
-const projectsStore = useProjectsStore(); // Use the dedicated projects store
-await projectsStore.fetchRecords(); // Call the fetchRecords action specific to pathways
 
-
-// State for view mode and search query
-const viewMode = ref('list') // 'list' or 'grid'
+const isLoading = ref(true)
+const projects = ref([])
+const viewMode = ref('list')
 const searchQuery = ref('')
-
-// Pagination state
 const currentPage = ref(1)
 const itemsPerPage = 30
 
-// Watch searchQuery to reset currentPage to 1 when it changes
+// Fetch projects from Nuxt Content
+try {
+  const { data } = await useAsyncData('projects', () => 
+    queryCollection('projects')
+      .where('published', '=', true)
+      .order('title', 'ASC')
+      .all()
+  )
+  
+  projects.value = data.value || []
+  console.log('Loaded projects:', projects.value.length, projects.value[0])
+} catch (error) {
+  console.error('Error loading projects:', error)
+  projects.value = []
+} finally {
+  isLoading.value = false
+}
+
+// Watch searchQuery to reset currentPage
 watch(searchQuery, () => {
   currentPage.value = 1
 })
 
-// Computed filtered records based on search query
-const filteredRecords = computed(() => {
-  if (!searchQuery.value) return projectsStore.records
+// Computed filtered projects
+const filteredProjects = computed(() => {
+  if (!searchQuery.value) return projects.value
 
   const query = searchQuery.value.toLowerCase()
-  return projectsStore.records.filter(record => {
+  return projects.value.filter(project => {
     return (
-      record.fields.name?.toLowerCase().includes(query) ||
-      record.fields.description?.toLowerCase().includes(query)
+      project.title?.toLowerCase().includes(query) ||
+      project.description?.toLowerCase().includes(query) ||
+      project.difficulty?.toLowerCase().includes(query)
     )
   })
 })
 
-// Total number of pages
-const totalPages = computed(() => Math.ceil(filteredRecords.value.length / itemsPerPage))
+// Total pages
+const totalPages = computed(() => Math.ceil(filteredProjects.value.length / itemsPerPage))
 
-// Computed paginated records for the current page
-const paginatedRecords = computed(() => {
+// Paginated projects
+const paginatedProjects = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage
-  return filteredRecords.value.slice(start, start + itemsPerPage)
+  return filteredProjects.value.slice(start, start + itemsPerPage)
 })
 
-// Toggle view mode
 const updateViewMode = (newViewMode) => {
   viewMode.value = newViewMode
-  // console.log('View mode changed:', viewMode.value) // Log the new view mode
 }
 </script>

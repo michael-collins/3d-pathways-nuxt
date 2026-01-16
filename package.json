@@ -7,6 +7,7 @@
   },
   "scripts": {
     "generate:cache": "node scripts/generateAirtableCache.js",
+    "migrate:content": "node scripts/migrateToNuxtContent.js",
     "dev": "npm run generate:cache && nuxt dev",
     "build": "npm run generate:cache && nuxt build",
     "generate": "nuxt generate",
