@@ -7,6 +7,9 @@ difficulty: beginner
 youtubePlaylistID: PLcAjW37cz5Ql40pEsctlh1xNHLDS8F0cb
 image: /assets/exercises/recI5o36ru0BbxuCH_image_rook_image.png
 imageAlt: rook image.png
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -47,5 +50,8 @@ Make sure that your assignment is titled in the following format:
 
 
 
+## Grading Rubric
 
+::rubric-component{id="exercise"}
+::
 

@@ -8,6 +8,9 @@ youtubePlaylistID: PL-V2nChTadrUEv-pnXBisI7G3yU_puFGv
 image: /assets/exercises/recxOxvwqqUAVs2TK_image_banner-tetris-compressed.jpg
 imageAlt: banner-tetris-compressed.jpg
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -52,10 +55,8 @@ title: Animating Tetris Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

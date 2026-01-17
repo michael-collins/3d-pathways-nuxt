@@ -8,6 +8,9 @@ youtubePlaylistID: PL-V2nChTadrWaCwxTnu9yMGbqFudZtdls
 image: /assets/exercises/receipHXbIjwRD66T_image_texturing-objects-header.jpg
 imageAlt: texturing-objects-header.jpg
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -51,10 +54,8 @@ title: Rendering random objects Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

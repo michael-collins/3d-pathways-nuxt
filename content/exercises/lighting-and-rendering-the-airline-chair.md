@@ -8,6 +8,10 @@ youtubePlaylistID: PL-V2nChTadrVabQ0miYe-Oy-PZe6Jab7Q
 image: /assets/exercises/recbAgArvnM20cFKL_image_rendering-banner.jpg
 imageAlt: rendering-banner.jpg
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
+  - Lighting
 published: true
 ---
 
@@ -54,10 +58,8 @@ title: Lighting and Rendering the Airline Chair Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

@@ -9,7 +9,7 @@
     </div>
 
     <div v-else-if="project">
-      <!-- Header Image and Title -->
+      <!-- Header Image -->
       <NuxtImg v-if="project.image" 
         height="360"
         width="720"
@@ -19,109 +19,75 @@
         :alt="project.imageAlt || project.title"
       />
       
+      <!-- Title -->
       <h1 class="text-5xl font-bold mt-8 mb-4">{{ project.title }}</h1>
       
-      <div class="space-y-10 divide-y-4 divide-neutral">
-        <!-- Difficulty -->
-        <div v-if="project.difficulty" class="pb-8">
-          <ul class="space-x-2">
-            <li class="badge badge-outline text-xs uppercase">
-              {{ project.difficulty }}
-            </li>
-          </ul>
-        </div>
-        <div v-else class="pb-8"></div>
+      <!-- Difficulty Badge -->
+      <div v-if="project.difficulty" class="mb-6">
+        <span class="badge badge-outline text-xs uppercase">
+          {{ project.difficulty }}
+        </span>
+      </div>
 
-        <!-- Tags -->
-        <div v-if="project.tags" class="pb-8">
-          <h2 class="text-2xl font-semibold mb-2 text-left uppercase">Tags:</h2>
-          <ul class="space-x-2">
-            <li v-for="tag in project.tags" :key="tag" class="badge bg-base-300 text-xs uppercase">
-              {{ tag }}
-            </li>
-          </ul>
-        </div>
+      <!-- Tags -->
+      <div v-if="project.meta?.tags && project.meta.tags.length > 0" class="mb-8">
+        <h2 class="text-2xl font-semibold mb-2 text-left uppercase border-t-4 border-neutral pt-8">Tags</h2>
+        <ul class="flex flex-wrap gap-2">
+          <li v-for="tag in project.meta.tags" :key="tag" class="badge bg-base-300 text-xs uppercase">
+            {{ tag }}
+          </li>
+        </ul>
+      </div>
 
-        <!-- OER Schema JSON-LD -->
-        <OerSchema v-if="project.oer" :schema="project.oer" />
+      <!-- Description Header -->
+      <h2 class="text-2xl font-semibold mb-2 text-left uppercase border-t-4 border-neutral pt-8 mt-10">Description</h2>
 
-        <!-- Main Content - Markdown body -->
-        <div class="prose prose-lg max-w-none">
-          <ContentRenderer :value="project" />
-        </div>
+      <!-- Main Content - Markdown body with all sections -->
+      <div class="prose prose-lg max-w-none
+        prose-h1:hidden
+        prose-h2:text-2xl prose-h2:font-semibold prose-h2:mb-2 prose-h2:uppercase prose-h2:text-left
+        prose-h2:border-t-4 prose-h2:border-neutral prose-h2:pt-8 prose-h2:mt-10
+        prose-a:font-medium prose-a:text-secondary hover:prose-a:text-base-content
+        prose-ol:list-decimal prose-ol:mx-6
+        prose-ul:list-disc prose-ul:mx-6
+        prose-li:pt-1
+        prose-p:my-4">
+        <ContentRenderer :value="project" />
+      </div>
 
-        <!-- YouTube Playlist -->
-        <div v-if="project.youtubePlaylistID" class="flex flex-col justify-items-stretch">
-          <h2 class="text-2xl font-semibold mb-2 text-left uppercase">Tutorials:</h2>
-          <div class="text-md p-3">
-            <iframe width="100%" height="" class="aspect-video" 
-              :src="'https://www.youtube.com/embed/videoseries?si=qS1_gP2XR65V9BbI&amp;list=' + project.youtubePlaylistID"
-              title="YouTube video player" frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-            </iframe>
-          </div>
-          <a class="justify-self-auto mx-auto btn btn-ghost text-primary hover:text-secondary"
-            aria-label="View on Youtube" 
-            :href="'https://youtube.com/playlist?list=' + project.youtubePlaylistID" target="_blank">
-            View playlist on Youtube.com
-            <Icon name="octicon:link-external-16" class="text-sm" />
-          </a>
-        </div>
-
-        <!-- Vimeo Playlist -->
-        <div v-if="project.vimeoPlaylistID">
-          <h2 class="text-2xl font-semibold mb-2 text-left uppercase">Tutorials:</h2>
-          <div class="text-md p-3">
-            <div style='padding:56.25% 0 0 0;position:relative;'>
-              <iframe :src="'https://vimeo.com/showcase/' + project.vimeoPlaylistID + '/embed'" 
-                class="aspect-video"
-                allowfullscreen frameborder='0' 
-                style='position:absolute;top:0;left:0;width:100%;height:100%;'>
-              </iframe>
-            </div>
-            <a class="mx-auto btn btn-ghost text-secondary hover:text-secondary"
-              :href="'https://vimeo.com/showcase/' + project.vimeoPlaylistID" target="_blank">
-              Vimeo.com playlist
-              <Icon name="octicon:link-external-16" class="text-sm" />
-            </a>
-          </div>
-        </div>
-
-        <!-- Downloads/Files -->
-        <div v-if="projectFiles.length > 0" class="pt-8">
-          <h2 class="text-2xl font-semibold mb-4 text-left uppercase">Downloads:</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div v-for="file in projectFiles" :key="file.id" class="card bg-base-200 shadow-md overflow-hidden">
-              <!-- Image Thumbnail -->
-              <figure v-if="file.attachments?.[0]?.type?.startsWith('image/')" class="relative">
-                <NuxtImg 
-                  :src="file.attachments[0].url" 
-                  :alt="file.alt || file.name"
-                  class="w-full h-48 object-cover"
-                  placeholder
-                />
-              </figure>
-              <div class="card-body p-4">
-                <h3 class="card-title text-base">{{ file.name }}</h3>
-                <p v-if="file.description" class="text-sm opacity-70">{{ file.description }}</p>
-                <p v-if="file.citation" class="text-xs opacity-50 italic line-clamp-2">{{ file.citation }}</p>
-                
-                <div class="card-actions justify-between items-center mt-3">
-                  <a v-if="file.sourceUrl" :href="file.sourceUrl" target="_blank" 
-                    class="link link-primary text-xs flex items-center gap-1">
-                    Source
-                    <Icon name="octicon:link-external-16" class="text-xs" />
+      <!-- Downloads/Files Section -->
+      <div v-if="projectFiles.length > 0" class="mt-10">
+        <h2 class="text-2xl font-semibold mb-4 text-left uppercase border-t-4 border-neutral pt-8">Downloads</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div v-for="file in projectFiles" :key="file.id" class="card bg-base-200 shadow-md overflow-hidden">
+            <!-- Image Thumbnail -->
+            <figure v-if="file.attachments?.[0]?.type?.startsWith('image/')" class="relative">
+              <NuxtImg 
+                :src="file.attachments[0].url" 
+                :alt="file.alt || file.name"
+                class="w-full h-48 object-cover"
+                placeholder
+              />
+            </figure>
+            <div class="card-body p-4">
+              <h3 class="card-title text-base">{{ file.name }}</h3>
+              <p v-if="file.description" class="text-sm opacity-70">{{ file.description }}</p>
+              <p v-if="file.citation" class="text-xs opacity-50 italic line-clamp-2">{{ file.citation }}</p>
+              
+              <div class="card-actions justify-between items-center mt-3">
+                <a v-if="file.sourceUrl" :href="file.sourceUrl" target="_blank" 
+                  class="link link-primary text-xs flex items-center gap-1">
+                  Source
+                  <Icon name="octicon:link-external-16" class="text-xs" />
+                </a>
+                <div class="flex flex-wrap gap-2">
+                  <a v-for="(attachment, idx) in file.attachments" :key="idx"
+                    :href="attachment.url"
+                    :download="attachment.filename"
+                    class="btn btn-sm btn-primary gap-1">
+                    <Icon name="octicon:download-16" />
+                    <span class="hidden sm:inline">{{ (attachment.size / 1024 / 1024).toFixed(1) }} MB</span>
                   </a>
-                  <div class="flex flex-wrap gap-2">
-                    <a v-for="(attachment, idx) in file.attachments" :key="idx"
-                      :href="attachment.url"
-                      :download="attachment.filename"
-                      class="btn btn-sm btn-primary gap-1">
-                      <Icon name="octicon:download-16" />
-                      <span class="hidden sm:inline">{{ (attachment.size / 1024 / 1024).toFixed(1) }} MB</span>
-                    </a>
-                  </div>
                 </div>
               </div>
             </div>
@@ -131,6 +97,12 @@
 
       <!-- Canvas LMS Embed Generator -->
       <IframeConfigGenerator :url="`${$config.public.siteUrl}${project.path}`" :title="project.title" />
+
+      <!-- Rubric Section -->
+      <RubricComponent v-if="project.rubric && project.rubric.trim()" :rubric="project.rubric" :title="project.title" />
+
+      <!-- License Section -->
+      <LicenseComponent v-if="project.license && project.license.trim()" :license="project.license" :title="project.title" />
     </div>
 
     <div v-else class="alert alert-warning">

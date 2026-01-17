@@ -8,6 +8,11 @@ youtubePlaylistID: PL-V2nChTadrUWRugAsFhfYkUojjO1iZWH
 image: /assets/exercises/recn4C0llk2Kq5tuH_image_ex-7-intro-banner-compressed.jpg
 imageAlt: ex-7-intro-banner-compressed.jpg
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
+  - AfterEffects
+  - Adobe Media Encoder
 published: true
 ---
 
@@ -51,10 +56,8 @@ title: Animated textures Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

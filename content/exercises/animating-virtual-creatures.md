@@ -8,6 +8,9 @@ youtubePlaylistID: PL-V2nChTadrVL5OApws44r45Oz65NJyEi
 image: /assets/exercises/rechgHKhLdlHzKX81_image_banner-creatures-compressed.jpg
 imageAlt: banner-creatures-compressed.jpg
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -53,10 +56,8 @@ title: Animating virtual creatures Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

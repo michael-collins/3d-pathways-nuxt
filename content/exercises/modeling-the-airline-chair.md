@@ -8,6 +8,10 @@ youtubePlaylistID: PL-V2nChTadrXnIBdsAhYlYODx8f45Jk9f
 image: /assets/exercises/recksNEMV7vl5SFG4_image_airline-chair-header-compressed.jpg
 imageAlt: airline-chair-header-compressed.jpg
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
+  - Modeling
 published: true
 ---
 
@@ -53,10 +57,8 @@ title: Modeling the Airline Chair Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

@@ -7,6 +7,9 @@ difficulty: beginner
 youtubePlaylistID: PLcAjW37cz5QlafOnfBirWwtx83ZQ-6K4t
 image: /assets/exercises/recOJrvzE8GWdElPz_image_The_One_Called_Michael_Chavet_121_series_no_6_HORSE.png
 imageAlt: The One Called Michael Chavet 121 series no 6 HORSE.png
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -42,5 +45,8 @@ The image I used was originally found at this link: https://images.chesscomfiles
 
 
 
+## Grading Rubric
 
+::rubric-component{id="exercise"}
+::
 

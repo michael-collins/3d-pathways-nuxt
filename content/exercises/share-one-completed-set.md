@@ -6,6 +6,9 @@ type: "oer:Practice"
 difficulty: beginner
 image: /assets/exercises/rec3owIe1VzR0OffF_image_ian_brill_icon_chess_set_2.jpg
 imageAlt: ian brill icon chess set 2.jpg
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -37,5 +40,8 @@ Develop and refine a single chess set based on observation over time, peer and i
 
 
 
+## Grading Rubric
 
+::rubric-component{id="exercise"}
+::
 

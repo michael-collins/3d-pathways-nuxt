@@ -8,6 +8,9 @@ youtubePlaylistID: PL-V2nChTadrWh22nK2hfnGbeEaxMp3s_e
 image: /assets/exercises/recEGCzExXCKxYoco_image_sculpting-retopo-rendering-header-v1.jpg
 imageAlt: sculpting-retopo-rendering-header-v1.jpg
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -49,10 +52,8 @@ title: Sea creature: Non-photorealistic rendering Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

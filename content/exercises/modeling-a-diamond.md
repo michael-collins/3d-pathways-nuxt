@@ -7,6 +7,9 @@ difficulty: beginner
 youtubePlaylistID: PLcAjW37cz5Qnq4fsbvQw-IjrZd6EoMX1h
 image: /assets/exercises/rec2Od2fcMVgDSQyg_image_diamond_image.png
 imageAlt: diamond image.png
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -55,5 +58,8 @@ Be sure to upload each file independently to facilitate ease of grading (so that
 
 
 
+## Grading Rubric
 
+::rubric-component{id="exercise"}
+::
 

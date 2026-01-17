@@ -8,6 +8,9 @@ youtubePlaylistID: PL-V2nChTadrXmwBV0kO-ErBLFnyWukKsD
 image: /assets/exercises/recHQtwVG79n7xiNK_image_sculpture-garden.jpg
 imageAlt: sculpture-garden.jpg
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -71,10 +74,8 @@ title: Sculpture Garden Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

@@ -8,6 +8,9 @@ youtubePlaylistID: PL-V2nChTadrU-XvcElSlBW7dQn4n1yj54
 image: /assets/exercises/rechLzLJpVGI50gnn_image_room-banner2.png
 imageAlt: room-banner2.png
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -51,10 +54,8 @@ title: Rendering a room Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

@@ -8,6 +8,11 @@ youtubePlaylistID: PL-V2nChTadrXtsipLP7DiUgZxSrwUp8uh
 image: /assets/exercises/recHfTCKlxhMVb30g_image_waterfall.png
 imageAlt: waterfall.png
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
+  - AfterEffects
+  - Adobe Media Encoder
 published: true
 ---
 
@@ -51,10 +56,8 @@ title: Animated procedural textures Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

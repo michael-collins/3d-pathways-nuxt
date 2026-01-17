@@ -7,6 +7,9 @@ difficulty: beginner
 youtubePlaylistID: PLcAjW37cz5Qn9EwcL-Arvg3QWeQ_h-WVg
 image: /assets/exercises/rectzJhf833zBC9T3_image_bishop_image.png
 imageAlt: bishop image.png
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -51,5 +54,8 @@ Make sure that your assignment is titled in the following format:
 
 
 
+## Grading Rubric
 
+::rubric-component{id="exercise"}
+::
 

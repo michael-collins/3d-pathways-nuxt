@@ -7,6 +7,9 @@ difficulty: beginner
 youtubePlaylistID: PLcAjW37cz5Qn9XcneFk2URkb8MW1B4lQB
 image: /assets/exercises/rec14hI66d4Hl61SA_image_gem_image.png
 imageAlt: gem image.png
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -52,5 +55,8 @@ Be sure to provide screen grabs or renders from 3 angles and the original blende
 
 
 
+## Grading Rubric
 
+::rubric-component{id="exercise"}
+::
 

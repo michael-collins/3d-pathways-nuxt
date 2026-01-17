@@ -8,6 +8,9 @@ youtubePlaylistID: PL-V2nChTadrW9SylyEr8DprET38xynl_5
 image: /assets/exercises/reckkzm19AZnEIkJE_image_sculpting-retopo-header-v1.jpg
 imageAlt: sculpting-retopo-header-v1.jpg
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -49,10 +52,8 @@ title: Modeling and sculpting a sea creature Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

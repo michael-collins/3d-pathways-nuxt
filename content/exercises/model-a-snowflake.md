@@ -7,6 +7,9 @@ difficulty: beginner
 youtubePlaylistID: PLcAjW37cz5QlA1AFMxpkvj6JQwOxNygMy
 image: /assets/exercises/recorR58sjS22oVbk_image_snowflake_image.png
 imageAlt: snowflake image.png
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -55,5 +58,8 @@ Be sure to provide screen grabs or renders from 3 angles and the original blende
 
 
 
+## Grading Rubric
 
+::rubric-component{id="exercise"}
+::
 

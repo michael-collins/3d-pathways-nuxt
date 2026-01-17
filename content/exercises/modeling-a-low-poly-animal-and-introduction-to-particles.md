@@ -7,6 +7,9 @@ difficulty: beginner
 youtubePlaylistID: PLcAjW37cz5QkTtYtaAa7RjiQgixIJX0kH
 image: /assets/exercises/recvUlgEohhluSnhU_image_OSTRICH.png
 imageAlt: OSTRICH.png
+rubric: exercise-low-poly
+tags:
+  - Blender
 published: true
 ---
 
@@ -39,5 +42,8 @@ See Below
 
 
 
+## Grading Rubric
 
+::rubric-component{id="exercise-low-poly"}
+::
 

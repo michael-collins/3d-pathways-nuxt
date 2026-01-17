@@ -8,6 +8,9 @@ youtubePlaylistID: PL-V2nChTadrX1grpUd5zHMGYJovRjPN69
 image: /assets/exercises/recdQolQv78RHunPj_image_ex-6-adv-banner-compressed.jpg
 imageAlt: ex-6-adv-banner-compressed.jpg
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -53,10 +56,8 @@ title: Rigging a robot arm Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

@@ -1,44 +1,66 @@
 <script setup lang="ts">
 const props = defineProps<{
-  id: string
+  id?: string
+  license?: string  
+  title?: string
 }>()
 
-// Load license data from the JSON file in public directory
-const license = ref(null)
-
-onMounted(async () => {
-  try {
-    const data = await $fetch('/data/licenses.json')
-    license.value = data.find((l: any) => l.id === props.id || l.slug === props.id)
-  } catch (error) {
-    console.error('Error loading license data:', error)
+// Creative Commons license database - embedded in component
+const licenses = {
+  'cc-by-40': {
+    name: 'CC BY 4.0',
+    url: 'https://creativecommons.org/licenses/by/4.0/'
+  },
+  'cc0-10': {
+    name: 'CC0 1.0',
+    url: 'https://creativecommons.org/publicdomain/zero/1.0/'
+  },
+  'cc-by-sa-40': {
+    name: 'CC BY-SA 4.0',
+    url: 'https://creativecommons.org/licenses/by-sa/4.0/'
+  },
+  'cc-by-nd-40': {
+    name: 'CC BY-ND 4.0',
+    url: 'https://creativecommons.org/licenses/by-nd/4.0/'
+  },
+  'cc-by-nc-40': {
+    name: 'CC BY-NC 4.0',
+    url: 'https://creativecommons.org/licenses/by-nc/4.0/'
+  },
+  'cc-by-nc-sa-40': {
+    name: 'CC BY-NC-SA 4.0',
+    url: 'https://creativecommons.org/licenses/by-nc-sa/4.0/'
+  },
+  'cc-by-nc-nd-40': {
+    name: 'CC BY-NC-ND 4.0',
+    url: 'https://creativecommons.org/licenses/by-nc-nd/4.0/'
   }
+}
+
+// Support both props - license takes priority
+const licenseSlug = computed(() => props.license || props.id)
+const licenseInfo = computed(() => {
+  if (!licenseSlug.value) return null
+  return licenses[licenseSlug.value] || null
 })
 </script>
 
 <template>
-  <div v-if="license" class="license-component inline-flex items-center gap-2 px-3 py-2 bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-lg text-sm">
-    <Icon name="heroicons:shield-check" class="w-5 h-5 text-blue-600 dark:text-blue-400" />
-    <span class="font-medium">License:</span>
-    <a 
-      :href="license.url" 
-      target="_blank" 
-      rel="noopener noreferrer"
-      class="text-blue-600 dark:text-blue-400 hover:underline font-semibold"
-    >
-      {{ license.name }}
-    </a>
-    <Icon name="heroicons:arrow-top-right-on-square" class="w-4 h-4 text-blue-600 dark:text-blue-400" />
+  <div v-if="licenseInfo" class="mt-8">
+    <div class="border bg-base-300 rounded-xl py-8 px-6">
+      <p xmlns:cc="http://creativecommons.org/ns#">
+        <a v-if="title" class="link font-semibold" rel="cc:attributionURL" href="#">{{ title }}</a> 
+        <span v-if="!title">This work</span>
+        is licensed under 
+        <a class="link" :href="licenseInfo.url" target="_blank" rel="license noopener noreferrer">
+          {{ licenseInfo.name }}
+        </a>
+      </p>
+    </div>
   </div>
-  <div v-else class="license-component-error inline-block px-3 py-2 bg-yellow-50 dark:bg-yellow-900 border border-yellow-300 dark:border-yellow-700 rounded text-sm">
-    <span class="text-yellow-800 dark:text-yellow-200">
-      ⚠️ License "{{ id }}" not found
-    </span>
+  <div v-else-if="licenseSlug" class="mt-8">
+    <div class="border bg-base-300 rounded-xl py-8 px-6 text-error">
+      ⚠️ License "{{ licenseSlug }}" not found
+    </div>
   </div>
 </template>
-
-<style scoped>
-.license-component {
-  display: inline-flex;
-}
-</style>

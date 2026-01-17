@@ -7,6 +7,9 @@ difficulty: beginner
 youtubePlaylistID: PLcAjW37cz5QkyyjlPgk2ZmvzQih_Yk8Dx
 image: /assets/exercises/recsOUAg8kJfB2Czp_image_pawn_image.png
 imageAlt: pawn image.png
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -45,5 +48,8 @@ Make sure that your assignment is titled in the following format:
 
 
 
+## Grading Rubric
 
+::rubric-component{id="exercise"}
+::
 

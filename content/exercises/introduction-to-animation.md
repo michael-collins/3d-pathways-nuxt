@@ -8,6 +8,9 @@ youtubePlaylistID: PL-V2nChTadrUCq3o-AvWZ3A6mQTd8O9uJ
 image: /assets/exercises/recDaZ0H0qFz4iYlR_image_animation.png
 imageAlt: animation.png
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -64,10 +67,8 @@ title: Introduction to animation Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

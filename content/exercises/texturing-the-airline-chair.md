@@ -8,6 +8,10 @@ youtubePlaylistID: PL-V2nChTadrUGw6OioaTkVBSCP12C9mjq
 image: /assets/exercises/recF0xzVxfkZoJ63J_image_airline-chair-texturing-header.jpg
 imageAlt: airline-chair-texturing-header.jpg
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
+  - Texturing
 published: true
 ---
 
@@ -55,10 +59,8 @@ title: Texturing the Airline Chair Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

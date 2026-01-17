@@ -7,6 +7,9 @@ difficulty: beginner
 youtubePlaylistID: PLcAjW37cz5Qnmcpc_vs1RGJaQFm4EsuE9
 image: /assets/exercises/recJa9PrmESgMr9Zw_image_METAL_KNIGHT_IMAGE.png
 imageAlt: METAL KNIGHT IMAGE.png
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -40,5 +43,8 @@ This a demonstration of how to create a more complex Knight-like form that appro
 
 
 
+## Grading Rubric
 
+::rubric-component{id="exercise"}
+::
 

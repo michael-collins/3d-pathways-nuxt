@@ -8,6 +8,9 @@ youtubePlaylistID: PL-V2nChTadrV1iw9_XUwArDOs5mwu6fAk
 image: /assets/projects/rec67LSQtsxBgHxxE_image_youdontseethateveryday-banner-comp2.jpg
 imageAlt: youdontseethateveryday-banner-comp2.jpg
 license: cc-by-40
+rubric: project
+tags:
+  - Blender
 published: true
 ---
 
@@ -111,10 +114,8 @@ A work statement is a clear articulation about what you’ve made. This is not a
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="project"}
 ::
 

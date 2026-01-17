@@ -7,6 +7,9 @@ difficulty: beginner
 youtubePlaylistID: PLcAjW37cz5QlEM8qkrx_rcHaAemZ3oHZH
 image: /assets/exercises/rec8Y2xjGTcAffTeB_image_Smooth_Knight.png
 imageAlt: Smooth Knight.png
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -40,5 +43,8 @@ This a demonstration of how to create a more complex Knight that looks more like
 
 
 
+## Grading Rubric
 
+::rubric-component{id="exercise"}
+::
 

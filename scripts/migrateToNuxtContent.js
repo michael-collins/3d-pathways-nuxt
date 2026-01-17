@@ -67,6 +67,21 @@ function getFilesForRecord(recordId) {
   });
 }
 
+// Utility: Find rubric for an exercise or project
+function getRubricForRecord(recordId, contentType = 'exercise') {
+  const rubrics = recordCache.get('rubrics') || [];
+  const fieldName = contentType === 'exercise' ? 'exercises' : 'projects';
+  
+  for (const rubric of rubrics) {
+    const fields = rubric.fields || {};
+    if (fields[fieldName]?.includes(recordId)) {
+      return rubric.id;
+    }
+  }
+  
+  return null;
+}
+
 // Utility: Format array for YAML
 function formatArray(arr) {
   if (!arr || arr.length === 0) return null;
@@ -647,8 +662,11 @@ async function migrateExercises() {
     const licenseId = Array.isArray(fields.licenses) ? fields.licenses[0] : fields.licenses;
     const licenseSlug = licenseId ? getSlugFromId(licenseId) : null;
     
-    // Get rubric
-    const rubricId = Array.isArray(fields.rubric) ? fields.rubric[0] : fields.rubric;
+    // Get rubric - check both direct field and reverse lookup
+    let rubricId = Array.isArray(fields.rubric) ? fields.rubric[0] : fields.rubric;
+    if (!rubricId) {
+      rubricId = getRubricForRecord(record.id, 'exercise');
+    }
     const rubricSlug = rubricId ? getSlugFromId(rubricId) : null;
     
     // Get AI usage constraints (to be added to Airtable schema)
@@ -681,7 +699,7 @@ async function migrateExercises() {
       imageAlt: fields.image?.[0]?.filename || fields.name,
       license: licenseSlug,
       rubric: rubricSlug,
-      tags: fields.topics || null,
+      tags: fields.tags || null,
       aiUsageWriting: aiWriting,
       aiUsageImages: aiImages,
       aiUsageCode: aiCode,
@@ -732,13 +750,6 @@ ${rubricSlug ? `
 ::rubric-component{id="${rubricSlug}"}
 ::
 ` : ''}
-
-${licenseSlug ? `
-## License
-
-::license-component{id="${licenseSlug}"}
-::
-` : ''}
 `;
     
     const markdown = generateFrontmatter(frontmatter) + '\n' + content;
@@ -773,8 +784,11 @@ async function migrateProjects() {
     const licenseId = Array.isArray(fields.licenses) ? fields.licenses[0] : fields.licenses;
     const licenseSlug = licenseId ? getSlugFromId(licenseId) : null;
     
-    // Get rubric
-    const rubricId = Array.isArray(fields.rubric) ? fields.rubric[0] : fields.rubric;
+    // Get rubric - check both direct field and reverse lookup
+    let rubricId = Array.isArray(fields.rubric) ? fields.rubric[0] : fields.rubric;
+    if (!rubricId) {
+      rubricId = getRubricForRecord(record.id, 'project');
+    }
     const rubricSlug = rubricId ? getSlugFromId(rubricId) : null;
     
     // Get AI usage constraints (to be added to Airtable schema)
@@ -806,7 +820,7 @@ async function migrateProjects() {
       imageAlt: fields.image?.[0]?.filename || fields.name,
       license: licenseSlug,
       rubric: rubricSlug,
-      tags: fields.topics || null,
+      tags: fields.tags || null,
       aiUsageWriting: aiWriting,
       aiUsageImages: aiImages,
       aiUsageCode: aiCode,
@@ -848,13 +862,6 @@ ${rubricSlug ? `
 ## Grading Rubric
 
 ::rubric-component{id="${rubricSlug}"}
-::
-` : ''}
-
-${licenseSlug ? `
-## License
-
-::license-component{id="${licenseSlug}"}
 ::
 ` : ''}
 `;

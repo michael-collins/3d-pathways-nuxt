@@ -8,6 +8,9 @@ youtubePlaylistID: PL-V2nChTadrUtPySfHyf4j_w6PGi6AES9
 image: /assets/exercises/recLtYP0nJUL7RK8O_image_modeling-objects-header.jpg
 imageAlt: modeling-objects-header.jpg
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -53,10 +56,8 @@ title: Modeling random objects Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

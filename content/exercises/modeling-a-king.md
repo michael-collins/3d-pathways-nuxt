@@ -7,6 +7,9 @@ difficulty: beginner
 youtubePlaylistID: PLcAjW37cz5QmZ7dFmd7KeeCH5h9b3ZlGu
 image: /assets/exercises/recqV87QKaWerduJM_image_king_image.png
 imageAlt: king image.png
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -39,5 +42,8 @@ Instructions to be added
 
 
 
+## Grading Rubric
 
+::rubric-component{id="exercise"}
+::
 

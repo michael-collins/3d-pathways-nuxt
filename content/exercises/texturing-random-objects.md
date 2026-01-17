@@ -8,6 +8,9 @@ youtubePlaylistID: PL-V2nChTadrWipZPDR5ZYk4-EgwFzMahg
 image: /assets/exercises/reczUhTIOSSFk77BH_image_texturing-objects-header-v2.jpg
 imageAlt: texturing-objects-header-v2.jpg
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -53,10 +56,8 @@ title: Texturing random objects Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

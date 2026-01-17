@@ -8,6 +8,9 @@ youtubePlaylistID: PL-V2nChTadrX4lOk4gv0XjdSVpB31qOtJ
 image: /assets/exercises/recNVyB0NFX6Uu2Ln_image_ex-6-beginner-banner-compressed.jpg
 imageAlt: ex-6-beginner-banner-compressed.jpg
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -52,10 +55,8 @@ title: Introduction to rigging Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

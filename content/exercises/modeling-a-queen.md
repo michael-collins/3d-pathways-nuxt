@@ -7,6 +7,9 @@ difficulty: beginner
 youtubePlaylistID: PLcAjW37cz5QkznWA0SSvO8i2iMil7btof
 image: /assets/exercises/rec9QA33OJOpWtn9W_image_queen_image.png
 imageAlt: queen image.png
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -50,5 +53,8 @@ For this assignment, recreate the steps in basic **Demonstration** or try to 
 
 
 
+## Grading Rubric
 
+::rubric-component{id="exercise"}
+::
 

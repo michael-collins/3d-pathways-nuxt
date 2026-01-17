@@ -8,6 +8,9 @@ youtubePlaylistID: PL-V2nChTadrVP_vzYSEfaSkkPDhMdPfrK
 image: /assets/exercises/rec6ebYsG1Dnf08qb_image_room-model.png
 imageAlt: room-model.png
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -53,10 +56,8 @@ title: Modeling a room Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

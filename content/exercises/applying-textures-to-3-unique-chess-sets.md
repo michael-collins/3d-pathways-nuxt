@@ -7,6 +7,9 @@ difficulty: beginner
 youtubePlaylistID: PLcAjW37cz5QlIH4xCkx3q86mJu84QpGOJ
 image: /assets/exercises/rec0apDu2F1wTfIoq_image_ianbrill_chess_set.png
 imageAlt: ianbrill chess set.png
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -64,5 +67,8 @@ Create three unique chess sets based on the steps in Demonstrations 1, 2 and tut
 
 
 
+## Grading Rubric
 
+::rubric-component{id="exercise"}
+::
 

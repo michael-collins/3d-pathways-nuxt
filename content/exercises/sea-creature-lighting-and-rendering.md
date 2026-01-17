@@ -8,6 +8,9 @@ youtubePlaylistID: PL-V2nChTadrV3t6j1M7_93uLpJq-AXoHV
 image: /assets/exercises/recoSUxGzMnYSAxjn_image_sculpting-retopo-rendering-PBR-header-v1.jpg
 imageAlt: sculpting-retopo-rendering-PBR-header-v1.jpg
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -54,10 +57,8 @@ title: Sea creature: Lighting and rendering Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

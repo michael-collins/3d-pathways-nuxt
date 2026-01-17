@@ -7,6 +7,9 @@ difficulty: beginner
 youtubePlaylistID: PLcAjW37cz5QksJy4ZnxgWrbVFklAoOFvU
 image: /assets/exercises/recqqIknm5ebQaFmz_image_Chess_Board_Image.png
 imageAlt: Chess Board Image.png
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -52,5 +55,8 @@ Brill Ian Lesson x Assignment x
 
 
 
+## Grading Rubric
 
+::rubric-component{id="exercise"}
+::
 

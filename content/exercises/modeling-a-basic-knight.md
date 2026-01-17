@@ -7,6 +7,9 @@ difficulty: beginner
 youtubePlaylistID: PLcAjW37cz5QliQriwysglJwRIE6R8NP2f
 image: /assets/exercises/recPXvg0DlanTkyO2_image_Simple_Knight.png
 imageAlt: Simple Knight.png
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -44,5 +47,8 @@ They will show you how you might use new tools and methods to make your knight m
 
 
 
+## Grading Rubric
 
+::rubric-component{id="exercise"}
+::
 

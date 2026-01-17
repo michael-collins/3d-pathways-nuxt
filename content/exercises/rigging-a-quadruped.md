@@ -8,6 +8,9 @@ youtubePlaylistID: PL-V2nChTadrV1SRFV9WFkj605z0HzQLXS
 image: /assets/exercises/recF6aLZmbNHI355u_image_ex-6-intermediate-banner-compressed.jpg
 imageAlt: ex-6-intermediate-banner-compressed.jpg
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -53,10 +56,8 @@ title: Rigging a quadruped Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

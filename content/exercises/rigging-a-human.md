@@ -8,6 +8,9 @@ youtubePlaylistID: PL-V2nChTadrWPKLLkM8oVibJ1aKHivoNl
 image: /assets/exercises/recaLI7LYZgUjk4bg_image_human-rig-banner.png
 imageAlt: human-rig-banner.png
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -54,10 +57,8 @@ title: Rigging a human Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

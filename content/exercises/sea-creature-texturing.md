@@ -8,6 +8,10 @@ youtubePlaylistID: PL-V2nChTadrUU3MSAv9EfORij5j2E3uVv
 image: /assets/exercises/recc827jhaiZue5as_image_sculpting-retopo-header-v2.png
 imageAlt: sculpting-retopo-header-v2.png
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
+  - Substance Painter
 published: true
 ---
 
@@ -59,10 +63,8 @@ title: Sea creature: Texturing Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 

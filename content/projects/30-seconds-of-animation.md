@@ -8,6 +8,10 @@ youtubePlaylistID: PL-V2nChTadrWRqmkePyLUhIndLHarj7H-
 image: /assets/projects/recyIT96rUW4iYLNm_image_cycles-banner-compressed2.jpg
 imageAlt: cycles-banner-compressed2.jpg
 license: cc-by-40
+rubric: project
+tags:
+  - Blender
+  - AfterEffects
 published: true
 ---
 
@@ -102,10 +106,8 @@ Do not produce work that could be construed as ‘fan art’ for existing intell
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="project"}
 ::
 

@@ -8,6 +8,9 @@ youtubePlaylistID: PL-V2nChTadrU8K-0aHxzKVRQWLcJt7YAW
 image: /assets/exercises/rec9LnLexVEqnrZNs_image_sculpting-retopo-header-v2.png
 imageAlt: sculpting-retopo-header-v2.png
 license: cc-by-40
+rubric: exercise
+tags:
+  - Blender
 published: true
 ---
 
@@ -56,10 +59,8 @@ title: Sculpting, retopo, and texturing Tutorial
 
 
 
+## Grading Rubric
 
-
-## License
-
-::license-component{id="cc-by-40"}
+::rubric-component{id="exercise"}
 ::
 
