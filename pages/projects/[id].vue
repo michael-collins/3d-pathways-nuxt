@@ -124,10 +124,10 @@ const config = useRuntimeConfig()
 // Detect embed mode from query parameter
 const isEmbedMode = computed(() => route.query.embed === 'true')
 
-// Fetch the project content
+// Fetch the project content via custom API endpoint (avoids POST 500 in Canvas)
 const { data: project, pending, error } = await useAsyncData(
   `project-${route.params.id}`,
-  () => queryCollection('projects').where('path', '=', `/projects/${route.params.id}`).first(),
+  () => $fetch(`/api/content/projects/${route.params.id}`),
   { watch: [route.params] }
 )
 
