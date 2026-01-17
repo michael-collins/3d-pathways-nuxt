@@ -15,7 +15,7 @@ tags:
   - Adobe Media Encoder
 author: Michael Collins
 authorUrl: "https://michaelcollins.xyz"
-published: false
+published: true
 ---
 
 # Animated procedural textures
