@@ -3,6 +3,8 @@ const props = defineProps<{
   id?: string
   license?: string  
   title?: string
+  author?: string
+  authorUrl?: string
 }>()
 
 // Creative Commons license database - embedded in component
@@ -51,6 +53,7 @@ const licenseInfo = computed(() => {
       <p xmlns:cc="http://creativecommons.org/ns#">
         <a v-if="title" class="link font-semibold" rel="cc:attributionURL" href="#">{{ title }}</a> 
         <span v-if="!title">This work</span>
+        <span v-if="author"> by <a v-if="authorUrl" class="link" :href="authorUrl" rel="cc:attributionURL dct:creator" property="cc:attributionName">{{ author }}</a><span v-else rel="cc:attributionURL dct:creator" property="cc:attributionName">{{ author }}</span></span>
         is licensed under 
         <a class="link" :href="licenseInfo.url" target="_blank" rel="license noopener noreferrer">
           {{ licenseInfo.name }}

@@ -13,6 +13,8 @@ tags:
   - Blender
   - AfterEffects
   - Adobe Media Encoder
+author: Michael Collins
+authorUrl: "https://michaelcollins.xyz"
 published: true
 ---
 

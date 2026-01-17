@@ -12,6 +12,8 @@ rubric: exercise
 tags:
   - Blender
   - Substance Painter
+author: Michael Collins
+authorUrl: "https://michaelcollins.xyz"
 published: true
 ---
 

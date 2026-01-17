@@ -12,6 +12,8 @@ rubric: project
 tags:
   - Blender
   - AfterEffects
+author: Michael Collins
+authorUrl: "https://michaelcollins.xyz"
 published: true
 ---
 

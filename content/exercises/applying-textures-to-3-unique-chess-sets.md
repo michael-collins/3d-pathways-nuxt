@@ -10,6 +10,8 @@ imageAlt: ianbrill chess set.png
 rubric: exercise
 tags:
   - Blender
+author: Kenneth Ian Brill
+authorUrl: "https://www.ianbrill.com/"
 published: true
 ---
 

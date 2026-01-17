@@ -12,6 +12,8 @@ rubric: exercise
 tags:
   - Blender
   - Texturing
+author: Michael Collins
+authorUrl: "https://michaelcollins.xyz"
 published: true
 ---
 

@@ -12,6 +12,8 @@ rubric: exercise
 tags:
   - Blender
   - Lighting
+author: Michael Collins
+authorUrl: "https://michaelcollins.xyz"
 published: true
 ---
 

@@ -43,11 +43,13 @@
       <h2 class="text-2xl font-semibold mb-2 text-left uppercase border-t-4 border-neutral pt-8 mt-10">Description</h2>
 
       <!-- Main Content - Markdown body with all sections -->
-      <div class="prose prose-lg max-w-none
+      <div class="prose prose-lg max-w-none project-content
         prose-h1:hidden
         prose-h2:text-2xl prose-h2:font-semibold prose-h2:mb-2 prose-h2:uppercase prose-h2:text-left
         prose-h2:border-t-4 prose-h2:border-neutral prose-h2:pt-8 prose-h2:mt-10
+        prose-h2:no-underline
         prose-a:font-medium prose-a:text-secondary hover:prose-a:text-base-content
+        prose-h2>a:no-underline prose-h2>a:text-current prose-h2>a:font-semibold
         prose-ol:list-decimal prose-ol:mx-6
         prose-ul:list-disc prose-ul:mx-6
         prose-li:pt-1
@@ -95,14 +97,14 @@
         </div>
       </div>
 
-      <!-- Canvas LMS Embed Generator -->
-      <IframeConfigGenerator :url="`${$config.public.siteUrl}${project.path}`" :title="project.title" />
+      <!-- Canvas LMS Embed Generator (hidden in embed mode) -->
+      <IframeConfigGenerator v-if="!isEmbedMode" :url="`${$config.public.siteUrl}${project.path}?embed=true&hidePageElements=true`" :title="project.title" />
 
       <!-- Rubric Section -->
       <RubricComponent v-if="project.rubric && project.rubric.trim()" :rubric="project.rubric" :title="project.title" />
 
       <!-- License Section -->
-      <LicenseComponent v-if="project.license && project.license.trim()" :license="project.license" :title="project.title" />
+      <LicenseComponent v-if="project.license && project.license.trim()" :license="project.license" :title="project.title" :author="project.author || project.meta?.author" :author-url="project.authorUrl || project.meta?.authorUrl" />
     </div>
 
     <div v-else class="alert alert-warning">
@@ -119,6 +121,9 @@ definePageMeta({
 const route = useRoute()
 const config = useRuntimeConfig()
 
+// Detect embed mode from query parameter
+const isEmbedMode = computed(() => route.query.embed === 'true')
+
 // Fetch the project content
 const { data: project, pending, error } = await useAsyncData(
   `project-${route.params.id}`,
@@ -128,7 +133,13 @@ const { data: project, pending, error } = await useAsyncData(
 // Load files data from files.json using the project's record ID
 const projectFiles = ref([])
 
+// Initialize Canvas LTI support for auto-height
+const { initCanvasLTI } = useCanvasLTI()
+
 onMounted(async () => {
+  // Initialize Canvas LTI integration
+  initCanvasLTI()
+  
   // Extract filename from stem (remove folder path)
   const stem = project.value?.stem || ''
   const slug = project.value?.slug || stem.split('/').pop()
@@ -151,4 +162,20 @@ useHead({
   ]
 })
 </script>
+
+<style scoped>
+/* Remove link styling from heading anchors */
+.project-content :deep(h2 a),
+.project-content :deep(h3 a) {
+  color: inherit;
+  text-decoration: none;
+  font-weight: inherit;
+}
+
+.project-content :deep(h2 a:hover),
+.project-content :deep(h3 a:hover) {
+  color: inherit;
+  text-decoration: none;
+}
+</style>
 

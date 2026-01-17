@@ -9,6 +9,8 @@ imageAlt: ian brill icon chess set 2.jpg
 rubric: exercise
 tags:
   - Blender
+author: Kenneth Ian Brill
+authorUrl: "https://www.ianbrill.com/"
 published: true
 ---
 

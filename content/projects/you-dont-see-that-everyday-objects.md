@@ -11,6 +11,8 @@ license: cc-by-40
 rubric: project
 tags:
   - Blender
+author: Michael Collins
+authorUrl: "https://michaelcollins.xyz"
 published: true
 ---
 

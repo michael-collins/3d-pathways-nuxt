@@ -10,6 +10,8 @@ imageAlt: OSTRICH.png
 rubric: exercise-low-poly
 tags:
   - Blender
+author: Kenneth Ian Brill
+authorUrl: "https://www.ianbrill.com/"
 published: true
 ---
 

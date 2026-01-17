@@ -10,6 +10,8 @@ imageAlt: The One Called Michael Chavet 121 series no 6 HORSE.png
 rubric: exercise
 tags:
   - Blender
+author: Kenneth Ian Brill
+authorUrl: "https://www.ianbrill.com/"
 published: true
 ---
 

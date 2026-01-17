@@ -97,14 +97,14 @@
         </div>
       </div>
 
-      <!-- Canvas LMS Embed Generator -->
-      <IframeConfigGenerator :url="`${$config.public.siteUrl}${exercise.path}`" :title="exercise.title" />
+      <!-- Canvas LMS Embed Generator (hidden in embed mode) -->
+      <IframeConfigGenerator v-if="!isEmbedMode" :url="`${$config.public.siteUrl}${exercise.path}?embed=true&hidePageElements=true`" :title="exercise.title" />
 
       <!-- Rubric Section -->
       <RubricComponent v-if="exercise.rubric && exercise.rubric.trim()" :rubric="exercise.rubric" :title="exercise.title" />
 
       <!-- License Section -->
-      <LicenseComponent v-if="exercise.license && exercise.license.trim()" :license="exercise.license" :title="exercise.title" />
+      <LicenseComponent v-if="exercise.license && exercise.license.trim()" :license="exercise.license" :title="exercise.title" :author="exercise.author || exercise.meta?.author" :author-url="exercise.authorUrl || exercise.meta?.authorUrl" />
     </div>
 
     <div v-else class="alert alert-warning">
@@ -121,6 +121,9 @@ definePageMeta({
 const route = useRoute()
 const config = useRuntimeConfig()
 
+// Detect embed mode from query parameter
+const isEmbedMode = computed(() => route.query.embed === 'true')
+
 // Fetch the exercise content
 const { data: exercise, pending, error } = await useAsyncData(
   `exercise-${route.params.id}`,
@@ -130,7 +133,13 @@ const { data: exercise, pending, error } = await useAsyncData(
 // Load files data from files-by-slug.json
 const exerciseFiles = ref([])
 
+// Initialize Canvas LTI support for auto-height
+const { initCanvasLTI } = useCanvasLTI()
+
 onMounted(async () => {
+  // Initialize Canvas LTI integration
+  initCanvasLTI()
+  
   // Extract filename from stem (remove folder path)
   const stem = exercise.value?.stem || ''
   const slug = exercise.value?.slug || stem.split('/').pop()
@@ -156,13 +165,15 @@ useHead({
 
 <style scoped>
 /* Remove link styling from heading anchors */
-.exercise-content :deep(h2 a) {
+.exercise-content :deep(h2 a),
+.exercise-content :deep(h3 a) {
   color: inherit;
   text-decoration: none;
   font-weight: inherit;
 }
 
-.exercise-content :deep(h2 a:hover) {
+.exercise-content :deep(h2 a:hover),
+.exercise-content :deep(h3 a:hover) {
   color: inherit;
   text-decoration: none;
 }
