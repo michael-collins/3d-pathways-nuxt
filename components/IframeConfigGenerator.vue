@@ -32,11 +32,15 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { useRuntimeConfig } from '#app'
 
 const props = defineProps<{
+  // Preferred: pass a content path like "/exercises/animated-procedural-textures"
+  path?: string
+  // Legacy/support: full URL or iframeUrl
   url?: string
-  title?: string
   iframeUrl?: string
+  title?: string
   articleHeight?: string | number
   record?: any
 }>()
@@ -46,10 +50,17 @@ const copied = ref(false)
 
 // Generate the iframe embed code
 const iframeCodeText = computed(() => {
-  const src = props.url || props.iframeUrl || ''
+  const cfg = useRuntimeConfig()
+  const origin = typeof window !== 'undefined' ? window.location.origin : cfg.public.siteUrl
+
+  // Prefer path-based URL and always append embed flags
+  const srcFromPath = props.path ? `${origin}${props.path}?embed=true&hidePageElements=true` : ''
+  const fallbackSrc = props.url || props.iframeUrl || ''
+  const src = srcFromPath || fallbackSrc
+
   const titleText = props.title || (props.record?.fields?.name) || 'Embedded Content'
   const height = props.articleHeight || '600'
-  
+
   return `<iframe width="100%" height="${height}px" src="${src}" style="border:none;" title="${titleText}"></iframe>`
 })
 

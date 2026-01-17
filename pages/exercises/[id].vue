@@ -98,7 +98,7 @@
       </div>
 
       <!-- Canvas LMS Embed Generator (hidden in embed mode) -->
-      <IframeConfigGenerator v-if="!isEmbedMode" :url="`${$config.public.siteUrl}${exercise.path}?embed=true&hidePageElements=true`" :title="exercise.title" />
+      <IframeConfigGenerator v-if="!isEmbedMode" :path="exercise.path" :title="exercise.title" />
 
       <!-- Rubric Section -->
       <RubricComponent v-if="exercise.rubric && exercise.rubric.trim()" :rubric="exercise.rubric" :title="exercise.title" />
@@ -124,10 +124,10 @@ const config = useRuntimeConfig()
 // Detect embed mode from query parameter
 const isEmbedMode = computed(() => route.query.embed === 'true')
 
-// Fetch the exercise content
+// Fetch the exercise content (use generic queryContent to avoid collection-specific POST route)
 const { data: exercise, pending, error } = await useAsyncData(
   `exercise-${route.params.id}`,
-  () => queryCollection('exercises').where('path', '=', `/exercises/${route.params.id}`).first()
+  () => queryContent('/exercises').where('path', '=', `/exercises/${route.params.id}`).findOne()
 )
 
 // Load files data from files-by-slug.json
