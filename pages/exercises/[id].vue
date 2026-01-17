@@ -124,10 +124,11 @@ const config = useRuntimeConfig()
 // Detect embed mode from query parameter
 const isEmbedMode = computed(() => route.query.embed === 'true')
 
-// Fetch the exercise content (use generic queryContent to avoid collection-specific POST route)
+// Fetch the exercise content
 const { data: exercise, pending, error } = await useAsyncData(
   `exercise-${route.params.id}`,
-  () => queryContent('/exercises').where('path', '=', `/exercises/${route.params.id}`).findOne()
+  () => queryCollection('exercises').where('path', '=', `/exercises/${route.params.id}`).first(),
+  { watch: [route.params] }
 )
 
 // Load files data from files-by-slug.json

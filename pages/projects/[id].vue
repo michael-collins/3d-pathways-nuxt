@@ -124,10 +124,11 @@ const config = useRuntimeConfig()
 // Detect embed mode from query parameter
 const isEmbedMode = computed(() => route.query.embed === 'true')
 
-// Fetch the project content (use generic queryContent to avoid collection-specific POST route)
+// Fetch the project content
 const { data: project, pending, error } = await useAsyncData(
   `project-${route.params.id}`,
-  () => queryContent('/projects').where('path', '=', `/projects/${route.params.id}`).findOne()
+  () => queryCollection('projects').where('path', '=', `/projects/${route.params.id}`).first(),
+  { watch: [route.params] }
 )
 
 // Load files data from files.json using the project's record ID
