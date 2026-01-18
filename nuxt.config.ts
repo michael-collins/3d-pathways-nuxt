@@ -155,7 +155,7 @@ content: {
 },
  ssr: true,
  
- // ISR (Incremental Static Regeneration) configuration
+ // Enhanced ISR (Incremental Static Regeneration) configuration
  routeRules: {
    // Homepage - prerender and cache with ISR
    '/': { 
@@ -173,30 +173,55 @@ content: {
      headers: { 'cache-control': 's-maxage=3600' }
    },
    
-   // Content pages - ISR with longer cache for better performance
+   // Content pages - Enhanced ISR with error handling
    '/exercises/**': { 
      isr: 7200,  // Regenerate every 2 hours
-     headers: { 'cache-control': 's-maxage=7200' }
+     headers: { 
+       'cache-control': 's-maxage=7200',
+       'x-content-type': 'exercise'
+     },
+     // Ensure content is available during generation
+     experimentalNoScripts: false
    },
    '/projects/**': { 
      isr: 7200,  // Regenerate every 2 hours
-     headers: { 'cache-control': 's-maxage=7200' }
+     headers: { 
+       'cache-control': 's-maxage=7200',
+       'x-content-type': 'project'
+     },
+     experimentalNoScripts: false
    },
    '/lectures/**': { 
      isr: 7200,  // Regenerate every 2 hours
-     headers: { 'cache-control': 's-maxage=7200' }
+     headers: { 
+       'cache-control': 's-maxage=7200',
+       'x-content-type': 'lecture'
+     },
+     experimentalNoScripts: false
    },
    '/pathways/**': { 
      isr: 7200,  // Regenerate every 2 hours
-     headers: { 'cache-control': 's-maxage=7200' }
+     headers: { 
+       'cache-control': 's-maxage=7200',
+       'x-content-type': 'pathway'
+     },
+     experimentalNoScripts: false
    },
    '/lessons/**': { 
      isr: 7200,  // Regenerate every 2 hours
-     headers: { 'cache-control': 's-maxage=7200' }
+     headers: { 
+       'cache-control': 's-maxage=7200',
+       'x-content-type': 'lesson'
+     },
+     experimentalNoScripts: false
    },
    '/specializations/**': { 
      isr: 7200,  // Regenerate every 2 hours
-     headers: { 'cache-control': 's-maxage=7200' }
+     headers: { 
+       'cache-control': 's-maxage=7200',
+       'x-content-type': 'specialization'
+     },
+     experimentalNoScripts: false
    },
    
    // Index pages - ISR with moderate cache
@@ -239,13 +264,13 @@ content: {
   externals: {
     inline: ['gray-matter']
   },
-  // Vercel-specific optimizations for content
+  // Enhanced content processing for ISR
   experimental: {
     wasm: true
   },
   vercel: {
     functions: {
-      maxDuration: 5
+      maxDuration: 10  // Increased for content generation
     }
   },
   storage: {
@@ -253,6 +278,12 @@ content: {
       driver: 'fs',
       base: './data'
     }
+  },
+  // Ensure content is available during generation
+  prerender: {
+    failOnError: false,  // Don't fail the entire build if one route fails
+    crawlLinks: true,    // Discover more content routes
+    concurrency: 1       // Process one at a time to avoid conflicts
   },
   devStorage: {
     data: {

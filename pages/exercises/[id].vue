@@ -109,7 +109,26 @@
     </div>
 
     <div v-else class="alert alert-warning">
-      <span>Exercise not found</span>
+      <div>
+        <h3 class="font-bold">Exercise not found</h3>
+        <div class="text-sm mt-2">
+          <p>The exercise "{{ route.params.id }}" could not be found.</p>
+          <div class="mt-4 flex gap-2 flex-wrap">
+            <button @click="refresh()" class="btn btn-sm btn-primary">
+              <Icon name="heroicons:arrow-path" />
+              Retry
+            </button>
+            <NuxtLink to="/exercises" class="btn btn-sm btn-outline">
+              <Icon name="heroicons:arrow-left" />
+              All Exercises
+            </NuxtLink>
+            <button @click="reloadPage" class="btn btn-sm btn-ghost">
+              <Icon name="heroicons:arrow-clockwise" />
+              Reload Page
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </article>
 </template>
@@ -124,9 +143,9 @@ const route = useRoute()
 // Detect embed mode from query parameter
 const isEmbedMode = computed(() => route.query.embed === 'true')
 
-// Fetch the exercise content using standard Nuxt Content
-// Use robust queries for both local and Vercel environments
-const { data: exercise, pending, error } = await useAsyncData(
+// Fetch the exercise content using enhanced Nuxt Content with ISR support
+// Use robust queries for both local and Vercel environments with ISR caching
+const { data: exercise, pending, error, refresh } = await useAsyncData(
   `exercise-${route.params.id}`,
   async () => {
     const exerciseId = route.params.id
@@ -134,16 +153,20 @@ const { data: exercise, pending, error } = await useAsyncData(
     // Ensure we have a valid ID
     if (!exerciseId || typeof exerciseId !== 'string') {
       console.warn('Invalid exercise ID:', exerciseId)
-      return null
+      throw createError({ statusCode: 404, statusMessage: 'Invalid exercise ID' })
     }
     
     try {
+      // Enhanced content fetching with better error handling for ISR
+      console.log(`Fetching exercise: ${exerciseId}`)
+      
       // Try path-based query first (most reliable for SSR and Vercel)
       let result = await queryCollection('exercises')
         .path(`/exercises/${exerciseId}`)
         .first()
       
       if (result) {
+        console.log(`Found exercise by path: ${result.title}`)
         return result
       }
       
@@ -153,28 +176,67 @@ const { data: exercise, pending, error } = await useAsyncData(
         .first()
         
       if (result) {
+        console.log(`Found exercise by slug: ${result.title}`)
         return result
       }
       
-      // Final fallback: try to find by any matching field
+      // Enhanced fallback: try multiple potential matches
       result = await queryCollection('exercises')
         .where({ $or: [
           { slug: exerciseId },
           { _id: `exercises:${exerciseId}.md` },
-          { _path: `/exercises/${exerciseId}` }
+          { _id: `exercises/exercises:${exerciseId}.md` },
+          { _path: `/exercises/${exerciseId}` },
+          { stem: exerciseId },
+          { stem: `exercises/${exerciseId}` }
         ]})
         .first()
         
-      return result
+      if (result) {
+        console.log(`Found exercise by fallback: ${result.title}`)
+        return result
+      }
+      
+      // Final attempt: search all exercises for matching fields
+      const allExercises = await queryCollection('exercises').find()
+      console.log(`Total exercises found: ${allExercises.length}`)
+      
+      for (const ex of allExercises) {
+        if (ex.slug === exerciseId || 
+            ex._id?.includes(exerciseId) ||
+            ex._path?.includes(exerciseId) ||
+            ex.stem?.includes(exerciseId)) {
+          console.log(`Found exercise by search: ${ex.title}`)
+          return ex
+        }
+      }
+      
+      console.error(`Exercise not found: ${exerciseId}`)
+      console.log('Available exercises:', allExercises.map(ex => ({ slug: ex.slug, _id: ex._id, _path: ex._path })).slice(0, 5))
+      
+      // Return null instead of throwing to allow graceful error handling
+      return null
     } catch (err) {
       console.error('Error fetching exercise:', err)
-      return null
+      
+      // For ISR, we want to serve cached version if available, not throw error
+      if (process.server) {
+        console.log('Server-side error, attempting graceful fallback')
+        return null
+      }
+      
+      throw err
     }
   },
   { 
     watch: [() => route.params.id],
-    server: true, // Ensure this runs on server side
-    default: () => null // Provide default value to prevent hydration issues
+    server: true, // Ensure this runs on server side for ISR
+    client: false, // Only run on server for better ISR performance
+    default: () => null, // Provide default value to prevent hydration issues
+    // Enhanced caching for ISR
+    getCachedData: (key) => {
+      return nuxtApp.ssrContext?.cache?.[key] ?? nuxtApp.payload.data[key]
+    }
   }
 )
 
@@ -183,6 +245,13 @@ const exerciseFiles = ref([])
 
 // Initialize Canvas LTI support for auto-height
 const { initCanvasLTI } = useCanvasLTI()
+
+// Add reload function for error recovery
+const reloadPage = () => {
+  if (process.client) {
+    window.location.reload()
+  }
+}
 
 onMounted(async () => {
   // Initialize Canvas LTI integration
