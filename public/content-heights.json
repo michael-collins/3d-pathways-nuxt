@@ -1,0 +1,24 @@
+{
+  "exercises": {
+    "animated-procedural-textures": 1400,
+    "modeling-the-airline-chair": 1300,
+    "rigging-a-quadruped": 1200,
+    "modeling-a-pawn": 1100,
+    "default": 1200
+  },
+  "projects": {
+    "default": 1000
+  },
+  "lectures": {
+    "introduction-to-texturing": 1100,
+    "introduction-to-modeling": 1100,
+    "introduction-to-animation": 1100,
+    "default": 900
+  },
+  "pathways": {
+    "default": 800
+  },
+  "specializations": {
+    "default": 900
+  }
+}

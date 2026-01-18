@@ -25,6 +25,9 @@ logs
 .vercel
 .env*.local
 public/cache/
+public/content-cache/
+# Keep content-heights.json for LTI
+!/public/content-heights.json
 /data
 /public/assets
 
