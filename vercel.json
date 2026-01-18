@@ -1,16 +1,9 @@
 {
   "functions": {
-    "**": {
-      "maxDuration": 30
+    "server/api/**/*.ts": {
+      "maxDuration": 5
     }
   },
   "buildCommand": "npm run build",
-  "installCommand": "npm install",
-  "framework": "nuxt",
-  "builds": [
-    {
-      "src": "nuxt.config.ts",
-      "use": "@nuxtjs/vercel-builder"
-    }
-  ]
+  "installCommand": "npm install"
 }
