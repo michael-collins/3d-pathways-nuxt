@@ -138,6 +138,11 @@ content: {
   experimental: {
     wasm: true
   },
+  vercel: {
+    functions: {
+      maxDuration: 5
+    }
+  },
   storage: {
     'data': {
       driver: 'fs',

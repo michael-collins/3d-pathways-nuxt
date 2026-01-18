@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "server/api/**/*.ts": {
-      "maxDuration": 5
-    }
-  },
   "buildCommand": "npm run build",
   "installCommand": "npm install"
 }
