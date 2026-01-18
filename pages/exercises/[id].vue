@@ -125,10 +125,41 @@ const route = useRoute()
 const isEmbedMode = computed(() => route.query.embed === 'true')
 
 // Fetch the exercise content using standard Nuxt Content
+// Use slug-based query for better SSR compatibility
 const { data: exercise, pending, error } = await useAsyncData(
   `exercise-${route.params.id}`,
-  () => queryCollection('exercises').path(`/exercises/${route.params.id}`).first(),
-  { watch: [() => route.params.id] }
+  async () => {
+    const exerciseId = route.params.id
+    
+    // Ensure we have a valid ID
+    if (!exerciseId || typeof exerciseId !== 'string') {
+      console.warn('Invalid exercise ID:', exerciseId)
+      return null
+    }
+    
+    try {
+      // Try slug-based query first (most reliable for SSR)
+      const result = await queryCollection('exercises')
+        .where('slug', exerciseId)
+        .first()
+      
+      if (result) {
+        return result
+      }
+      
+      // Fallback to path-based query if slug query fails
+      return await queryCollection('exercises')
+        .path(`/exercises/${exerciseId}`)
+        .first()
+    } catch (err) {
+      console.error('Error fetching exercise:', err)
+      return null
+    }
+  },
+  { 
+    watch: [() => route.params.id],
+    server: true // Ensure this runs on server side
+  }
 )
 
 // Load files data from files-by-slug.json

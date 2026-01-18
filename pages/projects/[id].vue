@@ -125,10 +125,41 @@ const route = useRoute()
 const isEmbedMode = computed(() => route.query.embed === 'true')
 
 // Fetch the project content using standard Nuxt Content
+// Use slug-based query for better SSR compatibility
 const { data: project, pending, error } = await useAsyncData(
   `project-${route.params.id}`,
-  () => queryCollection('projects').path(`/projects/${route.params.id}`).first(),
-  { watch: [() => route.params.id] }
+  async () => {
+    const projectId = route.params.id
+    
+    // Ensure we have a valid ID
+    if (!projectId || typeof projectId !== 'string') {
+      console.warn('Invalid project ID:', projectId)
+      return null
+    }
+    
+    try {
+      // Try slug-based query first (most reliable for SSR)
+      const result = await queryCollection('projects')
+        .where('slug', projectId)
+        .first()
+      
+      if (result) {
+        return result
+      }
+      
+      // Fallback to path-based query if slug query fails
+      return await queryCollection('projects')
+        .path(`/projects/${projectId}`)
+        .first()
+    } catch (err) {
+      console.error('Error fetching project:', err)
+      return null
+    }
+  },
+  { 
+    watch: [() => route.params.id],
+    server: true // Ensure this runs on server side
+  }
 )
 
 // Load files data from files-by-slug.json

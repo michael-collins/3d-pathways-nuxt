@@ -28,7 +28,7 @@ const aiulExplanations: Record<string, string> = {
 // Build constraint list
 const constraints = computed(() => {
   const list = []
-  if (props.writing) {
+  if (props.writing && typeof props.writing === 'string') {
     list.push({
       code: props.writing.toUpperCase(),
       url: `https://dmd-program.github.io/aiul/combinations/${props.writing.toLowerCase()}.html`,
@@ -36,7 +36,7 @@ const constraints = computed(() => {
       label: 'Writing'
     })
   }
-  if (props.images) {
+  if (props.images && typeof props.images === 'string') {
     list.push({
       code: props.images.toUpperCase(),
       url: `https://dmd-program.github.io/aiul/combinations/${props.images.toLowerCase()}.html`,
@@ -44,7 +44,7 @@ const constraints = computed(() => {
       label: 'Images'
     })
   }
-  if (props.code) {
+  if (props.code && typeof props.code === 'string') {
     list.push({
       code: props.code.toUpperCase(),
       url: `https://dmd-program.github.io/aiul/combinations/${props.code.toLowerCase()}.html`,
