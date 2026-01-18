@@ -54,7 +54,9 @@
         prose-ul:list-disc prose-ul:mx-6
         prose-li:pt-1
         prose-p:my-4">
-        <ContentRenderer :value="exercise" />
+        <!-- Use ContentRenderer for full Nuxt Content, MDC for fallback with raw markdown -->
+        <ContentRenderer v-if="!exercise._fallback" :value="exercise" />
+        <MDC v-else :value="exercise.body" />
       </div>
 
       <!-- Downloads/Files Section -->
@@ -123,10 +125,23 @@ const route = useRoute()
 // Detect embed mode from query parameter
 const isEmbedMode = computed(() => route.query.embed === 'true')
 
-// Fetch the exercise content using standard queryCollection (proper MDC/Studio support)
+// Fetch the exercise content with fallback support
+// First try queryCollection (standard Nuxt Content), fall back to custom API if it fails
 const { data: exercise, pending, error } = await useAsyncData(
   `exercise-${route.params.id}`,
-  () => queryCollection('exercises').path(`/exercises/${route.params.id}`).first(),
+  async () => {
+    try {
+      // Try standard queryCollection first (proper MDC/Studio support)
+      const result = await queryCollection('exercises').path(`/exercises/${route.params.id}`).first()
+      if (result) return result
+    } catch (e) {
+      console.warn('queryCollection failed, trying fallback API:', e)
+    }
+    
+    // Fallback to custom API endpoint that reads markdown directly
+    const fallbackResult = await $fetch(`/api/content/exercises/${route.params.id}`)
+    return fallbackResult
+  },
   { watch: [() => route.params.id] }
 )
 

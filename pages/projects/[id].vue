@@ -54,7 +54,9 @@
         prose-ul:list-disc prose-ul:mx-6
         prose-li:pt-1
         prose-p:my-4">
-        <ContentRenderer :value="project" />
+        <!-- Use ContentRenderer for full Nuxt Content, MDC for fallback with raw markdown -->
+        <ContentRenderer v-if="!project._fallback" :value="project" />
+        <MDC v-else :value="project.body" />
       </div>
 
       <!-- Downloads/Files Section -->
@@ -123,10 +125,23 @@ const route = useRoute()
 // Detect embed mode from query parameter
 const isEmbedMode = computed(() => route.query.embed === 'true')
 
-// Fetch the project content using standard queryCollection (proper MDC/Studio support)
+// Fetch the project content with fallback support
+// First try queryCollection (standard Nuxt Content), fall back to custom API if it fails
 const { data: project, pending, error } = await useAsyncData(
   `project-${route.params.id}`,
-  () => queryCollection('projects').path(`/projects/${route.params.id}`).first(),
+  async () => {
+    try {
+      // Try standard queryCollection first (proper MDC/Studio support)
+      const result = await queryCollection('projects').path(`/projects/${route.params.id}`).first()
+      if (result) return result
+    } catch (e) {
+      console.warn('queryCollection failed, trying fallback API:', e)
+    }
+    
+    // Fallback to custom API endpoint that reads markdown directly
+    const fallbackResult = await $fetch(`/api/content/projects/${route.params.id}`)
+    return fallbackResult
+  },
   { watch: [() => route.params.id] }
 )
 
