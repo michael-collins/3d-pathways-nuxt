@@ -9,6 +9,12 @@
     </div>
 
     <div v-else-if="project">
+      <!-- LTI Fallback Mode Indicator (for testing) -->
+      <div v-if="project._fallback" class="alert alert-info mb-4">
+        <Icon name="octicon:info-16" />
+        <span>LTI Compatible Mode: Content loaded via fallback API</span>
+      </div>
+
       <!-- Header Image -->
       <NuxtImg v-if="project.image" 
         height="360"
