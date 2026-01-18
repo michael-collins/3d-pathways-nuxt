@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
  devtools: { enabled: true },
- plugins: ['~/plugins/airtable.js'],
+ // plugins: ['~/plugins/airtable.js'], // Disabled for testing
  css: ['~/assets/css/main.css'],
 
  experimental: {

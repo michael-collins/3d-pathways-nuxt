@@ -6,12 +6,12 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-    "generate:cache": "node scripts/generateAirtableCache.js",
-    "generate:content-cache": "node scripts/generateContentCache.js",
+    "generate:cache": "echo 'Airtable cache disabled for testing'",
+    "generate:content-cache": "echo 'Content cache disabled for testing'",
     "generate:heights": "node scripts/calculateContentHeights.js",
     "migrate:content": "node scripts/migrateToNuxtContent.js",
-    "dev": "npm run generate:cache && npm run generate:content-cache && nuxt dev",
-    "build": "npm run generate:cache && npm run generate:content-cache && nuxt build",
+    "dev": "nuxt dev",
+    "build": "nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
