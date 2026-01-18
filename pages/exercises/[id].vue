@@ -138,18 +138,18 @@ const { data: exercise, pending, error } = await useAsyncData(
     }
     
     try {
-      // Try slug-based query first (most reliable for SSR)
+      // Try path-based query first (most reliable for SSR)
       const result = await queryCollection('exercises')
-        .where('slug', exerciseId)
+        .path(`/exercises/${exerciseId}`)
         .first()
       
       if (result) {
         return result
       }
       
-      // Fallback to path-based query if slug query fails
+      // Fallback to slug-based query if path query fails
       return await queryCollection('exercises')
-        .path(`/exercises/${exerciseId}`)
+        .where({ slug: exerciseId })
         .first()
     } catch (err) {
       console.error('Error fetching exercise:', err)
