@@ -99,16 +99,6 @@ content: {
         'Access-Control-Allow-Methods': 'GET',
         'Cache-Control': 'public, max-age=3600'
       }
-    },
-    // Allow POST requests from Canvas LTI embeds for Nuxt Content queries
-    '/__nuxt_content/**': {
-      cors: true,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        'Access-Control-Max-Age': '86400'
-      }
     }
   },
   devStorage: {

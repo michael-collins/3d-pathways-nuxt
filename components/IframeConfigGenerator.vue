@@ -53,12 +53,13 @@ const iframeCodeText = computed(() => {
   const cfg = useRuntimeConfig()
   const origin = typeof window !== 'undefined' ? window.location.origin : cfg.public.siteUrl
 
-  // Prefer path-based URL and always append embed flags
-  const srcFromPath = props.path ? `${origin}${props.path}?embed=true&hidePageElements=true` : ''
+  // Use LTI endpoint for Canvas compatibility (handles height automatically)
+  const srcFromPath = props.path ? `${origin}/api/lti${props.path}` : ''
   const fallbackSrc = props.url || props.iframeUrl || ''
   const src = srcFromPath || fallbackSrc
 
   const titleText = props.title || (props.record?.fields?.name) || 'Embedded Content'
+  // Height will be handled by LTI endpoint, but provide fallback
   const height = props.articleHeight || '600'
 
   return `<iframe width="100%" height="${height}px" src="${src}" style="border:none;" title="${titleText}"></iframe>`

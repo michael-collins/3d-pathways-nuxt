@@ -9,12 +9,6 @@
     </div>
 
     <div v-else-if="project">
-      <!-- LTI Fallback Mode Indicator (for testing) -->
-      <div v-if="project._fallback" class="alert alert-info mb-4">
-        <Icon name="octicon:info-16" />
-        <span>LTI Compatible Mode: Content loaded via fallback API</span>
-      </div>
-
       <!-- Header Image -->
       <NuxtImg v-if="project.image" 
         height="360"
@@ -60,9 +54,8 @@
         prose-ul:list-disc prose-ul:mx-6
         prose-li:pt-1
         prose-p:my-4">
-        <!-- Use ContentRenderer for full Nuxt Content, MDC for fallback with raw markdown -->
-        <ContentRenderer v-if="!project._fallback" :value="project" />
-        <MDC v-else :value="project.body" />
+        <!-- Use standard ContentRenderer for full MDC support -->
+        <ContentRenderer :value="project" />
       </div>
 
       <!-- Downloads/Files Section -->
@@ -131,23 +124,10 @@ const route = useRoute()
 // Detect embed mode from query parameter
 const isEmbedMode = computed(() => route.query.embed === 'true')
 
-// Fetch the project content with fallback support
-// First try queryCollection (standard Nuxt Content), fall back to custom API if it fails
+// Fetch the project content using standard Nuxt Content
 const { data: project, pending, error } = await useAsyncData(
   `project-${route.params.id}`,
-  async () => {
-    try {
-      // Try standard queryCollection first (proper MDC/Studio support)
-      const result = await queryCollection('projects').path(`/projects/${route.params.id}`).first()
-      if (result) return result
-    } catch (e) {
-      console.warn('queryCollection failed, trying fallback API:', e)
-    }
-    
-    // Fallback to custom API endpoint that reads markdown directly
-    const fallbackResult = await $fetch(`/api/content/projects/${route.params.id}`)
-    return fallbackResult
-  },
+  () => queryCollection('projects').path(`/projects/${route.params.id}`).first(),
   { watch: [() => route.params.id] }
 )
 
