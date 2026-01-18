@@ -1,0 +1,13 @@
+{
+	"servers": {
+		"nuxt": {
+			"type": "http",
+			"url": "https://nuxt.com/mcp"
+		},
+		"Vercel": {
+			"url": "https://mcp.vercel.com",
+			"type": "http"
+		}
+	},
+	"inputs": []
+}

@@ -24,6 +24,7 @@
     "airtable": "^0.12.2",
     "better-sqlite3": "^12.6.0",
     "fs-extra": "^11.2.0",
+    "gray-matter": "^4.0.3",
     "node-fecth": "^0.0.1-security",
     "path": "^0.12.7",
     "pinia": "^2.1.7",

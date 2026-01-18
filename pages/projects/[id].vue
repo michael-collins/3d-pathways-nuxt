@@ -119,19 +119,18 @@ definePageMeta({
 })
 
 const route = useRoute()
-const config = useRuntimeConfig()
 
 // Detect embed mode from query parameter
 const isEmbedMode = computed(() => route.query.embed === 'true')
 
-// Fetch the project content via custom API endpoint (avoids POST 500 in Canvas)
+// Fetch the project content using standard queryCollection (proper MDC/Studio support)
 const { data: project, pending, error } = await useAsyncData(
   `project-${route.params.id}`,
-  () => $fetch(`/api/content/projects/${route.params.id}`),
-  { watch: [route.params] }
+  () => queryCollection('projects').path(`/projects/${route.params.id}`).first(),
+  { watch: [() => route.params.id] }
 )
 
-// Load files data from files.json using the project's record ID
+// Load files data from files-by-slug.json
 const projectFiles = ref([])
 
 // Initialize Canvas LTI support for auto-height
@@ -141,16 +140,15 @@ onMounted(async () => {
   // Initialize Canvas LTI integration
   initCanvasLTI()
   
-  // Extract filename from stem (remove folder path)
-  const stem = project.value?.stem || ''
-  const slug = project.value?.slug || stem.split('/').pop()
+  // Extract slug from the project
+  const slug = project.value?.slug || route.params.id
   
   if (slug) {
     try {
       const filesData = await $fetch('/data/files-by-slug.json')
       projectFiles.value = filesData[slug] || []
-    } catch (error) {
-      console.error('Error loading files:', error)
+    } catch (err) {
+      console.error('Error loading files:', err)
     }
   }
 })

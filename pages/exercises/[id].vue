@@ -119,16 +119,15 @@ definePageMeta({
 })
 
 const route = useRoute()
-const config = useRuntimeConfig()
 
 // Detect embed mode from query parameter
 const isEmbedMode = computed(() => route.query.embed === 'true')
 
-// Fetch the exercise content via custom API endpoint (avoids POST 500 in Canvas)
+// Fetch the exercise content using standard queryCollection (proper MDC/Studio support)
 const { data: exercise, pending, error } = await useAsyncData(
   `exercise-${route.params.id}`,
-  () => $fetch(`/api/content/exercises/${route.params.id}`),
-  { watch: [route.params] }
+  () => queryCollection('exercises').path(`/exercises/${route.params.id}`).first(),
+  { watch: [() => route.params.id] }
 )
 
 // Load files data from files-by-slug.json
@@ -141,16 +140,15 @@ onMounted(async () => {
   // Initialize Canvas LTI integration
   initCanvasLTI()
   
-  // Extract filename from stem (remove folder path)
-  const stem = exercise.value?.stem || ''
-  const slug = exercise.value?.slug || stem.split('/').pop()
+  // Extract slug from the exercise
+  const slug = exercise.value?.slug || route.params.id
   
   if (slug) {
     try {
       const filesData = await $fetch('/data/files-by-slug.json')
       exerciseFiles.value = filesData[slug] || []
-    } catch (error) {
-      console.error('Error loading files:', error)
+    } catch (err) {
+      console.error('Error loading files:', err)
     }
   }
 })
