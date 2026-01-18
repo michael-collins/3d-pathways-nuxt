@@ -13,8 +13,18 @@ export default defineNuxtConfig({
   '@nuxt/image'
 ],
 content: {
-  debug: true, // Enable for detailed logging during development
-  // ...other options if needed
+  debug: false, // Disable debug in production
+  // Ensure content is processed during build for Vercel
+  experimental: {
+    clientDB: true  // Enable client-side database for better SSR support
+  },
+  // Include all content types
+  sources: {
+    content: {
+      driver: 'fs',
+      base: './content'
+    }
+  }
 },
  image: {
   // unoptimized: true, // Disable all image optimization. Default: false
@@ -85,6 +95,10 @@ content: {
  nitro: {
   externals: {
     inline: ['gray-matter']
+  },
+  // Vercel-specific optimizations for content
+  experimental: {
+    wasm: true
   },
   storage: {
     'data': {

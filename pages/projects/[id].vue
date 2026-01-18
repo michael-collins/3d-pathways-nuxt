@@ -125,7 +125,7 @@ const route = useRoute()
 const isEmbedMode = computed(() => route.query.embed === 'true')
 
 // Fetch the project content using standard Nuxt Content
-// Use slug-based query for better SSR compatibility
+// Use robust queries for both local and Vercel environments
 const { data: project, pending, error } = await useAsyncData(
   `project-${route.params.id}`,
   async () => {
@@ -138,8 +138,8 @@ const { data: project, pending, error } = await useAsyncData(
     }
     
     try {
-      // Try path-based query first (most reliable for SSR)
-      const result = await queryCollection('projects')
+      // Try path-based query first (most reliable for SSR and Vercel)
+      let result = await queryCollection('projects')
         .path(`/projects/${projectId}`)
         .first()
       
@@ -148,9 +148,24 @@ const { data: project, pending, error } = await useAsyncData(
       }
       
       // Fallback to slug-based query if path query fails
-      return await queryCollection('projects')
+      result = await queryCollection('projects')
         .where({ slug: projectId })
         .first()
+        
+      if (result) {
+        return result
+      }
+      
+      // Final fallback: try to find by any matching field
+      result = await queryCollection('projects')
+        .where({ $or: [
+          { slug: projectId },
+          { _id: `projects:${projectId}.md` },
+          { _path: `/projects/${projectId}` }
+        ]})
+        .first()
+        
+      return result
     } catch (err) {
       console.error('Error fetching project:', err)
       return null
@@ -158,7 +173,8 @@ const { data: project, pending, error } = await useAsyncData(
   },
   { 
     watch: [() => route.params.id],
-    server: true // Ensure this runs on server side
+    server: true, // Ensure this runs on server side
+    default: () => null // Provide default value to prevent hydration issues
   }
 )
 

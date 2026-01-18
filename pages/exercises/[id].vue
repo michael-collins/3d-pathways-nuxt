@@ -125,7 +125,7 @@ const route = useRoute()
 const isEmbedMode = computed(() => route.query.embed === 'true')
 
 // Fetch the exercise content using standard Nuxt Content
-// Use slug-based query for better SSR compatibility
+// Use robust queries for both local and Vercel environments
 const { data: exercise, pending, error } = await useAsyncData(
   `exercise-${route.params.id}`,
   async () => {
@@ -138,8 +138,8 @@ const { data: exercise, pending, error } = await useAsyncData(
     }
     
     try {
-      // Try path-based query first (most reliable for SSR)
-      const result = await queryCollection('exercises')
+      // Try path-based query first (most reliable for SSR and Vercel)
+      let result = await queryCollection('exercises')
         .path(`/exercises/${exerciseId}`)
         .first()
       
@@ -148,9 +148,24 @@ const { data: exercise, pending, error } = await useAsyncData(
       }
       
       // Fallback to slug-based query if path query fails
-      return await queryCollection('exercises')
+      result = await queryCollection('exercises')
         .where({ slug: exerciseId })
         .first()
+        
+      if (result) {
+        return result
+      }
+      
+      // Final fallback: try to find by any matching field
+      result = await queryCollection('exercises')
+        .where({ $or: [
+          { slug: exerciseId },
+          { _id: `exercises:${exerciseId}.md` },
+          { _path: `/exercises/${exerciseId}` }
+        ]})
+        .first()
+        
+      return result
     } catch (err) {
       console.error('Error fetching exercise:', err)
       return null
@@ -158,7 +173,8 @@ const { data: exercise, pending, error } = await useAsyncData(
   },
   { 
     watch: [() => route.params.id],
-    server: true // Ensure this runs on server side
+    server: true, // Ensure this runs on server side
+    default: () => null // Provide default value to prevent hydration issues
   }
 )
 
