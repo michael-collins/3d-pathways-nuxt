@@ -86,6 +86,13 @@ content: {
   externals: {
     inline: ['gray-matter']
   },
+  // Include content-cache in serverless bundle for Vercel fallback API
+  serverAssets: [
+    {
+      baseName: 'content-cache',
+      dir: './public/content-cache'
+    }
+  ],
   storage: {
     'data': {
       driver: 'fs',
