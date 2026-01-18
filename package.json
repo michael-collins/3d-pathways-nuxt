@@ -7,9 +7,10 @@
   },
   "scripts": {
     "generate:cache": "node scripts/generateAirtableCache.js",
+    "generate:content-cache": "node scripts/generateContentCache.js",
     "migrate:content": "node scripts/migrateToNuxtContent.js",
-    "dev": "npm run generate:cache && nuxt dev",
-    "build": "npm run generate:cache && nuxt build",
+    "dev": "npm run generate:cache && npm run generate:content-cache && nuxt dev",
+    "build": "npm run generate:cache && npm run generate:content-cache && nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",

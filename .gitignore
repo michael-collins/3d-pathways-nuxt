@@ -27,3 +27,6 @@ logs
 public/cache/
 /data
 /public/assets
+
+# Generated content cache for fallback API
+public/content-cache/

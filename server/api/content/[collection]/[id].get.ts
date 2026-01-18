@@ -1,11 +1,8 @@
 /**
  * Fallback API endpoint for fetching content when queryCollection fails
- * This reads markdown files directly and parses them with gray-matter
- * Used as a fallback for Canvas LTI embeds or when Nuxt Content API fails
+ * This reads from pre-generated JSON cache files in /public/content-cache/
+ * Used as a fallback for Canvas LTI embeds or when Nuxt Content API fails on Vercel
  */
-import { promises as fs } from 'fs'
-import { resolve, join } from 'path'
-import matter from 'gray-matter'
 
 export default defineEventHandler(async (event) => {
   const { collection, id } = getRouterParams(event)
@@ -19,29 +16,26 @@ export default defineEventHandler(async (event) => {
     })
   }
   
+  // Validate id to prevent path traversal
+  if (id.includes('/') || id.includes('..')) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Invalid content ID'
+    })
+  }
+  
   try {
-    // Read the markdown file directly from content folder
-    const contentDir = resolve(process.cwd(), 'content', collection)
-    const filePath = join(contentDir, `${id}.md`)
+    // Fetch from the pre-generated content cache in public folder
+    const cacheUrl = `/content-cache/${collection}/${id}.json`
     
-    const fileContent = await fs.readFile(filePath, 'utf-8')
+    // Use $fetch to get the cached content (works both locally and on Vercel)
+    const cached = await $fetch(cacheUrl, {
+      baseURL: getRequestURL(event).origin
+    })
     
-    // Parse frontmatter and content using gray-matter
-    const { data: frontmatter, content } = matter(fileContent)
-    
-    // Return combined data matching what Nuxt Content provides
-    return {
-      ...frontmatter,
-      path: `/${collection}/${id}`,
-      stem: `${collection}/${id}`,
-      slug: id,
-      body: content,
-      _id: `${collection}:${id}.md`,
-      _path: `/${collection}/${id}`,
-      _fallback: true, // Flag to indicate this came from fallback
-    }
+    return cached
   } catch (error: any) {
-    if (error.code === 'ENOENT') {
+    if (error.statusCode === 404 || error.status === 404) {
       throw createError({
         statusCode: 404,
         statusMessage: `Content not found: ${collection}/${id}`
