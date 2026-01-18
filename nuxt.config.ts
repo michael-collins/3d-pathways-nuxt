@@ -2,6 +2,18 @@
 export default defineNuxtConfig({
  devtools: { enabled: true },
  plugins: ['~/plugins/airtable.js'],
+ css: ['~/assets/css/main.css'],
+
+ experimental: {
+   payloadExtraction: false  // Simpler approach for SSR
+ },
+
+ // Simple loading indicator configuration
+ loading: {
+   color: '#3B82F6',
+   height: '2px',
+   continuous: true
+ },
 
  modules: [
   '@nuxtjs/tailwindcss',
@@ -84,6 +96,32 @@ content: {
      },
      link: [
        { rel: "icon", type: "image/png", href: "/favicon.ico" }
+     ],
+     script: [
+       {
+         innerHTML: `
+           document.documentElement.style.visibility = 'hidden';
+           document.addEventListener('DOMContentLoaded', function() {
+             const checkStyles = () => {
+               const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+               let loaded = 0;
+               if (stylesheets.length === 0) {
+                 document.documentElement.style.visibility = 'visible';
+                 return;
+               }
+               stylesheets.forEach(sheet => {
+                 if (sheet.sheet || sheet.disabled) loaded++;
+               });
+               if (loaded === stylesheets.length) {
+                 document.documentElement.style.visibility = 'visible';
+               } else {
+                 setTimeout(checkStyles, 10);
+               }
+             };
+             checkStyles();
+           });
+         `
+       }
      ]
    }
  },
