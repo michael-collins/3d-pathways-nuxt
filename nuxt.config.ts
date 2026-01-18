@@ -8,11 +8,13 @@ export default defineNuxtConfig({
    payloadExtraction: false  // Simpler approach for SSR
  },
 
- // Simple loading indicator configuration
+ // Enhanced loading indicator configuration for ISR
  loading: {
    color: '#3B82F6',
-   height: '2px',
-   continuous: true
+   height: '3px',
+   continuous: true,
+   duration: 2000,
+   throttle: 0
  },
 
  modules: [
@@ -100,25 +102,47 @@ content: {
      script: [
        {
          innerHTML: `
+           // Enhanced FOUC prevention for ISR
            document.documentElement.style.visibility = 'hidden';
+           document.documentElement.style.opacity = '0';
+           
            document.addEventListener('DOMContentLoaded', function() {
+             const showContent = () => {
+               document.documentElement.style.visibility = 'visible';
+               document.documentElement.style.opacity = '1';
+               document.documentElement.style.transition = 'opacity 0.1s ease-in';
+             };
+             
              const checkStyles = () => {
                const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
                let loaded = 0;
+               
                if (stylesheets.length === 0) {
-                 document.documentElement.style.visibility = 'visible';
+                 showContent();
                  return;
                }
+               
                stylesheets.forEach(sheet => {
-                 if (sheet.sheet || sheet.disabled) loaded++;
+                 if (sheet.sheet || sheet.disabled) {
+                   loaded++;
+                 } else {
+                   sheet.addEventListener('load', () => {
+                     loaded++;
+                     if (loaded === stylesheets.length) {
+                       showContent();
+                     }
+                   });
+                 }
                });
+               
                if (loaded === stylesheets.length) {
-                 document.documentElement.style.visibility = 'visible';
-               } else {
-                 setTimeout(checkStyles, 10);
+                 showContent();
                }
              };
+             
+             // Check immediately and fallback after 1.5 seconds
              checkStyles();
+             setTimeout(showContent, 1500);
            });
          `
        }
@@ -130,6 +154,87 @@ content: {
   baseURL: process.env.BASE_URL || 'http://localhost:3000',
 },
  ssr: true,
+ 
+ // ISR (Incremental Static Regeneration) configuration
+ routeRules: {
+   // Homepage - prerender and cache with ISR
+   '/': { 
+     prerender: true,
+     headers: { 'cache-control': 's-maxage=3600' }
+   },
+   // Static pages - prerender for better performance
+   '/about': { prerender: true },
+   '/colors': { prerender: true },
+   '/license': { prerender: true },
+   
+   // Docs - ISR with 1 hour cache
+   '/docs/**': { 
+     isr: 3600,  // Regenerate every hour
+     headers: { 'cache-control': 's-maxage=3600' }
+   },
+   
+   // Content pages - ISR with longer cache for better performance
+   '/exercises/**': { 
+     isr: 7200,  // Regenerate every 2 hours
+     headers: { 'cache-control': 's-maxage=7200' }
+   },
+   '/projects/**': { 
+     isr: 7200,  // Regenerate every 2 hours
+     headers: { 'cache-control': 's-maxage=7200' }
+   },
+   '/lectures/**': { 
+     isr: 7200,  // Regenerate every 2 hours
+     headers: { 'cache-control': 's-maxage=7200' }
+   },
+   '/pathways/**': { 
+     isr: 7200,  // Regenerate every 2 hours
+     headers: { 'cache-control': 's-maxage=7200' }
+   },
+   '/lessons/**': { 
+     isr: 7200,  // Regenerate every 2 hours
+     headers: { 'cache-control': 's-maxage=7200' }
+   },
+   '/specializations/**': { 
+     isr: 7200,  // Regenerate every 2 hours
+     headers: { 'cache-control': 's-maxage=7200' }
+   },
+   
+   // Index pages - ISR with moderate cache
+   '/exercises': { 
+     isr: 1800,  // Regenerate every 30 minutes
+     headers: { 'cache-control': 's-maxage=1800' }
+   },
+   '/projects': { 
+     isr: 1800,  // Regenerate every 30 minutes
+     headers: { 'cache-control': 's-maxage=1800' }
+   },
+   '/lectures': { 
+     isr: 1800,  // Regenerate every 30 minutes
+     headers: { 'cache-control': 's-maxage=1800' }
+   },
+   '/pathways': { 
+     isr: 1800,  // Regenerate every 30 minutes
+     headers: { 'cache-control': 's-maxage=1800' }
+   },
+   '/lessons': { 
+     isr: 1800,  // Regenerate every 30 minutes
+     headers: { 'cache-control': 's-maxage=1800' }
+   },
+   '/specializations': { 
+     isr: 1800,  // Regenerate every 30 minutes
+     headers: { 'cache-control': 's-maxage=1800' }
+   },
+   
+   // API routes - cache for better performance
+   '/api/**': {
+     cors: true,
+     headers: {
+       'Access-Control-Allow-Methods': 'GET',
+       'Cache-Control': 'public, max-age=3600'
+     }
+   }
+ },
+
  nitro: {
   externals: {
     inline: ['gray-matter']
@@ -147,15 +252,6 @@ content: {
     'data': {
       driver: 'fs',
       base: './data'
-    }
-  },
-  routeRules: {
-    '/api/**': {
-      cors: true,
-      headers: {
-        'Access-Control-Allow-Methods': 'GET',
-        'Cache-Control': 'public, max-age=3600'
-      }
     }
   },
   devStorage: {
